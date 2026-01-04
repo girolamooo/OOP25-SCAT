@@ -5,4 +5,13 @@ package it.unibo.scat.control.api;
  */
 public interface ControlInterface {
 
+    /**
+     * ...
+     */
+    void notifyQuitGame();
+
+    /**
+     * ...
+     */
+    void notifyPlayerMovement();
 }
