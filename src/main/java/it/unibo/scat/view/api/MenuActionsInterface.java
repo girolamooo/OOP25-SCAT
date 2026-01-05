@@ -61,4 +61,30 @@ public interface MenuActionsInterface {
      * 
      */
     String fetchUsername();
+
+    /**
+     * ...
+     */
+    void showGamePanel();
+
+    /**
+     * ...
+     */
+    void hideGamePanel();
+
+    /**
+     * ...
+     */
+    void showMenuPanel();
+
+    /**
+     * ...
+     */
+    void hideMenuPanel();
+
+    /**
+     * @return ...
+     * 
+     */
+    int fetchScore();
 }
