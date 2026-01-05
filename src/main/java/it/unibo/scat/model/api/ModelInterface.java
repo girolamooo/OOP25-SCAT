@@ -27,4 +27,15 @@ public interface ModelInterface {
      */
     void increaseScore(int points);
 
+
+    /**
+     * @return ...
+     * 
+     */
+    int checkCollisions();
+
+    /**
+     * ...
+     */
+    void addPlayerShot();
 }

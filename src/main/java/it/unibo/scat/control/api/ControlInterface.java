@@ -14,4 +14,16 @@ public interface ControlInterface {
      * ...
      */
     void notifyPlayerMovement();
+
+    /**
+     * @param username ...
+     * 
+     */
+    void notifySetUsername(String username);
+
+    /**
+     * ...
+     */
+    void notifyPlayerShot();
+
 }
