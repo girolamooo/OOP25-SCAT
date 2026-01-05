@@ -15,4 +15,14 @@ public interface ControlInterface {
      * ...
      */
     void notifyPlayerShot();
+
+    /**
+     * ...
+     */
+    void notifyQuitGame();
+
+    /**
+     * ...
+     */
+    void notifyPlayerMovement();
 }
