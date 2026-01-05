@@ -20,4 +20,16 @@ public interface ModelObservable {
      * 
      */
     String getUsername();
+
+    /**
+     * @return ...
+     * 
+     */
+    int getScore();
+
+    /**
+     * @return ...
+     * 
+     */
+    List<Record> getLeaderboard();
 }
