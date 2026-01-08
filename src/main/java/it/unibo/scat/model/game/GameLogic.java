@@ -10,4 +10,28 @@ public class GameLogic {
     private GameWorld gameWorld;
     private int lastInvaderShotTime;
     private int invaderShootCooldown;
+
+    /**
+     * @return ...
+     * 
+     */
+    public CollisionReport checkCollisions() {
+        return null;
+    }
+
+    /**
+     * @param cr ...
+     * 
+     */
+    public void handleCollisionReport(final CollisionReport cr) {
+
+    }
+
+    /**
+     * ...
+     */
+    public void addPlayerShot() {
+
+    }
+
 }
