@@ -23,8 +23,6 @@ public class Model {
     private int score;
     private Leaderboard leaderboard;
     private int gameState;
-    private int lastInvaderShootTime;
-    private int invaderShootCooldown;
     private int level;
     private String username;
 
