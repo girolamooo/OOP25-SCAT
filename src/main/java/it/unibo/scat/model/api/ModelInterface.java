@@ -29,17 +29,6 @@ public interface ModelInterface {
     /**
      * ...
      */
-    void generateInvaderShot();
-
-    /**
-     * @param points ...
-     *
-     */
-    void updateScore(int points);
-
-    /**
-     * ...
-     */
     void resetGame();
 
     /**
