@@ -2,6 +2,7 @@ package it.unibo.scat.model.game;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.GameResult;
+import it.unibo.scat.model.game.entity.AbstractEntity;
 
 /**
  * ...
@@ -69,5 +70,21 @@ public class GameLogic {
      */
     public void generateInvaderShot() {
 
-    };
+    }
+
+    /**
+     * @param e ...
+     * 
+     */
+    public void addEntity(final AbstractEntity e) {
+
+    }
+
+    /**
+     * @param e ...
+     * 
+     */
+    public void removeEntity(final AbstractEntity e) {
+
+    }
 }

@@ -22,6 +22,13 @@ public class GameWorld {
     private List<Shot> shots;
 
     /**
+     * ...
+     */
+    public void initEntities() {
+
+    }
+
+    /**
      * @return ...
      *
      */
