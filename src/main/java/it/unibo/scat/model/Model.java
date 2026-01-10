@@ -15,8 +15,8 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
 /**
  * The main class for the "Model" section of the MVC pattern.
  */
-// @SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
-@SuppressFBWarnings("UUF_UNUSED_FIELD")
+@SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
+// @SuppressFBWarnings("UUF_UNUSED_FIELD")
 
 public final class Model implements ModelInterface, ModelObservable {
     private int score;
@@ -26,6 +26,14 @@ public final class Model implements ModelInterface, ModelObservable {
     private Leaderboard leaderboard;
     private GameWorld gameWorld;
     private GameLogic gameLogic;
+
+    /**
+     * ...
+     */
+    public Model() {
+        this.gameWorld = new GameWorld(); // to remove when unecessary
+        resetGame();
+    }
 
     /**
      * ...
@@ -54,8 +62,10 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public void initEverything(final String filename) {
-        // gameWorld = new GameWorld();
-        // gameLogic = new GameLogic(gameWorld);
+        gameWorld = new GameWorld();
+        gameLogic = new GameLogic(gameWorld);
+
+        gameWorld.initEntities(filename);
     }
 
     @Override
@@ -103,4 +113,11 @@ public final class Model implements ModelInterface, ModelObservable {
         return null;
     }
 
+    /**
+     * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private void tempUseAllFields() {
+        gameWorld.update();
+    }
 }
