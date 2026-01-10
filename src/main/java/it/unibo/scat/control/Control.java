@@ -10,7 +10,8 @@ import it.unibo.scat.view.api.ViewInterface;
  */
 // @SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will
 // be used by upcoming game logic")
-@SuppressFBWarnings({ "EI2", "URF_UNREAD_FIELD" })
+// @SuppressFBWarnings({ "EI2", "URF_UNREAD_FIELD" })
+@SuppressFBWarnings("EI2")
 public class Control implements ControlInterface {
     private final ViewInterface viewInterface;
     private final ModelInterface modelInterface;
@@ -23,6 +24,9 @@ public class Control implements ControlInterface {
     public Control(final ViewInterface vInterface, final ModelInterface mInterface) {
         this.viewInterface = vInterface;
         this.modelInterface = mInterface;
+
+        modelInterface.initEverything("data/entities.txt");
+        viewInterface.initEverything();
     }
 
     /**
