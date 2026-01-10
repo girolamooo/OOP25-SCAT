@@ -1,8 +1,13 @@
 package it.unibo.scat.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.model.api.ModelInterface;
+import it.unibo.scat.model.api.ModelObservable;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
 import it.unibo.scat.model.leaderboard.Leaderboard;
@@ -11,7 +16,7 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
  * The main class for the "Model" section of the MVC pattern.
  */
 @SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will be used by upcoming game logic")
-public class Model implements ModelInterface {
+public class Model implements ModelInterface, ModelObservable {
     private int score;
     private int level;
     private String username;
@@ -96,6 +101,42 @@ public class Model implements ModelInterface {
     @Override
     public void update() {
 
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    @Override
+    public List<EntityView> getEntities() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    @Override
+    public List<Record> getLeaderboard() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    @Override
+    public int getScore() {
+        return 0;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    @Override
+    public String getUsername() {
+        return null;
     }
 
 }
