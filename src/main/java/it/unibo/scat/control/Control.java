@@ -10,7 +10,8 @@ import it.unibo.scat.view.api.ViewInterface;
  */
 // @SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will
 // be used by upcoming game logic")
-@SuppressFBWarnings({ "EI2", "URF_UNREAD_FIELD" })
+// @SuppressFBWarnings({ "EI2", "URF_UNREAD_FIELD" })
+@SuppressFBWarnings("EI2")
 public class Control implements ControlInterface {
     private final ViewInterface viewInterface;
     private final ModelInterface modelInterface;
@@ -29,61 +30,40 @@ public class Control implements ControlInterface {
      * ...
      */
     public void start() {
-
+        modelInterface.initEverything("data/entities.txt", "data/leaderboard.txt");
+        viewInterface.initEverything();
     }
 
-    /**
-     * ...
-     */
     @Override
     public void notifyPauseGame() {
 
     }
 
-    /**
-     * ...
-     */
     @Override
     public void notifyPlayerMovement() {
 
     }
 
-    /**
-     * ...
-     */
     @Override
     public void notifyPlayerShot() {
 
     }
 
-    /**
-     * ...
-     */
     @Override
     public void notifyQuitGame() {
 
     }
 
-    /**
-     * ...
-     */
     @Override
     public void notifyResetGame() {
 
     }
 
-    /**
-     * ...
-     */
     @Override
     public void notifyResumeGame() {
 
     }
 
-    /**
-     * @param username ...
-     * 
-     */
     @Override
     public void notifySetUsername(final String username) {
 
