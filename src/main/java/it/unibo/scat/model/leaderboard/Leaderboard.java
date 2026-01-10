@@ -10,4 +10,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class Leaderboard {
     private List<Record> games;
+
+    /**
+     * ...
+     */
+    public Leaderboard() {
+
+    }
 }
