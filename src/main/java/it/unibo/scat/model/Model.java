@@ -2,6 +2,7 @@ package it.unibo.scat.model;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.GameState;
+import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
 import it.unibo.scat.model.leaderboard.Leaderboard;
@@ -10,7 +11,7 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
  * The main class for the "Model" section of the MVC pattern.
  */
 @SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will be used by upcoming game logic")
-public class Model {
+public class Model implements ModelInterface {
     private int score;
     private int level;
     private String username;
@@ -33,4 +34,68 @@ public class Model {
     public void updateScore(final int points) {
 
     }
+
+    /**
+     * ...
+     */
+    @Override
+    public void addPlayerShot() {
+
+    }
+
+    /**
+     * ...
+     */
+    @Override
+    public void endGame() {
+
+    }
+
+    /**
+     * ...
+     */
+    @Override
+    public void initEverything() {
+
+    }
+
+    /**
+     * @param direction ...
+     * @return ...
+     * 
+     */
+    @Override
+    public int movePlayer(final int direction) {
+        return 0;
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    /**
+     * ...
+     */
+    @Override
+    public void resetGame() {
+
+    }
+
+    /**
+     * ...
+     */
+    @Override
+    public void resume() {
+
+    }
+
+    /**
+     * ...
+     */
+    @Override
+    public void update() {
+
+    }
+
 }
