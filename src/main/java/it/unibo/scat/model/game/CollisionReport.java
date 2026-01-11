@@ -9,17 +9,32 @@ import it.unibo.scat.model.game.entity.AbstractEntity;
 /**
  * ...
  */
-@SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will be used by upcoming game logic")
 public class CollisionReport {
-    private List<AbstractEntity> entities;
-    private boolean collisions;
+    private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
+    private final List<AbstractEntity> entities;
+    private final boolean collisions;
+
+    /**
+     * @param entities ...
+     * 
+     */
+    public CollisionReport(final List<AbstractEntity> entities) {
+        this.entities = new ArrayList<>(entities);
+
+        if (!entities.isEmpty()) {
+            this.collisions = true;
+        } else {
+            this.collisions = false;
+        }
+    }
 
     /**
      * @return ...
      *
      */
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Entities are a part of the game state, intentionally exposed")
     public List<AbstractEntity> getEntities() {
-        return new ArrayList<>();
+        return this.entities;
     }
 
     /**
@@ -27,7 +42,7 @@ public class CollisionReport {
      *
      */
     public boolean hasCollisions() {
-        return false;
+        return this.collisions;
     }
 
 }

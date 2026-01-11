@@ -23,6 +23,7 @@ import it.unibo.scat.model.game.entity.Shot;
  */
 // @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class GameWorld {
+    private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
     private final List<AbstractEntity> entities;
     private final List<Invader> invaders;
     private final List<Shot> shots;
@@ -109,16 +110,18 @@ public class GameWorld {
      * @return ...
      *
      */
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Entities are a part of the game state, intentionally exposed")
     public List<AbstractEntity> getEntities() {
-        return new ArrayList<>();
+        return this.entities;
     }
 
     /**
      * @return ...
      *
      */
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Shots are a part of the game state, intentionally exposed")
     public List<Shot> getShots() {
-        return new ArrayList<>();
+        return this.shots;
     }
 
     /**
