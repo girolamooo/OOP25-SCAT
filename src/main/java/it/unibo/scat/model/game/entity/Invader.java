@@ -8,7 +8,7 @@ import it.unibo.scat.common.EntityType;
  */
 @SuppressWarnings("PMD.UnusedPrivateMethod")
 public final class Invader extends AbstractEntity {
-    private static Direction direction = Direction.RIGHT;
+    private static Direction currDirection = Direction.RIGHT;
     private static Direction nextDirection = Direction.DOWN;
 
     /**
@@ -36,7 +36,13 @@ public final class Invader extends AbstractEntity {
      * ...
      */
     public static void changeDirection() {
-        direction = Direction.DOWN;
+        if (nextDirection == Direction.DOWN) {
+            nextDirection = (currDirection == Direction.LEFT) ? Direction.RIGHT : Direction.LEFT;
+            currDirection = Direction.DOWN;
+        } else {
+            currDirection = nextDirection;
+            nextDirection = Direction.DOWN;
+        }
     }
 
     /**
@@ -69,7 +75,7 @@ public final class Invader extends AbstractEntity {
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private Direction tempUseAllFields() {
-        return this.direction;
+        return this.currDirection;
     }
 
     /**
