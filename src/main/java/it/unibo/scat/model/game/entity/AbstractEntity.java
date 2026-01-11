@@ -126,6 +126,14 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
+     * @return ...
+     * 
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
      * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
