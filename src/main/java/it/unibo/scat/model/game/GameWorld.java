@@ -118,6 +118,14 @@ public class GameWorld {
      * @return ...
      *
      */
+    public List<Invader> getInvaders() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * @return ...
+     *
+     */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Player is part of the game state and intentionally exposed")
     public Player getPlayer() {
         return this.player;
