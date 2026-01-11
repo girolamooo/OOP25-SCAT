@@ -60,21 +60,21 @@ public abstract class AbstractEntity implements EntityView {
      *
      */
     private void setAlive() {
-
+        this.alive = true;
     }
 
     /**
      *
      */
-    public void decreaseHealth() {
-
+    private void decreaseHealth() {
+        this.health--;
     }
 
     /**
      *
      */
-    public void die() {
-
+    private void die() {
+        this.alive = false;
     }
 
     /**
