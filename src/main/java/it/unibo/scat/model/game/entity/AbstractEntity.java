@@ -1,6 +1,5 @@
 package it.unibo.scat.model.game.entity;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.Position;
@@ -9,7 +8,8 @@ import it.unibo.scat.common.Position;
  * Abstract class for Entities.
  */
 @SuppressWarnings("unused")
-@SuppressFBWarnings("URF_UNREAD_FIELD")
+// @SuppressWarnings("PMD.UnusedPrivateField")
+// @SuppressFBWarnings("URF_UNREAD_FIELD")
 public abstract class AbstractEntity implements EntityView {
     private boolean alive;
     private int health;
@@ -126,6 +126,14 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
+     * @return ...
+     * 
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
      * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -140,4 +148,12 @@ public abstract class AbstractEntity implements EntityView {
         startingPosition = new Position(3, 2);
     }
 
+    /**
+     * DEBUG FUNCTION.
+     */
+    @Override
+    public final String toString() {
+        return "Entity: " + this.entityType + " pos:(" + this.position.getX() + "," + this.position.getY()
+                + ") dims: " + this.width + "x" + this.height + " health: " + this.health + " alive: " + this.alive;
+    }
 }

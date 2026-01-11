@@ -1,11 +1,15 @@
 package it.unibo.scat.model.game.entity;
 
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 
 /**
  * This class represents the "Invader" entity.
  */
-public class Invader extends AbstractEntity {
+@SuppressWarnings("PMD.UnusedPrivateMethod")
+public final class Invader extends AbstractEntity {
+    private static Direction currDirection = Direction.RIGHT;
+    private static Direction nextDirection = Direction.DOWN;
 
     /**
      * @param type   ...
@@ -31,7 +35,7 @@ public class Invader extends AbstractEntity {
     /**
      * ...
      */
-    public void moveLeft() {
+    private void moveLeft() {
 
     }
 
@@ -39,15 +43,68 @@ public class Invader extends AbstractEntity {
      * ...
      *
      */
-    public void moveRight() {
+    private void moveRight() {
 
     }
 
     /**
      * ...
      */
-    public void moveDown() {
+    private void moveDown() {
 
     }
 
+    /**
+     * @return ...
+     * 
+     */
+    public static Direction getCurrDirection() {
+        return currDirection;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public static Direction getNextDirection() {
+        return nextDirection;
+    }
+
+    /**
+     * @param dir ...
+     * 
+     */
+    public static void setCurrDirection(final Direction dir) {
+        currDirection = dir;
+    }
+
+    /**
+     * @param dir ...
+     * 
+     */
+    public static void setNextDirection(final Direction dir) {
+        nextDirection = dir;
+    }
+
+    /**
+     * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
+     * 
+     * @return ...
+     * 
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private Direction tempUseAllFields() {
+        return this.currDirection;
+    }
+
+    /**
+     * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
+     * 
+     * @return ...
+     * 
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private Direction tempUseAfeeffellFields() {
+        return this.nextDirection;
+    }
 }

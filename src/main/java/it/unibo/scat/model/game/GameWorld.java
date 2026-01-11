@@ -1,14 +1,16 @@
 package it.unibo.scat.model.game;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.model.game.entity.AbstractEntity;
 import it.unibo.scat.model.game.entity.Bunker;
@@ -22,18 +24,25 @@ import it.unibo.scat.model.game.entity.Shot;
 // @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class GameWorld {
     private final List<AbstractEntity> entities;
-    private final List<AbstractEntity> invaders;
-    private final List<AbstractEntity> shots;
+    private final List<Invader> invaders;
+    private final List<Shot> shots;
     private Player player;
+    private final int worldWidth;
+    private final int worldHeight;
 
     /**
-     * ...
+     * @param wWidth  ...
+     * @param wHeight ...
+     * 
      */
-    public GameWorld() {
+    public GameWorld(final int wWidth, final int wHeight) {
         entities = new ArrayList<>();
         invaders = new ArrayList<>();
         shots = new ArrayList<>();
         player = null;
+
+        worldWidth = wWidth;
+        worldHeight = wHeight;
     }
 
     /**
@@ -49,7 +58,11 @@ public class GameWorld {
         final int idxHealth = 5;
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8))) {
+                new InputStreamReader(
+                        Objects.requireNonNull(
+                                getClass().getClassLoader().getResourceAsStream(filename)),
+                        StandardCharsets.UTF_8))) {
+
             String line;
             int x;
             int y;
@@ -87,7 +100,7 @@ public class GameWorld {
             }
 
         } catch (final IOException e) {
-            throw new IllegalStateException("Cannot load entities", e);
+            throw new IllegalStateException("Cannot load entities from file: " + filename + "Exception: ", e);
         }
 
     }
@@ -112,6 +125,14 @@ public class GameWorld {
      * @return ...
      *
      */
+    public List<Invader> getInvaders() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * @return ...
+     *
+     */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Player is part of the game state and intentionally exposed")
     public Player getPlayer() {
         return this.player;
@@ -125,11 +146,11 @@ public class GameWorld {
         entities.add(e);
 
         if (e instanceof Invader) {
-            invaders.add(e);
+            invaders.add((Invader) e);
         }
 
         if (e instanceof Shot) {
-            shots.add(e);
+            shots.add((Shot) e);
         }
     }
 
@@ -138,7 +159,114 @@ public class GameWorld {
      * 
      */
     public void removeEntity(final AbstractEntity e) {
+        entities.remove(e);
 
+        if (e instanceof Invader) {
+            invaders.remove(e);
+        }
+
+        if (e instanceof Shot) {
+            shots.remove(e);
+        }
+    }
+
+    /**
+     * ...
+     */
+    public static void changeInvadersDirection() {
+        if (Invader.getCurrDirection() == Direction.DOWN) {
+            Invader.setNextDirection((Invader.getCurrDirection() == Direction.LEFT) ? Direction.RIGHT : Direction.LEFT);
+            Invader.setCurrDirection(Direction.DOWN);
+        } else {
+            Invader.setCurrDirection(Invader.getNextDirection());
+            Invader.setNextDirection(Direction.DOWN);
+        }
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public boolean shouldInvadersChangeDirection() {
+        if (Invader.getCurrDirection() == Direction.DOWN) {
+            return true;
+        }
+        final boolean hitRight = didInvadersHitRight();
+        final boolean hitLeft = didInvadersHitLeft();
+
+        return hitLeft || hitRight;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean didInvadersHitRight() {
+        for (final Invader invader : invaders) {
+            if ((invader.getPosition().getX() + invader.getWidth()) >= worldWidth) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean didInvadersHitLeft() {
+        for (final Invader invader : invaders) {
+            if (invader.getPosition().getX() <= 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public int getWorldWidth() {
+        return worldWidth;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public int getWorldHeight() {
+        return worldHeight;
+    }
+
+    /**
+     * Debug method.
+     */
+    public void printEntities() {
+        final Logger logger = Logger.getLogger(GameWorld.class.getName());
+
+        int i = 0;
+        logger.info("PRINTING entities, size: " + entities.size());
+        for (final AbstractEntity e : entities) {
+            logger.info(i + ":" + e);
+            i++;
+        }
+
+        i = 0;
+        logger.info("\nPRINTING just invaders, size: " + invaders.size());
+        for (final AbstractEntity e : invaders) {
+            logger.info(i + ":" + e);
+            i++;
+        }
+
+        i = 0;
+        logger.info("\nPRINTING just shots, size: " + shots.size());
+        for (final AbstractEntity e : shots) {
+            logger.info(i + ":" + e);
+            i++;
+        }
     }
 
     /**
@@ -158,4 +286,5 @@ public class GameWorld {
     public void update() {
 
     }
+
 }
