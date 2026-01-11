@@ -143,7 +143,43 @@ public class GameWorld {
      * 
      */
     public void removeEntity(final AbstractEntity e) {
+        entities.remove(e);
 
+        if (e instanceof Invader) {
+            invaders.remove(e);
+        }
+
+        if (e instanceof Shot) {
+            shots.remove(e);
+        }
+    }
+
+    /**
+     * Debug method.
+     */
+    public void printEntities() {
+        final Logger logger = Logger.getLogger(GameWorld.class.getName());
+
+        int i = 0;
+        logger.info("PRINTING entities, size: " + entities.size());
+        for (final AbstractEntity e : entities) {
+            logger.info(i + ":" + e);
+            i++;
+        }
+
+        i = 0;
+        logger.info("\nPRINTING just invaders, size: " + invaders.size());
+        for (final AbstractEntity e : invaders) {
+            logger.info(i + ":" + e);
+            i++;
+        }
+
+        i = 0;
+        logger.info("\nPRINTING just shots, size: " + shots.size());
+        for (final AbstractEntity e : shots) {
+            logger.info(i + ":" + e);
+            i++;
+        }
     }
 
     /**
@@ -164,31 +200,4 @@ public class GameWorld {
 
     }
 
-    /**
-     * Debug method.
-     */
-    public void printEntities() {
-        final Logger logger = Logger.getLogger(GameWorld.class.getName());
-
-        int i = 0;
-        logger.info("PRINTING entities");
-        for (final AbstractEntity e : entities) {
-            logger.info(i + ":" + e);
-            i++;
-        }
-
-        i = 0;
-        logger.info("\nPRINTING just invaders");
-        for (final AbstractEntity e : invaders) {
-            logger.info(i + ":" + e);
-            i++;
-        }
-
-        i = 0;
-        logger.info("\nPRINTING just shots");
-        for (final AbstractEntity e : shots) {
-            logger.info(i + ":" + e);
-            i++;
-        }
-    }
 }
