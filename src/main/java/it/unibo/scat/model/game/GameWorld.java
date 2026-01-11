@@ -24,8 +24,8 @@ import it.unibo.scat.model.game.entity.Shot;
 // @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class GameWorld {
     private final List<AbstractEntity> entities;
-    private final List<AbstractEntity> invaders;
-    private final List<AbstractEntity> shots;
+    private final List<Invader> invaders;
+    private final List<Shot> shots;
     private Player player;
     private final int worldWidth;
     private final int worldHeight;
@@ -146,11 +146,11 @@ public class GameWorld {
         entities.add(e);
 
         if (e instanceof Invader) {
-            invaders.add(e);
+            invaders.add((Invader) e);
         }
 
         if (e instanceof Shot) {
-            shots.add(e);
+            shots.add((Shot) e);
         }
     }
 
@@ -181,6 +181,48 @@ public class GameWorld {
             Invader.setCurrDirection(Invader.getNextDirection());
             Invader.setNextDirection(Direction.DOWN);
         }
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public boolean shouldInvadersChangeDirection() {
+        if (Invader.getCurrDirection() == Direction.DOWN) {
+            return true;
+        }
+        final boolean hitRight = didInvadersHitRight();
+        final boolean hitLeft = didInvadersHitLeft();
+
+        return hitLeft || hitRight;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean didInvadersHitRight() {
+        for (final Invader invader : invaders) {
+            if ((invader.getPosition().getX() + invader.getWidth()) >= worldWidth) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean didInvadersHitLeft() {
+        for (final Invader invader : invaders) {
+            if (invader.getPosition().getX() <= 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
