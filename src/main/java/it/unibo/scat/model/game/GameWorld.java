@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.model.game.entity.AbstractEntity;
 import it.unibo.scat.model.game.entity.Bunker;
@@ -83,7 +84,7 @@ public class GameWorld {
                         newEntity = new Player(type, x, y, width, height, health);
                     }
                     default -> {
-                        newEntity = new Invader(type, x, y, width, height, health);
+                        newEntity = new Invader(type, x, y, width, height, health, Direction.RIGHT);
                     }
                 }
 

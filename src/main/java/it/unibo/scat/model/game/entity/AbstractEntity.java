@@ -8,6 +8,7 @@ import it.unibo.scat.common.Position;
  * Abstract class for Entities.
  */
 @SuppressWarnings("unused")
+// @SuppressWarnings("PMD.UnusedPrivateField")
 // @SuppressFBWarnings("URF_UNREAD_FIELD")
 public abstract class AbstractEntity implements EntityView {
     private boolean alive;
