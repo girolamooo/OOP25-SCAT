@@ -21,6 +21,7 @@ import it.unibo.scat.model.game.entity.Shot;
  */
 // @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class GameWorld {
+    private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
     private final List<AbstractEntity> entities;
     private final List<AbstractEntity> invaders;
     private final List<AbstractEntity> shots;
@@ -96,7 +97,7 @@ public class GameWorld {
      * @return ...
      *
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Entities are a part of the game state, intentionally exposed")
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Entities are a part of the game state, intentionally exposed")
     public List<AbstractEntity> getEntities() {
         return this.entities;
     }
@@ -105,19 +106,25 @@ public class GameWorld {
      * @return ...
      *
      */
-    public List<Shot> getShots() {
-        final List<Shot> shotList = new ArrayList<>();
-        for (final AbstractEntity entity : shots) {
-            shotList.add((Shot) entity);
-        }
-        return shotList;
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Shots are a part of the game state, intentionally exposed")
+    public List<AbstractEntity> getShots() {
+        return this.shots;
     }
 
     /**
      * @return ...
      *
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Player is part of the game state and intentionally exposed")
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Invaders are a part of the game state, intentionally exposed")
+    public List<AbstractEntity> getInvaders() {
+        return this.invaders;
+    }
+
+    /**
+     * @return ...
+     *
+     */
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Player is part of the game state and intentionally exposed")
     public Player getPlayer() {
         return this.player;
     }
