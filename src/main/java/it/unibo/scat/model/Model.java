@@ -35,6 +35,7 @@ public final class Model implements ModelInterface, ModelObservable {
     public Model() {
         this.gameWorld = new GameWorld(WORLD_WIDTH, WORLD_HEIGHT); // to remove when unecessary
         this.leaderboard = new Leaderboard(); // to remove when unecessary
+        this.gameLogic = new GameLogic(gameWorld);
     }
 
     /**
@@ -64,7 +65,7 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public void addPlayerShot() {
-
+        gameLogic.addPlayerShot();
     }
 
     @Override
