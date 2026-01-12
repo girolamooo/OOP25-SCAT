@@ -113,7 +113,7 @@ public abstract class AbstractEntity implements EntityView {
      */
     @Override
     public EntityType getType() {
-        return null;
+        return this.entityType;
     }
 
     /**
