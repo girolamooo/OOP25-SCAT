@@ -12,7 +12,7 @@ public final class Invader extends AbstractEntity {
     private static final long INVADER_SHOOTING_COOLDOWN = 500;
     private static Direction currDirection = Direction.RIGHT;
     private static Direction nextDirection = Direction.DOWN;
-    private static long lastInvadersShotTime;
+    private static long lastShotTime;
 
     /**
      * @param type   ...
@@ -93,23 +93,23 @@ public final class Invader extends AbstractEntity {
      * @return ...
      * 
      */
-    public long getLastInvaderShotTime() {
-        return lastInvadersShotTime;
+    public long getLastShotTime() {
+        return lastShotTime;
     }
 
     /**
-     * @param lastShotTime ...
+     * @param shotTime ...
      * 
      */
-    public static void setLastInvaderShotTime(final long lastShotTime) {
-        lastInvadersShotTime = lastShotTime;
+    public static void setLastShotTime(final long shotTime) {
+        lastShotTime = shotTime;
     }
 
     /**
      * @return ...
      * 
      */
-    public long getInavdersShootingCooldown() {
+    public long getShootingCooldown() {
         return INVADER_SHOOTING_COOLDOWN;
     }
 

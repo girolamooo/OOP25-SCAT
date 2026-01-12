@@ -8,7 +8,7 @@ import it.unibo.scat.common.EntityType;
 // @SuppressFBWarnings("SS_SHOULD_BE_STATIC")
 public class Player extends AbstractEntity {
     private static final long PLAYER_SHOOTING_COOLDOWN = 500;
-    private static long lastPlayerShotTime;
+    private static long lastShotTime;
 
     /**
      * @param type   ...
@@ -42,23 +42,23 @@ public class Player extends AbstractEntity {
      * @return ...
      * 
      */
-    public long getLastPlayerShotTime() {
-        return lastPlayerShotTime;
+    public long getLastShotTime() {
+        return lastShotTime;
     }
 
     /**
-     * @param lastShotTime ...
+     * @param shotTime ...
      * 
      */
-    public static void setLastPlayerShotTime(final long lastShotTime) {
-        lastPlayerShotTime = lastShotTime;
+    public static void setLastShotTime(final long shotTime) {
+        lastShotTime = shotTime;
     }
 
     /**
      * @return ...
      * 
      */
-    public long getPlayerShootingCooldown() {
+    public long getShootingCooldown() {
         return PLAYER_SHOOTING_COOLDOWN;
     }
 
