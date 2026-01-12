@@ -113,7 +113,7 @@ public abstract class AbstractEntity implements EntityView {
      */
     @Override
     public Position getPosition() {
-        return this.position;
+        return new Position(this.position.getX(), this.position.getY());
     }
 
     /**
