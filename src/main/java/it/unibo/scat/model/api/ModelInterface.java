@@ -31,8 +31,7 @@ public interface ModelInterface {
 
     /**
      * @param direction ...
-     * @return ...
-     *
+     * 
      */
     void movePlayer(Direction direction);
 
