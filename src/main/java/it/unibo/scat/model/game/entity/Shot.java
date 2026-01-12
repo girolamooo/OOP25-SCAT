@@ -30,6 +30,19 @@ public class Shot extends AbstractEntity {
      */
     public void move() {
 
+        switch (direction) {
+
+            case UP:
+                setPosition(getPosition().getX(), getPosition().getY() - 1);
+                break;
+
+            case DOWN:
+                setPosition(getPosition().getX(), getPosition().getY() + 1);
+                break;
+            default:
+                break;
+        }
+
     }
 
     /**
