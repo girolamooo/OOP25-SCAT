@@ -1,5 +1,7 @@
 package it.unibo.scat.model.api;
 
+import it.unibo.scat.common.Direction;
+
 /**
  * Interface for the Model class, seen from the Controller.
  */
@@ -32,7 +34,7 @@ public interface ModelInterface {
      * @return ...
      *
      */
-    void movePlayer(int direction);
+    void movePlayer(Direction direction);
 
     /**
      * ...

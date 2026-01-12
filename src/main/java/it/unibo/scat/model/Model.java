@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameRecord;
 import it.unibo.scat.common.GameState;
@@ -11,6 +12,8 @@ import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.api.ModelObservable;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
+import it.unibo.scat.model.game.entity.AbstractEntity;
+import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.leaderboard.Leaderboard;
 
 /**
@@ -80,8 +83,18 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     @Override
-    public int movePlayer(final int direction) {
-        return 0;
+    public void movePlayer(final Direction direction) {
+        switch (direction) {
+            case LEFT:
+                gameWorld.getPlayer().moveLeft();
+                break;
+            case RIGHT:
+                gameWorld.getPlayer().moveRight();
+                break;
+
+            default:
+                break;
+        }
     }
 
     @Override
