@@ -143,6 +143,16 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
+     * @return ...
+     * 
+     */
+    public int getHeight() {
+
+        return this.height;
+
+    }
+
+    /**
      * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
