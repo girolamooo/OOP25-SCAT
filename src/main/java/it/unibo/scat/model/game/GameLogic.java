@@ -113,6 +113,13 @@ public class GameLogic {
     }
 
     /**
+     * ...
+     */
+    public void updateLastInvadersShotTime() {
+        Invader.setLastShotTime(System.currentTimeMillis());
+    }
+
+    /**
      * @param e ...
      * 
      */
