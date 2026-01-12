@@ -16,7 +16,7 @@ public abstract class AbstractEntity implements EntityView {
     private int startingHealth;
     private int width;
     private int height;
-    private Position position;
+    protected Position position;
     private Position startingPosition;
     private EntityType entityType;
 
