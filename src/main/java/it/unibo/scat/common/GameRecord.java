@@ -28,4 +28,12 @@ public class GameRecord {
         this.level = level;
         this.date = date;
     }
+
+    /**
+     * @return ...
+     *
+     */
+    public String getName() {
+        return this.name;
+    }
 }
