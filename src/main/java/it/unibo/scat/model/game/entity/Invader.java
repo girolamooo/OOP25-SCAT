@@ -11,7 +11,7 @@ import it.unibo.scat.common.EntityType;
 public final class Invader extends AbstractEntity {
     private static Direction currDirection = Direction.RIGHT;
     private static Direction nextDirection = Direction.DOWN;
-    private long lastInvaderShotTime;
+    private long lastInvaderShotTime = 0;
 
     /**
      * @param type   ...
