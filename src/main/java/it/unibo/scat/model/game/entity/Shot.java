@@ -1,5 +1,7 @@
 package it.unibo.scat.model.game.entity;
 
+import java.security.KeyStore.Entry;
+
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 
@@ -29,6 +31,21 @@ public class Shot extends AbstractEntity {
      * ...
      */
     public void move() {
+
+        int tmp;
+        switch (this.direction) {
+            case UP:
+                tmp = this.getPosition().getY();
+                tmp -= 1;
+                this.getPosition().setY(tmp);
+                break;
+
+            case DOWN:
+                tmp = this.getPosition().getY();
+                tmp += 1;
+                this.getPosition().setY(tmp);
+                break;
+        }
 
     }
 
