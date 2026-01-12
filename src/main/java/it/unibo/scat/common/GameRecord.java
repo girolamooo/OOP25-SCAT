@@ -44,4 +44,12 @@ public class GameRecord {
     public int score() {
         return this.score;
     }
+
+    /**
+     * @return ...
+     *
+     */
+    public int level() {
+        return this.level;
+    }
 }
