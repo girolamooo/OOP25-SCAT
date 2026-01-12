@@ -159,7 +159,7 @@ public final class Invader extends AbstractEntity {
                 case INVADER_4:
                     return INVADER4_POINTS;
                 default:
-                    return NO_POINTS;
+                    break;
             }
         }
 
