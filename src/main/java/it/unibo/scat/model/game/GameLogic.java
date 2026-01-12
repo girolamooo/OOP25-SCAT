@@ -52,7 +52,7 @@ public class GameLogic {
     public void resetEntities() {
 
         deleteShots();
-        this.gameWorld.getEntities().forEach(x -> {
+        gameWorld.getEntities().forEach(x -> {
             x.reset();
         });
     }
@@ -70,13 +70,14 @@ public class GameLogic {
      */
     public void deleteShots() {
 
-        this.gameWorld.getEntities().forEach(x -> {
+        gameWorld.getEntities().forEach(x -> {
 
             if (x instanceof Shot) {
-                this.gameWorld.getEntities().remove(x);
+                gameWorld.getEntities().remove(x);
             }
 
         });
+        gameWorld.getShots().clear();
 
     }
 
