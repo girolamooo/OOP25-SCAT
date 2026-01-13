@@ -36,6 +36,7 @@ public class Control implements ControlInterface {
 
     @Override
     public void notifyPauseGame() {
+        modelInterface.pauseGame();
 
     }
 
