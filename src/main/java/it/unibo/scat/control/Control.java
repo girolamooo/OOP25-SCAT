@@ -62,7 +62,7 @@ public class Control implements ControlInterface {
 
     @Override
     public void notifyResetGame() {
-
+        modelInterface.resetGame();
     }
 
     /**
