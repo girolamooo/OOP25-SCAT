@@ -6,7 +6,6 @@ import it.unibo.scat.common.EntityType;
 /**
  * This class represents the "Invader" entity.
  */
-@SuppressWarnings("PMD.UnusedPrivateMethod")
 // @SuppressFBWarnings("SS_SHOULD_BE_STATIC")
 public final class Invader extends AbstractEntity {
     private static final int INVADER1_POINTS = 10;
@@ -17,6 +16,7 @@ public final class Invader extends AbstractEntity {
     private static Direction currDirection = Direction.RIGHT;
     private static Direction nextDirection = Direction.DOWN;
     private static long lastShotTime;
+    private static final int DISTANCE_OF_MOVEMENT = 1;
 
     /**
      * @param type   ...
@@ -37,13 +37,28 @@ public final class Invader extends AbstractEntity {
      */
     public void move() {
 
+        switch (currDirection) {
+            case RIGHT:
+                moveRight();
+                break;
+            case LEFT:
+                moveLeft();
+                break;
+            case DOWN:
+                moveDown();
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     /**
      * ...
      */
     private void moveLeft() {
-
+        setPosition(getPosition().getX() - DISTANCE_OF_MOVEMENT, getPosition().getY());
     }
 
     /**
@@ -51,14 +66,14 @@ public final class Invader extends AbstractEntity {
      *
      */
     private void moveRight() {
-
+        setPosition(getPosition().getX() + DISTANCE_OF_MOVEMENT, getPosition().getY());
     }
 
     /**
      * ...
      */
     private void moveDown() {
-
+        setPosition(getPosition().getX(), getPosition().getY() + DISTANCE_OF_MOVEMENT);
     }
 
     /**
