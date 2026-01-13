@@ -33,7 +33,7 @@ public final class Invader extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the invader based on the current direction.
      */
     public void move() {
 
@@ -55,14 +55,14 @@ public final class Invader extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the invader one unit to the left.
      */
     private void moveLeft() {
         setPosition(getPosition().getX() - DISTANCE_OF_MOVEMENT, getPosition().getY());
     }
 
     /**
-     * ...
+     * Moves the invader one unit to the right.
      *
      */
     private void moveRight() {
@@ -70,7 +70,7 @@ public final class Invader extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the invader down by one unit.
      */
     private void moveDown() {
         setPosition(getPosition().getX(), getPosition().getY() + DISTANCE_OF_MOVEMENT);
