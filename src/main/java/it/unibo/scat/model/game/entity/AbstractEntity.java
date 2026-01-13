@@ -64,7 +64,6 @@ public abstract class AbstractEntity implements EntityView {
      */
     public void setPosition(final int x, final int y) {
         this.position = new Position(x, y);
-
     }
 
     /**
@@ -93,29 +92,23 @@ public abstract class AbstractEntity implements EntityView {
      * Calls the internal reset methods for health and position.
      */
     public void reset() {
-
         resetHealth();
         resetStartingPosition();
-
     }
 
     /**
      * Resets the health to the starting value and marks the entity as alive.
      */
     private void resetHealth() {
-
         this.health = startingHealth;
         setAlive();
-
     }
 
     /**
      * Resets the position to the starting position.
      */
     private void resetStartingPosition() {
-
         this.position = startingPosition;
-
     }
 
     /**
