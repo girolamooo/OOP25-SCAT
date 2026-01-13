@@ -36,10 +36,11 @@ public class GameLogic {
 
     /**
      * @param cr ...
-     *
+     * @return ...
+     * 
      */
-    public void handleCollisionReport(final CollisionReport cr) {
-
+    public int handleCollisionReport(final CollisionReport cr) {
+        return 0;
     }
 
     /**
@@ -139,6 +140,13 @@ public class GameLogic {
      */
     public void updateLastInvadersShotTime() {
         Invader.setLastShotTime(System.currentTimeMillis());
+    }
+
+    /**
+     * ...
+     */
+    public void removeDeadShots() {
+
     }
 
     /**
