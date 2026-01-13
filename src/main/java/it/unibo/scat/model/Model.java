@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameRecord;
+import it.unibo.scat.common.GameResult;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.api.ModelObservable;
+import it.unibo.scat.model.game.CollisionReport;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
 import it.unibo.scat.model.leaderboard.Leaderboard;
@@ -23,7 +26,7 @@ public final class Model implements ModelInterface, ModelObservable {
     private static final int WORLD_HEIGHT = 35;
     private int score;
     private int level;
-    private String username;
+    private final String username;
     private GameState gameState;
     private Leaderboard leaderboard;
     private GameWorld gameWorld;
@@ -36,22 +39,14 @@ public final class Model implements ModelInterface, ModelObservable {
         this.gameWorld = new GameWorld(WORLD_WIDTH, WORLD_HEIGHT); // to remove when unecessary
         this.leaderboard = new Leaderboard(); // to remove when unecessary
         this.gameLogic = new GameLogic(gameWorld);
-    }
-
-    /**
-     * @param username ...
-     * 
-     */
-    public Model(final String username) {
-        this.gameWorld = new GameWorld(WORLD_WIDTH, WORLD_HEIGHT); // to remove when unecessary
-        this.leaderboard = new Leaderboard(); // to remove when unecessary
-        this.username = username;
+        this.username = "user";
     }
 
     /**
      * ...
      */
     public void increaseLevel() {
+        this.level++;
 
     }
 
@@ -70,7 +65,7 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public void endGame() {
-
+        gameState = GameState.GAMEOVER;
     }
 
     @Override
@@ -90,28 +85,60 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     @Override
-    public int movePlayer(final int direction) {
-        return 0;
+    public void movePlayer(final Direction direction) {
+        switch (direction) {
+            case LEFT:
+                gameWorld.getPlayer().moveLeft();
+                break;
+            case RIGHT:
+                gameWorld.getPlayer().moveRight();
+                break;
+
+            default:
+                break;
+        }
     }
 
     @Override
-    public void pause() {
-
+    public void pauseGame() {
+        gameState = GameState.PAUSE;
     }
 
     @Override
     public void resetGame() {
 
+        gameLogic.resetEntities();
+        score = 0;
+        level = 0;
     }
 
     @Override
-    public void resume() {
+    public void resumeGame() {
+
+        gameState = GameState.RUNNING;
 
     }
 
     @Override
     public void update() {
+        final CollisionReport collisionReport;
+        final int newPoints;
 
+        gameLogic.moveEntities();
+
+        collisionReport = gameLogic.checkCollisions();
+        newPoints = gameLogic.handleCollisionReport(collisionReport);
+
+        gameLogic.removeDeadShots();
+        updateScore(newPoints);
+
+        if (gameWorld.shouldInvadersChangeDirection()) {
+            gameWorld.changeInvadersDirection();
+        }
+
+        if (gameLogic.checkGameEnd() != GameResult.STILL_PLAYING) {
+            endGame();
+        }
     }
 
     @Override

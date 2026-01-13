@@ -6,13 +6,17 @@ import it.unibo.scat.common.EntityType;
 /**
  * This class represents the "Invader" entity.
  */
-@SuppressWarnings("PMD.UnusedPrivateMethod")
 // @SuppressFBWarnings("SS_SHOULD_BE_STATIC")
 public final class Invader extends AbstractEntity {
+    private static final int INVADER1_POINTS = 10;
+    private static final int INVADER2_POINTS = 20;
+    private static final int INVADER3_POINTS = 30;
+    private static final int INVADER4_POINTS = 50;
     private static final long INVADER_SHOOTING_COOLDOWN = 500;
     private static Direction currDirection = Direction.RIGHT;
     private static Direction nextDirection = Direction.DOWN;
     private static long lastShotTime;
+    private static final int DISTANCE_OF_MOVEMENT = 1;
 
     /**
      * @param type   ...
@@ -33,13 +37,28 @@ public final class Invader extends AbstractEntity {
      */
     public void move() {
 
+        switch (currDirection) {
+            case RIGHT:
+                moveRight();
+                break;
+            case LEFT:
+                moveLeft();
+                break;
+            case DOWN:
+                moveDown();
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     /**
      * ...
      */
     private void moveLeft() {
-
+        setPosition(getPosition().getX() - DISTANCE_OF_MOVEMENT, getPosition().getY());
     }
 
     /**
@@ -47,14 +66,14 @@ public final class Invader extends AbstractEntity {
      *
      */
     private void moveRight() {
-
+        setPosition(getPosition().getX() + DISTANCE_OF_MOVEMENT, getPosition().getY());
     }
 
     /**
      * ...
      */
     private void moveDown() {
-
+        setPosition(getPosition().getX(), getPosition().getY() + DISTANCE_OF_MOVEMENT);
     }
 
     /**
@@ -93,7 +112,7 @@ public final class Invader extends AbstractEntity {
      * @return ...
      * 
      */
-    public long getLastShotTime() {
+    public static long getLastShotTime() {
         return lastShotTime;
     }
 
@@ -109,7 +128,7 @@ public final class Invader extends AbstractEntity {
      * @return ...
      * 
      */
-    public long getShootingCooldown() {
+    public static long getShootingCooldown() {
         return INVADER_SHOOTING_COOLDOWN;
     }
 
@@ -135,4 +154,29 @@ public final class Invader extends AbstractEntity {
         return this.nextDirection;
     }
 
+    /**
+     * @return ...
+     * 
+     */
+    @Override
+    public int onHit() {
+        super.onHit();
+
+        if (!isAlive()) {
+            switch (this.getType()) {
+                case INVADER_1:
+                    return INVADER1_POINTS;
+                case INVADER_2:
+                    return INVADER2_POINTS;
+                case INVADER_3:
+                    return INVADER3_POINTS;
+                case INVADER_4:
+                    return INVADER4_POINTS;
+                default:
+                    break;
+            }
+        }
+
+        return NO_POINTS;
+    }
 }
