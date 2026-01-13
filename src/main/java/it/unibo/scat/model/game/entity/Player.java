@@ -26,14 +26,14 @@ public class Player extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the player one unit to the left.
      */
     public void moveLeft() {
         setPosition(getPosition().getX() - DISTANCE_OF_MOVEMENT, getPosition().getY());
     }
 
     /**
-     * ...
+     * Moves the player one unit to the right
      */
     public void moveRight() {
         setPosition(getPosition().getX() + DISTANCE_OF_MOVEMENT, getPosition().getY());
