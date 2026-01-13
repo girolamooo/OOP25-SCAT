@@ -55,7 +55,6 @@ public class GameLogic {
      */
     public void resetEntities() {
 
-        deleteShots();
         gameWorld.getEntities().forEach(x -> {
             x.reset();
         });
