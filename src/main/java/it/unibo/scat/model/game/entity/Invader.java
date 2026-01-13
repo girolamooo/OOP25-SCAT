@@ -99,9 +99,9 @@ public final class Invader extends AbstractEntity {
     public void reset() {
 
         super.reset();
-        currDirection = Direction.RIGHT;
-        nextDirection = Direction.DOWN;
-        lastShotTime = 0;
+        setCurrDirection(Direction.RIGHT);
+        setNextDirection(Direction.DOWN);
+        setLastShotTime(0);
     }
 
     /**
