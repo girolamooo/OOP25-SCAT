@@ -176,7 +176,7 @@ public class GameWorld {
     /**
      * ...
      */
-    public static void changeInvadersDirection() {
+    public void changeInvadersDirection() {
         if (Invader.getCurrDirection() == Direction.DOWN) {
             Invader.setNextDirection((Invader.getCurrDirection() == Direction.LEFT) ? Direction.RIGHT : Direction.LEFT);
             Invader.setCurrDirection(Direction.DOWN);
