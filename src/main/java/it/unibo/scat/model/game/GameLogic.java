@@ -125,7 +125,7 @@ public class GameLogic {
      */
     private boolean invadersReachedBottom(final List<Invader> invader) {
         for (final Invader x : invader) {
-            if (x.isAlive() && x.getPosition().getY() + x.getHeight() >= GameWorld.getInvaderThreshold()) {
+            if (x.isAlive() && x.getPosition().getY() + x.getHeight() >= GameWorld.getInvaderBottomLimit()) {
                 return true;
             }
         }
@@ -236,5 +236,35 @@ public class GameLogic {
         final long actualTime = System.currentTimeMillis();
 
         return actualTime - Player.getLastShotTime() >= Player.getShootingCooldown();
+    }
+
+    /**
+     * @param direction ..
+     * @return ...
+     * 
+     */
+    public boolean canPlayerMove(final Direction direction) {
+
+        return direction == Direction.RIGHT && canPlayerMoveRight()
+                || direction == Direction.LEFT && canPlayerMoveLeft();
+
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean canPlayerMoveRight() {
+        return gameWorld.getPlayer().getPosition().getX() + gameWorld.getPlayer().getWidth() <= GameWorld
+                .getBorderRight();
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean canPlayerMoveLeft() {
+        return gameWorld.getPlayer().getPosition().getX() + gameWorld.getPlayer().getWidth() >= GameWorld
+                .getBorderLeft();
     }
 }
