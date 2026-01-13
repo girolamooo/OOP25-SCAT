@@ -51,7 +51,8 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Reset all entities in the game.
+     * Calls reset() on every entity currently present in the game world.
      */
     public void resetEntities() {
 
@@ -62,15 +63,19 @@ public class GameLogic {
     }
 
     /**
-     * @return ...
-     *
+     * Checks if the game is over.
+     * Verifies whether the player is dead, all invaders are defeated,
+     * or an invader has reached the bottom of the world.
+     * 
+     * @return the game result
      */
     public GameResult checkGameEnd() {
         return null;
     }
 
     /**
-     * ...
+     * Removes all shots from the game.
+     * Deletes every Shot entity from both the entities list and the shots list.
      */
     public void deleteShots() {
 
