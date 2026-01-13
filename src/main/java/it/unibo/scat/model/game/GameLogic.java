@@ -1,5 +1,6 @@
 package it.unibo.scat.model.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +9,7 @@ import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.common.GameResult;
 import it.unibo.scat.model.game.entity.AbstractEntity;
+import it.unibo.scat.model.game.entity.Bunker;
 import it.unibo.scat.model.game.entity.Invader;
 import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.game.entity.Shot;
@@ -32,7 +34,57 @@ public class GameLogic {
      *
      */
     public CollisionReport checkCollisions() {
-        return null;
+        final List<AbstractEntity> entitiesThatGotShot = new ArrayList<>();
+        final List<Shot> shotList = gameWorld.getShots();
+
+        for (final Shot shot : shotList) {
+            for (final AbstractEntity gotShot : gameWorld.getEntities()) {
+
+                if (!shot.equals(gotShot)) {
+
+                    boolean ok = false;
+                    if (isCollision(shot, gotShot)) {
+
+                        if (shot.getDirection() == Direction.UP && gotShot instanceof Invader) {
+                            ok = true;
+                        }
+
+                        if (gotShot instanceof Bunker) {
+                            ok = true;
+                        }
+
+                        if (shot.getDirection() == Direction.DOWN && gotShot instanceof Player) {
+                            ok = true;
+                        }
+
+                        if (gotShot instanceof Shot && ((Shot) gotShot).getDirection() != shot.getDirection()) {
+                            ok = true;
+                        }
+
+                        if (ok) {
+                            entitiesThatGotShot.add(shot);
+                            entitiesThatGotShot.add(gotShot);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return new CollisionReport(entitiesThatGotShot);
+    }
+
+    private boolean isCollision(final AbstractEntity e1, final AbstractEntity e2) {
+        return checkX(e1, e2) && checkY(e1, e2);
+    }
+
+    private boolean checkX(final AbstractEntity e1, final AbstractEntity e2) {
+        return e1.getPosition().getX() < e2.getPosition().getX() + e2.getWidth()
+                && e2.getPosition().getX() < e1.getPosition().getX() + e1.getWidth();
+    }
+
+    private boolean checkY(final AbstractEntity e1, final AbstractEntity e2) {
+        return e1.getPosition().getY() < e2.getHeight() + e2.getPosition().getY()
+                && e2.getPosition().getY() < e1.getHeight() + e1.getPosition().getY();
     }
 
     /**
@@ -165,6 +217,7 @@ public class GameLogic {
 
     }
 
+    // DA CANCELLARE!!!
     /**
      * @param e ...
      * 
