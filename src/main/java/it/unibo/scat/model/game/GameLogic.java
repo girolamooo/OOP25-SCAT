@@ -16,6 +16,7 @@ import it.unibo.scat.model.game.entity.Shot;
  */
 @SuppressFBWarnings({ "EI2", "DMI_RANDOM_USED_ONLY_ONCE" })
 public class GameLogic {
+    private static final int LIMITE_SOGLIA = 10; // La soglia che deve passare un invader per finire la partita
     private final GameWorld gameWorld;
 
     /**
@@ -66,7 +67,30 @@ public class GameLogic {
      *
      */
     public GameResult checkGameEnd() {
-        return null;
+
+        for (final Invader x : gameWorld.getInvaders()) {
+            if (x.isAlive() && x.getPosition().getY() >= LIMITE_SOGLIA) {
+                return GameResult.INVADERS_WON;
+            }
+        }
+        boolean stillInvaders = true;
+        for (final Invader x : gameWorld.getInvaders()) {
+            if (!x.isAlive()) {
+                stillInvaders = false;
+            } else {
+                stillInvaders = true;
+                break;
+            }
+
+        }
+        if (!gameWorld.getPlayer().isAlive()) {
+            return GameResult.INVADERS_WON;
+        }
+        if (!stillInvaders) {
+            return GameResult.PLAYER_WON;
+        }
+        return GameResult.STILL_PLAYING;
+
     }
 
     /**
