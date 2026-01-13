@@ -57,9 +57,10 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * @param x ...
-     * @param y ...
+     * Sets the position of the entity.
      * 
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     public void setPosition(final int x, final int y) {
         this.position = new Position(x, y);
@@ -88,7 +89,8 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * ...
+     * Resets the entity to its initial state.
+     * Calls the internal reset methods for health and position.
      */
     public void reset() {
 
@@ -98,7 +100,7 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * ...
+     * Resets the health to the starting value and marks the entity as alive.
      */
     private void resetHealth() {
 
@@ -108,7 +110,7 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * ...
+     * Resets the position to the starting position.
      */
     private void resetStartingPosition() {
 
@@ -117,7 +119,7 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * @return ...
+     * @return the current position of the entity
      * 
      */
     @Override
@@ -152,7 +154,7 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * @return ...
+     * @return the height of the entity.
      * 
      */
     public int getHeight() {
