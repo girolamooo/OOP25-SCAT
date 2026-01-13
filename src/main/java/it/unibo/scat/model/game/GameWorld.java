@@ -24,6 +24,7 @@ import it.unibo.scat.model.game.entity.Shot;
 // @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class GameWorld {
     private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
+    private static final int INVADER_THRESHOLD = 26;
     private final List<AbstractEntity> entities;
     private final List<Invader> invaders;
     private final List<Shot> shots;
@@ -288,6 +289,14 @@ public class GameWorld {
      */
     public void update() {
 
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public static int getInvaderThreshold() {
+        return INVADER_THRESHOLD;
     }
 
 }

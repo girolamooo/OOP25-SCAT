@@ -9,6 +9,7 @@ import it.unibo.scat.common.EntityType;
 import it.unibo.scat.common.GameResult;
 import it.unibo.scat.model.game.entity.AbstractEntity;
 import it.unibo.scat.model.game.entity.Invader;
+import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.game.entity.Shot;
 
 /**
@@ -16,7 +17,6 @@ import it.unibo.scat.model.game.entity.Shot;
  */
 @SuppressFBWarnings({ "EI2", "DMI_RANDOM_USED_ONLY_ONCE" })
 public class GameLogic {
-    private static final int LIMITE_SOGLIA = 10; // La soglia che deve passare un invader per finire la partita
     private final GameWorld gameWorld;
 
     /**
@@ -68,29 +68,53 @@ public class GameLogic {
      */
     public GameResult checkGameEnd() {
 
-        for (final Invader x : gameWorld.getInvaders()) {
-            if (x.isAlive() && x.getPosition().getY() >= LIMITE_SOGLIA) {
-                return GameResult.INVADERS_WON;
-            }
-        }
-        boolean stillInvaders = true;
-        for (final Invader x : gameWorld.getInvaders()) {
-            if (!x.isAlive()) {
-                stillInvaders = false;
-            } else {
-                stillInvaders = true;
-                break;
-            }
-
-        }
-        if (!gameWorld.getPlayer().isAlive()) {
+        if (invadersReachedBottom(gameWorld.getInvaders()) || isPlayerDead(gameWorld.getPlayer())) {
             return GameResult.INVADERS_WON;
         }
-        if (!stillInvaders) {
+        if (!areInvadersAlive(gameWorld.getInvaders())) {
             return GameResult.PLAYER_WON;
         }
         return GameResult.STILL_PLAYING;
 
+    }
+
+    /**
+     * @param p ...
+     * @return ...
+     * 
+     */
+    private boolean isPlayerDead(final Player p) {
+        return !p.isAlive();
+    }
+
+    /**
+     * @param invaders ...
+     * @return ...
+     * 
+     */
+    private boolean areInvadersAlive(final List<Invader> invaders) {
+        for (final Invader x : invaders) {
+
+            if (x.isAlive()) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    /**
+     * @param invader ...
+     * @return ...
+     * 
+     */
+    private boolean invadersReachedBottom(final List<Invader> invader) {
+        for (final Invader x : invader) {
+            if (x.isAlive() && x.getPosition().getY() + x.getHeight() >= GameWorld.getInvaderThreshold()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
