@@ -72,7 +72,7 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public void endGame() {
-
+        gameState = GameState.GAMEOVER;
     }
 
     @Override
@@ -107,8 +107,8 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     @Override
-    public void pause() {
-
+    public void pauseGame() {
+        gameState = GameState.PAUSE;
     }
 
     @Override
@@ -120,7 +120,9 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     @Override
-    public void resume() {
+    public void resumeGame() {
+
+        gameState = GameState.RUNNING;
 
     }
 

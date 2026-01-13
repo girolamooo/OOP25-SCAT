@@ -43,10 +43,10 @@ public interface ModelInterface {
     /**
      * ...
      */
-    void pause();
+    void pauseGame();
 
     /**
      * ...
      */
-    void resume();
+    void resumeGame();
 }
