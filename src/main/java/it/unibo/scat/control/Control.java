@@ -1,6 +1,7 @@
 package it.unibo.scat.control;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.view.api.ViewInterface;
@@ -43,11 +44,12 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * ...
+     * @param direction ...
+     * 
      */
     @Override
-    public void notifyPlayerMovement() {
-
+    public void notifyPlayerMovement(final Direction direction) {
+        modelInterface.movePlayer(direction);
     }
 
     @Override
@@ -60,6 +62,9 @@ public class Control implements ControlInterface {
 
     }
 
+    /**
+     * ...
+     */
     @Override
     public void notifyResetGame() {
         modelInterface.resetGame();
@@ -71,7 +76,6 @@ public class Control implements ControlInterface {
     @Override
     public void notifyResumeGame() {
         modelInterface.resumeGame();
-
     }
 
     @Override
