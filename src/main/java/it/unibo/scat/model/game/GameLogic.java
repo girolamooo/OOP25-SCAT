@@ -82,7 +82,54 @@ public class GameLogic {
      *
      */
     public GameResult checkGameEnd() {
-        return null;
+
+        if (invadersReachedBottom(gameWorld.getInvaders()) || isPlayerDead(gameWorld.getPlayer())) {
+            return GameResult.INVADERS_WON;
+        }
+        if (!areInvadersAlive(gameWorld.getInvaders())) {
+            return GameResult.PLAYER_WON;
+        }
+        return GameResult.STILL_PLAYING;
+
+    }
+
+    /**
+     * @param p ...
+     * @return ...
+     * 
+     */
+    private boolean isPlayerDead(final Player p) {
+        return !p.isAlive();
+    }
+
+    /**
+     * @param invaders ...
+     * @return ...
+     * 
+     */
+    private boolean areInvadersAlive(final List<Invader> invaders) {
+        for (final Invader x : invaders) {
+
+            if (x.isAlive()) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    /**
+     * @param invader ...
+     * @return ...
+     * 
+     */
+    private boolean invadersReachedBottom(final List<Invader> invader) {
+        for (final Invader x : invader) {
+            if (x.isAlive() && x.getPosition().getY() + x.getHeight() >= GameWorld.getInvaderThreshold()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
