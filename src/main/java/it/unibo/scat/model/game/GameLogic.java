@@ -57,7 +57,6 @@ public class GameLogic {
      * ...
      */
     public void resetEntities() {
-
         deleteShots();
         gameWorld.getEntities().forEach(x -> {
             x.reset();
@@ -76,16 +75,12 @@ public class GameLogic {
      * ...
      */
     public void deleteShots() {
-
         gameWorld.getEntities().forEach(x -> {
-
             if (x instanceof Shot) {
                 gameWorld.getEntities().remove(x);
             }
-
         });
         gameWorld.getShots().clear();
-
     }
 
     /**
@@ -95,7 +90,6 @@ public class GameLogic {
         for (final Invader invader : gameWorld.getInvaders()) {
             invader.move();
         }
-
         for (final Shot shot : gameWorld.getShots()) {
             shot.move();
         }
