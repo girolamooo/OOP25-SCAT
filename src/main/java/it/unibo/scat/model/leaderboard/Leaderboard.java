@@ -45,7 +45,7 @@ public class Leaderboard {
     }
 
     /**
-     * @return all the records of the leaderboard
+     * @return all the records of the leaderboard.
      * 
      */
     public List<GameRecord> getAllRecords() {
