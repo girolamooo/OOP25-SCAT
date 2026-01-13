@@ -9,6 +9,7 @@ import it.unibo.scat.common.EntityType;
 import it.unibo.scat.common.GameResult;
 import it.unibo.scat.model.game.entity.AbstractEntity;
 import it.unibo.scat.model.game.entity.Invader;
+import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.game.entity.Shot;
 
 /**
@@ -47,6 +48,21 @@ public class GameLogic {
      * ...
      */
     public void addPlayerShot() {
+        if (!canPlayerShoot()) {
+            return;
+        }
+
+        final Player player = gameWorld.getPlayer();
+
+        final int shotWidth = 1;
+        final int shotHeight = 2;
+        final int shotHealth = 1;
+        final int shotX = player.getPosition().getX() + (player.getWidth() / 2);
+        final int shotY = player.getPosition().getY() - shotHeight;
+
+        final Shot newShot = new Shot(EntityType.SHOT, shotX, shotY, shotWidth, shotHeight, shotHealth, Direction.UP);
+
+        gameWorld.addEntity(newShot);
 
     }
 
@@ -55,6 +71,7 @@ public class GameLogic {
      */
     public void resetEntities() {
 
+        removeAllShots();
         gameWorld.getEntities().forEach(x -> {
             x.reset();
         });
@@ -65,13 +82,60 @@ public class GameLogic {
      *
      */
     public GameResult checkGameEnd() {
-        return null;
+
+        if (invadersReachedBottom(gameWorld.getInvaders()) || isPlayerDead(gameWorld.getPlayer())) {
+            return GameResult.INVADERS_WON;
+        }
+        if (!areInvadersAlive(gameWorld.getInvaders())) {
+            return GameResult.PLAYER_WON;
+        }
+        return GameResult.STILL_PLAYING;
+
+    }
+
+    /**
+     * @param p ...
+     * @return ...
+     * 
+     */
+    private boolean isPlayerDead(final Player p) {
+        return !p.isAlive();
+    }
+
+    /**
+     * @param invaders ...
+     * @return ...
+     * 
+     */
+    private boolean areInvadersAlive(final List<Invader> invaders) {
+        for (final Invader x : invaders) {
+
+            if (x.isAlive()) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    /**
+     * @param invader ...
+     * @return ...
+     * 
+     */
+    private boolean invadersReachedBottom(final List<Invader> invader) {
+        for (final Invader x : invader) {
+            if (x.isAlive() && x.getPosition().getY() + x.getHeight() >= GameWorld.getInvaderThreshold()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * ...
      */
-    public void deleteShots() {
+    public void removeAllShots() {
 
         gameWorld.getEntities().forEach(x -> {
 
@@ -162,5 +226,15 @@ public class GameLogic {
      */
     public void removeEntity(final AbstractEntity e) {
 
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public boolean canPlayerShoot() {
+        final long actualTime = System.currentTimeMillis();
+
+        return actualTime - Player.getLastShotTime() >= Player.getShootingCooldown();
     }
 }
