@@ -34,15 +34,16 @@ public class Leaderboard {
     }
 
     /**
-     * @param newRecord ...
+     * adds a new record to the leaderboard.
      * 
+     * @param newRecord the record to add
      */
     public void addNewGameRecord(final GameRecord newRecord) {
         games.add(newRecord);
     }
 
     /**
-     * @return ...
+     * @return all the records of the leaderboard.
      * 
      */
     public List<GameRecord> getAllRecords() {

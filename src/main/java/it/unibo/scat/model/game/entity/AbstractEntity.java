@@ -57,67 +57,62 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * @param x ...
-     * @param y ...
+     * Sets the position of the entity.
      * 
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     public void setPosition(final int x, final int y) {
-        this.position = new Position(x, y);
-
+        position = new Position(x, y);
     }
 
     /**
      *
      */
     private void setAlive() {
-        this.alive = true;
+        alive = true;
     }
 
     /**
      *
      */
     private void decreaseHealth() {
-        this.health--;
+        health--;
     }
 
     /**
      *
      */
     private void die() {
-        this.alive = false;
+        alive = false;
     }
 
     /**
-     * ...
+     * Resets the entity to its initial state.
+     * Calls the internal reset methods for health and position.
      */
     public void reset() {
-
         resetHealth();
         resetStartingPosition();
-
     }
 
     /**
-     * ...
+     * Resets the health to the starting value and marks the entity as alive.
      */
     private void resetHealth() {
-
-        this.health = startingHealth;
+        health = startingHealth;
         setAlive();
-
     }
 
     /**
-     * ...
+     * Resets the position to the starting position.
      */
     private void resetStartingPosition() {
-
-        this.position = startingPosition;
-
+        position = startingPosition;
     }
 
     /**
-     * @return ...
+     * @return the current position of the entity
      * 
      */
     @Override
@@ -131,7 +126,7 @@ public abstract class AbstractEntity implements EntityView {
      */
     @Override
     public EntityType getType() {
-        return this.entityType;
+        return entityType;
     }
 
     /**
@@ -140,7 +135,7 @@ public abstract class AbstractEntity implements EntityView {
      */
     @Override
     public boolean isAlive() {
-        return this.alive;
+        return alive;
     }
 
     /**
@@ -152,12 +147,12 @@ public abstract class AbstractEntity implements EntityView {
     }
 
     /**
-     * @return ...
+     * @return the height of the entity.
      * 
      */
     public int getHeight() {
 
-        return this.height;
+        return height;
 
     }
 
