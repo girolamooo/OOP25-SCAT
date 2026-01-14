@@ -19,9 +19,8 @@ import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.game.entity.Shot;
 
 /**
- * ...
+ * Class that represents the game world and holds the game's state.
  */
-// @SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class GameWorld {
     private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
     private static final int INVADER_THRESHOLD = 26;
@@ -33,9 +32,10 @@ public class GameWorld {
     private final int worldHeight;
 
     /**
-     * @param wWidth  ...
-     * @param wHeight ...
+     * GameWorld constructor.
      * 
+     * @param wWidth  the world's width.
+     * @param wHeight the world's height.
      */
     public GameWorld(final int wWidth, final int wHeight) {
         entities = new ArrayList<>();
@@ -108,26 +108,29 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
-     *
+     * Entities getter.
+     * 
+     * @return the list of entities.
      */
     @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Entities are a part of the game state, intentionally exposed")
     public List<AbstractEntity> getEntities() {
-        return this.entities;
+        return entities;
     }
 
     /**
-     * @return ...
-     *
+     * Shots getter.
+     * 
+     * @return the list of shots.
      */
     @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = "Shots are a part of the game state, intentionally exposed")
     public List<Shot> getShots() {
-        return this.shots;
+        return shots;
     }
 
     /**
-     * @return ...
-     *
+     * Invaders getter.
+     * 
+     * @return the list of invaders.
      */
     public List<Invader> getInvaders() {
         return new ArrayList<>();
