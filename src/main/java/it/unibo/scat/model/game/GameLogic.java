@@ -1,5 +1,6 @@
 package it.unibo.scat.model.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -32,7 +33,46 @@ public class GameLogic {
      *
      */
     public CollisionReport checkCollisions() {
-        return null;
+        final List<AbstractEntity> entitiesThatGotShot = new ArrayList<>();
+        final List<Shot> shotList = gameWorld.getShots();
+
+        for (final Shot shot : shotList) {
+            for (final AbstractEntity entity : gameWorld.getEntities()) {
+                final boolean isSameEntity = entity.equals(shot);
+                final boolean isCollision = areColliding(shot, entity);
+                final boolean isUselessCollision = isPlayerShot(shot) && entity instanceof Player
+                        || isInvaderShot(shot) && entity instanceof Invader;
+
+                if (isSameEntity || !isCollision || isUselessCollision) {
+                    continue;
+                }
+                entitiesThatGotShot.add(shot);
+                entitiesThatGotShot.add(entity);
+            }
+        }
+        return new CollisionReport(entitiesThatGotShot);
+    }
+
+    private boolean isPlayerShot(final Shot shot) {
+        return shot.getDirection() == Direction.UP;
+    }
+
+    private boolean isInvaderShot(final Shot shot) {
+        return shot.getDirection() == Direction.DOWN;
+    }
+
+    private boolean areColliding(final AbstractEntity shot, final AbstractEntity e) {
+        return checkX(shot, e) && checkY(shot, e);
+    }
+
+    private boolean checkX(final AbstractEntity shot, final AbstractEntity e) {
+        return shot.getPosition().getX() < e.getPosition().getX() + e.getWidth()
+                && e.getPosition().getX() < shot.getPosition().getX() + shot.getWidth();
+    }
+
+    private boolean checkY(final AbstractEntity shot, final AbstractEntity e) {
+        return shot.getPosition().getY() < e.getHeight() + e.getPosition().getY()
+                && e.getPosition().getY() < shot.getHeight() + shot.getPosition().getY();
     }
 
     /**
@@ -41,7 +81,12 @@ public class GameLogic {
      * 
      */
     public int handleCollisionReport(final CollisionReport cr) {
-        return 0;
+        int points = 0;
+
+        for (final AbstractEntity entity : cr.getEntities()) {
+            points += entity.onHit();
+        }
+        return points;
     }
 
     /**
@@ -208,24 +253,25 @@ public class GameLogic {
     /**
      * ...
      */
+    public void updateLastPlayerShotTime() {
+        Player.setLastShotTime(System.currentTimeMillis());
+    }
+
+    /**
+     * ...
+     */
     public void removeDeadShots() {
+        final List<Shot> toRemove = new ArrayList<>();
 
-    }
+        for (final Shot shot : gameWorld.getShots()) {
+            if (!shot.isAlive()) {
+                toRemove.add(shot);
+            }
+        }
 
-    /**
-     * @param e ...
-     * 
-     */
-    public void addEntity(final AbstractEntity e) {
-
-    }
-
-    /**
-     * @param e ...
-     * 
-     */
-    public void removeEntity(final AbstractEntity e) {
-
+        for (final Shot shot : toRemove) {
+            gameWorld.removeEntity(shot);
+        }
     }
 
     /**
@@ -236,5 +282,17 @@ public class GameLogic {
         final long actualTime = System.currentTimeMillis();
 
         return actualTime - Player.getLastShotTime() >= Player.getShootingCooldown();
+    }
+
+    /**
+     * @param shot ...
+     * @return ...
+     * 
+     */
+    public boolean didShotHitBorder(final Shot shot) {
+        final double y = shot.getPosition().getY();
+        final double height = shot.getHeight();
+
+        return y <= 0 || y + height >= gameWorld.getWorldHeight();
     }
 }
