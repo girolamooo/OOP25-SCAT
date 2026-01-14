@@ -163,8 +163,9 @@ public final class Invader extends AbstractEntity {
     }
 
     /**
-     * @return ...
+     * Checks if the invader is alive, then returns anumber of points.
      * 
+     * @return the number of points that each type of Invader dropes when it dies.
      */
     @Override
     public int onHit() {
