@@ -218,8 +218,12 @@ public class GameWorld {
      * 
      */
     public boolean shouldInvadersChangeDirection() {
-        if (Invader.getCurrDirection() == Direction.DOWN) {
-            return true;
+
+        for (final Invader x : invaders) {
+            if (x.getCurrDirection() == Direction.DOWN) {
+                return true;
+            }
+
         }
         final boolean hitRight = didInvadersHitRight();
         final boolean hitLeft = didInvadersHitLeft();
