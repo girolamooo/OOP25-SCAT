@@ -24,16 +24,19 @@ public class GameLogic {
     private final GameWorld gameWorld;
 
     /**
-     * @param gWorld ...
-     * 
+     * GameLogic constructor.
+     *
+     * @param gWorld the game world.
      */
     public GameLogic(final GameWorld gWorld) {
         this.gameWorld = gWorld;
     }
 
     /**
-     * @return ...
-     *
+     * Checks if every shot (player/invader shot) has hit some other entity.
+     * The entities that got hit get added to a list.
+     * 
+     * @return the list of entities and shots engaged in every hit.
      */
     public CollisionReport checkCollisions() {
         final List<AbstractEntity> entitiesThatGotShot = new ArrayList<>();
@@ -56,32 +59,69 @@ public class GameLogic {
         return new CollisionReport(entitiesThatGotShot);
     }
 
+    /**
+     * Checks if the shot is a player's shot.
+     * 
+     * @param shot shot that needs to be checked.
+     * @return true if the shot is a player's shot, false otherwise.
+     */
     private boolean isPlayerShot(final Shot shot) {
         return shot.getDirection() == Direction.UP;
     }
+
+    /**
+     * Checks if the shot is a invader's shot.
+     * 
+     * @param shot shot that needs to be checked.
+     * @return true if the shot is a invader's shot, false otherwise.
+     */
 
     private boolean isInvaderShot(final Shot shot) {
         return shot.getDirection() == Direction.DOWN;
     }
 
+    /**
+     * Checks if two entities (a shot and another one) are colliding.
+     * 
+     * @param shot the shot.
+     * @param e    the entity that needs to be checked if it was hit or not.
+     * @return true if there is a collision, false otherwise.
+     */
     private boolean areColliding(final AbstractEntity shot, final AbstractEntity e) {
         return checkX(shot, e) && checkY(shot, e);
     }
 
+    /**
+     * Checks if the horizontal bounds (X-axis) of the shot and the target entity
+     * overlap.
+     * 
+     * @param shot the shot.
+     * @param e    the entity.
+     * @return true if the two entities intersect horizontally.
+     */
     private boolean checkX(final AbstractEntity shot, final AbstractEntity e) {
         return shot.getPosition().getX() < e.getPosition().getX() + e.getWidth()
                 && e.getPosition().getX() < shot.getPosition().getX() + shot.getWidth();
     }
 
+    /**
+     * Checks if the vertical bounds (Y-axis) of the shot and the target entity
+     * overlap.
+     * 
+     * @param shot the shot.
+     * @param e    the entity.
+     * @return true if the two entities intersect vertically.
+     */
     private boolean checkY(final AbstractEntity shot, final AbstractEntity e) {
         return shot.getPosition().getY() < e.getHeight() + e.getPosition().getY()
                 && e.getPosition().getY() < shot.getHeight() + shot.getPosition().getY();
     }
 
     /**
-     * @param cr ...
-     * @return ...
+     * Calculates and returns the amount of points that were gained.
      * 
+     * @param cr the collision report.
+     * @return the points gained.
      */
     public int handleCollisionReport(final CollisionReport cr) {
         int points = 0;
@@ -93,7 +133,7 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Creates the new shot onject, given the player's coordinates.
      */
     public void addPlayerShot() {
         if (!canPlayerShoot()) {
@@ -249,14 +289,14 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Updates the last shot time of the player.
      */
     public void updateLastPlayerShotTime() {
         Player.setLastShotTime(System.currentTimeMillis());
     }
 
     /**
-     * ...
+     * Removes the dead shots.
      */
     public void removeDeadShots() {
         for (final Shot shot : gameWorld.getShots()) {
@@ -267,8 +307,9 @@ public class GameLogic {
     }
 
     /**
-     * @return ...
+     * Checks if enough time has passed since the last shot of the player.
      * 
+     * @return true if the player can shoot, false otherwise.
      */
     public boolean canPlayerShoot() {
         final long actualTime = System.currentTimeMillis();
@@ -307,29 +348,53 @@ public class GameLogic {
     }
 
     /**
-     * @param entity ...
-     * @return ...
+     * Checks if the entity is completely out of border.
      * 
+     * @param entity the entity.
+     * @return true if the entity is out of border, false otherwise.
      */
     public boolean isOutOfBorder(final AbstractEntity entity) {
         return isOverTopBorder(entity) || isOverBottomBorder(entity) || isOverLeftBorder(entity)
                 || isOverRightBorder(entity);
     }
 
+    /**
+     * Checks if the entity is completely above the top border.
+     * 
+     * @param entity the entity.
+     * @return true if the entity is fully out of bounds (top).
+     */
     private boolean isOverTopBorder(final AbstractEntity entity) {
         return entity.getPosition().getY() + entity.getHeight() < GameWorld.getBorderUp();
     }
 
+    /**
+     * Checks if the entity is completely below the bottom border.
+     * 
+     * @param entity the entity.
+     * @return true if the entity is fully out of bounds (bottom).
+     */
     private boolean isOverBottomBorder(final AbstractEntity entity) {
         return entity.getPosition().getY() > GameWorld.getBorderBottom();
     }
 
+    /**
+     * Checks if the entity is completely to the left of the game area.
+     * 
+     * @param entity the entity.
+     * @return true if the entity is fully out of bounds (left).
+     */
     private boolean isOverLeftBorder(final AbstractEntity entity) {
         return entity.getPosition().getX() + entity.getWidth() < GameWorld.getBorderLeft();
     }
 
+    /**
+     * Checks if the entity is completely to the right of the game area.
+     * 
+     * @param entity the entity.
+     * @return true if the entity is fully out of bounds (right).
+     */
     private boolean isOverRightBorder(final AbstractEntity entity) {
         return entity.getPosition().getX() > GameWorld.getBorderRight();
     }
-
 }
