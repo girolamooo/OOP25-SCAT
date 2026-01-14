@@ -7,11 +7,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameRecord;
-import it.unibo.scat.common.GameResult;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.api.ModelObservable;
-import it.unibo.scat.model.game.CollisionReport;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
 import it.unibo.scat.model.leaderboard.Leaderboard;
@@ -114,28 +112,6 @@ public final class Model implements ModelInterface, ModelObservable {
         gameState = GameState.RUNNING;
     }
 
-    @Override
-    public void update() {
-        final CollisionReport collisionReport;
-        final int newPoints;
-
-        gameLogic.moveEntities();
-
-        collisionReport = gameLogic.checkCollisions();
-        newPoints = gameLogic.handleCollisionReport(collisionReport);
-
-        gameLogic.removeDeadShots();
-        updateScore(newPoints);
-
-        if (gameWorld.shouldInvadersChangeDirection()) {
-            gameWorld.changeInvadersDirection();
-        }
-
-        if (gameLogic.checkGameEnd() != GameResult.STILL_PLAYING) {
-            endGame();
-        }
-    }
-
     /**
      * Entities getter.
      * 
@@ -174,14 +150,5 @@ public final class Model implements ModelInterface, ModelObservable {
     @Override
     public void setUsername(final String username) {
         this.username = username;
-    }
-
-    /**
-     * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
-     */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private void tempUseAllFields() {
-        gameWorld.update();
-        leaderboard.initLeaderboard("aa");
     }
 }
