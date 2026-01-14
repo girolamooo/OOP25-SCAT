@@ -56,8 +56,9 @@ public class GameWorld {
     }
 
     /**
-     * @param filename ...
+     * Initializes the game entities by loading them from a file.
      * 
+     * @param filename the file containing the entities configuration
      */
     public void initEntities(final String filename) {
         final int idxType = 0;
@@ -155,8 +156,9 @@ public class GameWorld {
     }
 
     /**
-     * @param e ...
+     * Adds an entity to the game world and the appropriate internal list.
      * 
+     * @param e the entity to add
      */
     @SuppressFBWarnings(EI_EXPOSE_REP)
 
@@ -179,8 +181,9 @@ public class GameWorld {
     }
 
     /**
-     * @param e ...
+     * Removes an entity from the game world and from the appropriate internal list.
      * 
+     * @param e the entity to remove
      */
     public void removeEntity(final AbstractEntity e) {
         entities.remove(e);
@@ -198,7 +201,7 @@ public class GameWorld {
     }
 
     /**
-     * ...
+     * Changes the movement direction of the invaders.
      */
     public void changeInvadersDirection() {
         if (Invader.getCurrDirection() == Direction.DOWN) {
@@ -211,8 +214,9 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * Checks if the invaders need to change direction.
      * 
+     * @return true if the direction should change, false otherwise
      */
     public boolean shouldInvadersChangeDirection() {
         if (Invader.getCurrDirection() == Direction.DOWN) {
@@ -225,8 +229,9 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * Checks if any invader has reached the right border.
      * 
+     * @return true if an invader hit the right border
      */
     private boolean didInvadersHitRight() {
         for (final Invader invader : invaders) {
@@ -239,8 +244,9 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * Checks if any invader has reached the left border.
      * 
+     * @return true if an invader hit the left border
      */
     private boolean didInvadersHitLeft() {
         for (final Invader invader : invaders) {
@@ -297,40 +303,45 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * Returns the vertical limit that invaders must not cross.
      * 
+     * @return the invader bottom limit
      */
     public static int getInvaderBottomLimit() {
         return INVADER_BOTTOM_LIMIT;
     }
 
     /**
-     * @return ...
+     * Returns the left border of the game world.
      * 
+     * @return the left border value
      */
     public static int getBorderLeft() {
         return BORDER_LEFT;
     }
 
     /**
-     * @return ...
+     * Returns the right border of the game world.
      * 
+     * @return the right border value
      */
     public static int getBorderRight() {
         return BORDER_RIGHT;
     }
 
     /**
-     * @return ...
+     * Returns the bottom border of the game world.
      * 
+     * @return the bottom border value
      */
     public static int getBorderBottom() {
         return BORDER_BOTTOM;
     }
 
     /**
-     * @return ...
+     * Returns the upper border of the game world.
      * 
+     * @return the upper border value
      */
     public static int getBorderUp() {
         return BORDER_UP;
@@ -355,7 +366,7 @@ public class GameWorld {
     }
 
     /**
-     * ...
+     * .Creates and adds a bonus invader at a random side of the game world.
      */
     public void spawnBonusInvader() {
         final int leftPos = -1;
