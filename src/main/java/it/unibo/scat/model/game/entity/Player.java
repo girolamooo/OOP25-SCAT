@@ -9,7 +9,6 @@ import it.unibo.scat.common.EntityType;
 public class Player extends AbstractEntity {
     private static final long PLAYER_SHOOTING_COOLDOWN = 500;
     private static long lastShotTime;
-    private static final int DISTANCE_OF_MOVEMENT = 1;
 
     /**
      * @param type   ...
@@ -29,21 +28,21 @@ public class Player extends AbstractEntity {
      * Moves the player one unit to the left.
      */
     public void moveLeft() {
-        setPosition(getPosition().getX() - DISTANCE_OF_MOVEMENT, getPosition().getY());
+        setPosition(getPosition().getX() - 1, getPosition().getY());
     }
 
     /**
      * Moves the player one unit to the right.
      */
     public void moveRight() {
-        setPosition(getPosition().getX() + DISTANCE_OF_MOVEMENT, getPosition().getY());
+        setPosition(getPosition().getX() + 1, getPosition().getY());
     }
 
     /**
      * @return ...
      * 
      */
-    public long getLastShotTime() {
+    public static long getLastShotTime() {
         return lastShotTime;
     }
 
@@ -59,7 +58,7 @@ public class Player extends AbstractEntity {
      * @return ...
      * 
      */
-    public long getShootingCooldown() {
+    public static long getShootingCooldown() {
         return PLAYER_SHOOTING_COOLDOWN;
     }
 

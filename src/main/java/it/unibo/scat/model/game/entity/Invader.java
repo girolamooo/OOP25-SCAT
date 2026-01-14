@@ -16,7 +16,6 @@ public final class Invader extends AbstractEntity {
     private static Direction currDirection = Direction.RIGHT;
     private static Direction nextDirection = Direction.DOWN;
     private static long lastShotTime;
-    private static final int DISTANCE_OF_MOVEMENT = 1;
 
     /**
      * @param type   ...
@@ -55,7 +54,7 @@ public final class Invader extends AbstractEntity {
      * Moves the invader one unit to the left.
      */
     private void moveLeft() {
-        setPosition(getPosition().getX() - DISTANCE_OF_MOVEMENT, getPosition().getY());
+        setPosition(getPosition().getX() - 1, getPosition().getY());
     }
 
     /**
@@ -63,14 +62,14 @@ public final class Invader extends AbstractEntity {
      *
      */
     private void moveRight() {
-        setPosition(getPosition().getX() + DISTANCE_OF_MOVEMENT, getPosition().getY());
+        setPosition(getPosition().getX() + 1, getPosition().getY());
     }
 
     /**
      * Moves the invader down by one unit.
      */
     private void moveDown() {
-        setPosition(getPosition().getX(), getPosition().getY() + DISTANCE_OF_MOVEMENT);
+        setPosition(getPosition().getX(), getPosition().getY() + 1);
     }
 
     /**
@@ -87,6 +86,18 @@ public final class Invader extends AbstractEntity {
      */
     public static Direction getNextDirection() {
         return nextDirection;
+    }
+
+    /**
+     * ...
+     */
+    @Override
+    public void reset() {
+
+        super.reset();
+        setCurrDirection(Direction.RIGHT);
+        setNextDirection(Direction.DOWN);
+        setLastShotTime(0);
     }
 
     /**

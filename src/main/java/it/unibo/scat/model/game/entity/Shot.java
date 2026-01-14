@@ -43,6 +43,14 @@ public class Shot extends AbstractEntity {
     }
 
     /**
+     * @return ...
+     * 
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+
+    /**
      * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
      * 
      * @return ...

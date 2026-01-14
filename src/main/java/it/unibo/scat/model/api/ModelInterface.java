@@ -54,4 +54,10 @@ public interface ModelInterface {
      * Sets the game state to RUNNING.
      */
     void resumeGame();
+
+    /**
+     * @param username ...
+     * 
+     */
+    void setUsername(String username);
 }
