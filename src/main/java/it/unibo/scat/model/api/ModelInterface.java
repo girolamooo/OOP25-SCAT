@@ -20,11 +20,6 @@ public interface ModelInterface {
     void initEverything(String entitiesFile, String leaderboardFile);
 
     /**
-     * ...
-     */
-    void update();
-
-    /**
      * Reset all entities throught the gameLogic and restores score and difficulty.
      */
     void resetGame();
