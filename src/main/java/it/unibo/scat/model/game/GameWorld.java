@@ -373,8 +373,11 @@ public class GameWorld {
         final int y = 2;
 
         final Invader invader = new Invader(EntityType.INVADER_4, x, y, 3, 2, 1);
-        Invader.setCurrDirection(direction);
-        Invader.setNextDirection(direction);
+
+        for (final Invader i : invaders) {
+            i.setCurrDirection(direction);
+            i.setNextDirection(direction);
+        }
         addEntity(invader);
     }
 }
