@@ -306,4 +306,30 @@ public class GameLogic {
                 .getBorderLeft();
     }
 
+    /**
+     * @param entity ...
+     * @return ...
+     * 
+     */
+    public boolean isOutOfBorder(final AbstractEntity entity) {
+        return isOverTopBorder(entity) || isOverBottomBorder(entity) || isOverLeftBorder(entity)
+                || isOverRightBorder(entity);
+    }
+
+    private boolean isOverTopBorder(final AbstractEntity entity) {
+        return entity.getPosition().getY() + entity.getHeight() < GameWorld.getBorderUp();
+    }
+
+    private boolean isOverBottomBorder(final AbstractEntity entity) {
+        return entity.getPosition().getY() > GameWorld.getBorderBottom();
+    }
+
+    private boolean isOverLeftBorder(final AbstractEntity entity) {
+        return entity.getPosition().getX() + entity.getWidth() < GameWorld.getBorderLeft();
+    }
+
+    private boolean isOverRightBorder(final AbstractEntity entity) {
+        return entity.getPosition().getX() > GameWorld.getBorderRight();
+    }
+
 }
