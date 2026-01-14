@@ -32,10 +32,9 @@ public final class Invader extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the invader based on the current direction.
      */
     public void move() {
-
         switch (currDirection) {
             case RIGHT:
                 moveRight();
@@ -46,22 +45,20 @@ public final class Invader extends AbstractEntity {
             case DOWN:
                 moveDown();
                 break;
-
             default:
                 break;
         }
-
     }
 
     /**
-     * ...
+     * Moves the invader one unit to the left.
      */
     private void moveLeft() {
         setPosition(getPosition().getX() - 1, getPosition().getY());
     }
 
     /**
-     * ...
+     * Moves the invader one unit to the right.
      *
      */
     private void moveRight() {
@@ -69,7 +66,7 @@ public final class Invader extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the invader down by one unit.
      */
     private void moveDown() {
         setPosition(getPosition().getX(), getPosition().getY() + 1);
@@ -151,7 +148,7 @@ public final class Invader extends AbstractEntity {
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private Direction tempUseAllFields() {
-        return this.currDirection;
+        return currDirection;
     }
 
     /**
@@ -162,7 +159,7 @@ public final class Invader extends AbstractEntity {
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private Direction tempUseAfeeffellFields() {
-        return this.nextDirection;
+        return nextDirection;
     }
 
     /**

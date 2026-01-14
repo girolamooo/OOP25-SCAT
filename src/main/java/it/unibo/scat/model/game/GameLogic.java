@@ -14,7 +14,10 @@ import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.game.entity.Shot;
 
 /**
- * ...
+ * Handles the game rules and updates.
+ * Move entities, checks collisions, manage shots, and determinate when the,
+ * game ends.
+ * 
  */
 @SuppressFBWarnings({ "EI2", "DMI_RANDOM_USED_ONLY_ONCE" })
 public class GameLogic {
@@ -181,16 +184,12 @@ public class GameLogic {
      * ...
      */
     public void removeAllShots() {
-
         gameWorld.getEntities().forEach(x -> {
-
             if (x instanceof Shot) {
                 gameWorld.getEntities().remove(x);
             }
-
         });
         gameWorld.getShots().clear();
-
     }
 
     /**
@@ -200,7 +199,6 @@ public class GameLogic {
         for (final Invader invader : gameWorld.getInvaders()) {
             invader.move();
         }
-
         for (final Shot shot : gameWorld.getShots()) {
             shot.move();
         }

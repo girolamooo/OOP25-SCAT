@@ -42,11 +42,10 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     /**
-     * ...
+     * increses the level.
      */
     public void increaseLevel() {
         this.level++;
-
     }
 
     /**
@@ -105,7 +104,6 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public void resetGame() {
-
         gameLogic.resetEntities();
         score = 0;
         level = 0;
@@ -113,9 +111,7 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public void resumeGame() {
-
         gameState = GameState.RUNNING;
-
     }
 
     @Override

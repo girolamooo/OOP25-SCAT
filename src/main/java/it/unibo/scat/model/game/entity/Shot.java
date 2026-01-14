@@ -26,23 +26,20 @@ public class Shot extends AbstractEntity {
     }
 
     /**
-     * ...
+     * Moves the shot in the direction it was fired.
+     * The position is updated by one unit vertically, depending on the direction.
      */
     public void move() {
-
         switch (direction) {
-
             case UP:
                 setPosition(getPosition().getX(), getPosition().getY() - 1);
                 break;
-
             case DOWN:
                 setPosition(getPosition().getX(), getPosition().getY() + 1);
                 break;
             default:
                 break;
         }
-
     }
 
     /**

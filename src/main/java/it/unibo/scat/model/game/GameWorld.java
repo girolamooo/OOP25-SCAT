@@ -134,7 +134,7 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * @return the player entity
      *
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Player is part of the game state and intentionally exposed")
@@ -164,7 +164,6 @@ public class GameWorld {
      */
     public void removeEntity(final AbstractEntity e) {
         entities.remove(e);
-
         if (e instanceof Invader) {
             invaders.remove(e);
         }
@@ -230,7 +229,7 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * @return the width of the game world
      * 
      */
     public int getWorldWidth() {
@@ -238,7 +237,7 @@ public class GameWorld {
     }
 
     /**
-     * @return ...
+     * @return the height of the game world
      * 
      */
     public int getWorldHeight() {
