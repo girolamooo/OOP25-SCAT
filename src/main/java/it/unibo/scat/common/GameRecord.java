@@ -5,8 +5,6 @@ import java.time.LocalDate;
 /**
  * This class represents a single record of the Leaderboard.
  */
-// @SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
-// @SuppressFBWarnings("URF_UNREAD_FIELD")
 public class GameRecord {
     private final String name;
     private final int score;
@@ -14,11 +12,12 @@ public class GameRecord {
     private final LocalDate date;
 
     /**
-     * @param name  ...
-     * @param score ...
-     * @param level ...
-     * @param date  ...
+     * GameRecord constructor.
      * 
+     * @param name  the name.
+     * @param score the score of the game.
+     * @param level the level.
+     * @param date  the date of the game.
      */
     public GameRecord(final String name, final int score, final int level, final LocalDate date) {
         this.name = name;
@@ -28,34 +27,38 @@ public class GameRecord {
     }
 
     /**
-     * @return ...
-     *
+     * Name getter.
+     * 
+     * @return the name.
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
-     * @return ...
-     *
+     * Score getter.
+     * 
+     * @return the score.
      */
     public int score() {
-        return this.score;
+        return score;
     }
 
     /**
-     * @return ...
-     *
+     * Level getter.
+     * 
+     * @return level.
      */
-    public int level() {
-        return this.level;
+    public int getLevel() {
+        return level;
     }
 
     /**
-     * @return ...
-     *
+     * Date getter.
+     * 
+     * @return the date.
      */
-    public LocalDate date() {
-        return this.date;
+    public LocalDate getDate() {
+        return date;
     }
 }
