@@ -8,7 +8,7 @@ import it.unibo.scat.common.Direction;
 public interface ModelInterface {
 
     /**
-     * ...
+     * Adds player's shot.
      */
     void addPlayerShot();
 
@@ -51,8 +51,9 @@ public interface ModelInterface {
     void resumeGame();
 
     /**
-     * @param username ...
+     * Sets player's username.
      * 
+     * @param username the username that the player chose.
      */
     void setUsername(String username);
 }
