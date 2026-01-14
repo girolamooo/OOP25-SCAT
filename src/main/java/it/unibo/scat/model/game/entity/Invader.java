@@ -13,9 +13,9 @@ public final class Invader extends AbstractEntity {
     private static final int INVADER3_POINTS = 30;
     private static final int INVADER4_POINTS = 50;
     private static final long INVADER_SHOOTING_COOLDOWN = 500;
+    private static long lastShotTime;
     private Direction currDirection = Direction.RIGHT;
     private Direction nextDirection = Direction.DOWN;
-    private static long lastShotTime;
 
     /**
      * @param type   ...
