@@ -1,5 +1,6 @@
 package it.unibo.scat.model.game.entity;
 
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 
 /**
@@ -27,21 +28,35 @@ public class Player extends AbstractEntity {
     }
 
     /**
+     * @param direction the direction of the movement.
+     * 
+     */
+    public void move(final Direction direction) {
+        if (direction == Direction.LEFT) {
+            moveLeft();
+        } else {
+            moveRight();
+        }
+    }
+
+    /**
      * Moves the player one unit to the left.
      */
-    public void moveLeft() {
+    private void moveLeft() {
         setPosition(getPosition().getX() - 1, getPosition().getY());
     }
 
     /**
      * Moves the player one unit to the right.
      */
-    public void moveRight() {
+    private void moveRight() {
         setPosition(getPosition().getX() + 1, getPosition().getY());
     }
 
     /**
-     * @return ...
+     * Getter.
+     * 
+     * @return the last shot time
      * 
      */
     public static long getLastShotTime() {
@@ -49,7 +64,9 @@ public class Player extends AbstractEntity {
     }
 
     /**
-     * @param shotTime ...
+     * Setter.
+     * 
+     * @param shotTime the shotTime
      * 
      */
     public static void setLastShotTime(final long shotTime) {
@@ -57,7 +74,9 @@ public class Player extends AbstractEntity {
     }
 
     /**
-     * @return ...
+     * Static getter.
+     * 
+     * @return the player shooting cooldown
      * 
      */
     public static long getShootingCooldown() {

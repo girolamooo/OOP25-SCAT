@@ -96,16 +96,8 @@ public final class Model implements ModelInterface, ModelObservable {
      */
     @Override
     public void movePlayer(final Direction direction) {
-        switch (direction) {
-            case LEFT:
-                gameWorld.getPlayer().moveLeft();
-                break;
-            case RIGHT:
-                gameWorld.getPlayer().moveRight();
-                break;
-
-            default:
-                break;
+        if (gameLogic.canPlayerMove(direction)) {
+            gameWorld.getPlayer().move(direction);
         }
     }
 
