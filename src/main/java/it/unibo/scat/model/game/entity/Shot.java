@@ -45,7 +45,9 @@ public class Shot extends AbstractEntity {
     }
 
     /**
-     * @return ...
+     * Getter.
+     * 
+     * @return the direction of the shot.
      * 
      */
     public Direction getDirection() {

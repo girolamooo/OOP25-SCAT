@@ -317,7 +317,7 @@ public class GameLogic {
      */
     public void removeDeadShots() {
         for (final Shot shot : gameWorld.getShots()) {
-            if (!shot.isAlive()) {
+            if (!shot.isAlive() || isOutOfBorder(shot)) {
                 gameWorld.removeEntity(shot);
             }
         }
