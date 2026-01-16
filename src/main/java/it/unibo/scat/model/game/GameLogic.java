@@ -181,7 +181,7 @@ public class GameLogic {
         if (!areInvadersAlive(gameWorld.getInvaders())) {
             return GameResult.PLAYER_WON;
         }
-        return GameResult.STILL_PLAYING;
+        return GameResult.PLAYING;
 
     }
 

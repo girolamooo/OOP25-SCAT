@@ -51,15 +51,4 @@ public class Shot extends AbstractEntity {
     public Direction getDirection() {
         return direction;
     }
-
-    /**
-     * TEMPORARY METHOD TO PASS THE CHECKSTYLE.
-     * 
-     * @return ...
-     * 
-     */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private Direction tempUseAllFields() {
-        return this.direction;
-    }
 }
