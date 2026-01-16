@@ -167,9 +167,10 @@ public final class Model implements ModelInterface, ModelObservable {
             gameWorld.changeInvadersDirection();
         }
 
-        if (gameLogic.checkGameEnd() != GameResult.STILL_PLAYING) {
+        if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
             endGame();
         }
+
     }
 
     /**
