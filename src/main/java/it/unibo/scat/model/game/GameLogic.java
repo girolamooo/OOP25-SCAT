@@ -324,6 +324,29 @@ public class GameLogic {
     }
 
     /**
+     * Handles the bonus invader lifecycle.
+     * If the bonus invader is alive, checks whether it is out of bounds and removes
+     * it if necessary.
+     * If no bonus invader is present, spawns a new one with a 5%
+     * probability.
+     */
+    public void handleBonusInvader() {
+        final boolean isAlive = gameWorld.isBonusInvaderAlive();
+
+        if (isAlive) {
+            if (isOutOfBorder(gameWorld.getBonusInvader())) {
+                gameWorld.removeEntity(gameWorld.getBonusInvader());
+            }
+            return;
+        }
+
+        final boolean respawn = new Random().nextInt(20) == 0;
+        if (respawn) {
+            gameWorld.spawnBonusInvader();
+        }
+    }
+
+    /**
      * Checks if enough time has passed since the last shot of the player.
      * 
      * @return true if the player can shoot, false otherwise.
