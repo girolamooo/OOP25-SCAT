@@ -11,12 +11,14 @@ public class Player extends AbstractEntity {
     private static long lastShotTime;
 
     /**
-     * @param type   ...
-     * @param x      ...
-     * @param y      ...
-     * @param width  ...
-     * @param height ...
-     * @param health ...
+     * Creates a new Player entity.
+     * 
+     * @param type   the type of the player.
+     * @param x      the initial x coordinate.
+     * @param y      the initial y coordinate.
+     * @param width  the witdh of the player.
+     * @param height the height of the player.
+     * @param health the initial health of the player.
      * 
      */
     public Player(final EntityType type, final int x, final int y, final int width, final int height,
