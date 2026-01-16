@@ -201,12 +201,15 @@ public class GameWorld {
      * ...
      */
     public void changeInvadersDirection() {
-        if (Invader.getCurrDirection() == Direction.DOWN) {
-            Invader.setNextDirection((Invader.getCurrDirection() == Direction.LEFT) ? Direction.RIGHT : Direction.LEFT);
-            Invader.setCurrDirection(Direction.DOWN);
-        } else {
-            Invader.setCurrDirection(Invader.getNextDirection());
-            Invader.setNextDirection(Direction.DOWN);
+
+        for (final Invader x : invaders) {
+            if (x.getCurrDirection() == Direction.DOWN) {
+                x.setNextDirection((x.getCurrDirection() == Direction.LEFT) ? Direction.RIGHT : Direction.LEFT);
+                x.setCurrDirection(Direction.DOWN);
+            } else {
+                x.setCurrDirection(x.getNextDirection());
+                x.setNextDirection(Direction.DOWN);
+            }
         }
     }
 
@@ -215,8 +218,12 @@ public class GameWorld {
      * 
      */
     public boolean shouldInvadersChangeDirection() {
-        if (Invader.getCurrDirection() == Direction.DOWN) {
-            return true;
+
+        for (final Invader x : invaders) {
+            if (x.getCurrDirection() == Direction.DOWN) {
+                return true;
+            }
+
         }
         final boolean hitRight = didInvadersHitRight();
         final boolean hitLeft = didInvadersHitLeft();
@@ -366,8 +373,11 @@ public class GameWorld {
         final int y = 2;
 
         final Invader invader = new Invader(EntityType.INVADER_4, x, y, 3, 2, 1);
-        Invader.setCurrDirection(direction);
-        Invader.setNextDirection(direction);
+
+        for (final Invader i : invaders) {
+            i.setCurrDirection(direction);
+            i.setNextDirection(direction);
+        }
         addEntity(invader);
     }
 }
