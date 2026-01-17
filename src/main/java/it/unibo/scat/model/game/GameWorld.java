@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+//import javax.swing.text.html.parser.Entity;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
@@ -201,16 +203,17 @@ public class GameWorld {
 
     /**
      * Changes the movement direction of the invaders.
+     * 
      */
     public void changeInvadersDirection() {
 
         for (final Invader x : invaders) {
             if (x.getCurrDirection() == Direction.DOWN) {
-                x.setNextDirection((x.getCurrDirection() == Direction.LEFT) ? Direction.RIGHT : Direction.LEFT);
-                x.setCurrDirection(Direction.DOWN);
-            } else {
                 x.setCurrDirection(x.getNextDirection());
                 x.setNextDirection(Direction.DOWN);
+            } else {
+                x.setNextDirection(x.getCurrDirection() == Direction.LEFT ? Direction.RIGHT : Direction.LEFT);
+                x.setCurrDirection(Direction.DOWN);
             }
         }
     }
