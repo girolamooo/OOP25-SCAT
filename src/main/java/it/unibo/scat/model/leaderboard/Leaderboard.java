@@ -8,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -18,6 +21,7 @@ import it.unibo.scat.common.GameRecord;
 // import it.unibo.scat.model.game.entity.Bunker;
 // import it.unibo.scat.model.game.entity.Invader;
 // import it.unibo.scat.model.game.entity.Player;
+import it.unibo.scat.model.game.GameWorld;
 
 /**
  * This class handles the leaderboard logic.
@@ -103,9 +107,41 @@ public class Leaderboard {
     /**
      * ...
      */
+    public void sortGames() {
+
+        games.sort(new Comparator<GameRecord>() {
+
+            @Override
+            public int compare(GameRecord o1, GameRecord o2) {
+
+                int r = Integer.compare(o1.getScore(), o2.getScore());
+                if (r != 0)
+                    return r;
+                r = Integer.compare(o1.getLevel(), o2.getLevel());
+                if (r != 0)
+                    return r;
+                r = o1.getDate().compareTo(o2.getDate());
+                if (r != 0)
+                    return r;
+                r = o1.getName().compareTo(o2.getName());
+                if (r != 0)
+                    return r;
+
+                return 0;
+            }
+
+        });
+
+    }
+
+    /**
+     * ...
+     */
     private void printLeaderboard() {
+        final Logger logger = Logger.getLogger(GameWorld.class.getName());
         for (final var x : games) {
-            System.out.println(x.getName() + x.getScore() + x.getLevel() + x.getDate());
+
+            logger.info(x.getName() + x.getScore() + x.getLevel() + x.getDate());
         }
     }
 
