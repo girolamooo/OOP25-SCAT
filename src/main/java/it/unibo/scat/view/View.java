@@ -1,10 +1,13 @@
 package it.unibo.scat.view;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.EntityView;
@@ -20,13 +23,39 @@ import it.unibo.scat.view.menu.MenuPanel;
  * The main class for the "View" section of the MVC pattern.
  */
 @SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
+@SuppressWarnings("PMD.SingularField")
 public final class View implements ViewInterface, MenuActionsInterface {
+    private final Dimension frameDim = new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,
+            Toolkit.getDefaultToolkit().getScreenSize().height);
     private ControlInterface controlInterface;
     private ModelObservable modelObservable;
     private JFrame frame;
     private Dimension screenDim;
     private MenuPanel menuPanel;
     private GamePanel gamePanel;
+
+    @Override
+    public void initEverything() {
+        initFrame();
+        gamePanel = new GamePanel();
+        menuPanel = new MenuPanel();
+    }
+
+    /**
+     * ...
+     */
+    private void initFrame() {
+        frame = new JFrame();
+        // frame.setUndecorated(true); // ... da mettere in seguito
+        frame.setTitle("SCAT 🚀👾");
+        frame.setPreferredSize(frameDim);
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 
     /**
      * @param mObservable ...
@@ -46,11 +75,6 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public void closeFrame() {
-
-    }
-
-    @Override
-    public void initEverything() {
 
     }
 
