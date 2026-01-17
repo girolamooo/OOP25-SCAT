@@ -43,11 +43,13 @@ public final class View implements ViewInterface, MenuActionsInterface {
     @Override
     public void initEverything() {
         initFrame();
-        initGamePanel();
-        initMenuPanel();
+        menuPanel = new MenuPanel();
+        gamePanel = new GamePanel();
 
-        frame.getContentPane().removeAll();
-        frame.getContentPane().add(menuPanel, BorderLayout.CENTER);
+        menuPanel.setBackground(Color.BLUE);
+        gamePanel.setBackground(Color.GREEN);
+
+        showMenuPanel();
     }
 
     /**
@@ -67,21 +69,6 @@ public final class View implements ViewInterface, MenuActionsInterface {
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setBackground(Color.DARK_GRAY);
         frame.setVisible(true);
-    }
-
-    /**
-     * ...
-     */
-    private void initMenuPanel() {
-        menuPanel = new MenuPanel();
-        menuPanel.setBackground(Color.CYAN);
-    }
-
-    /**
-     * ...
-     */
-    private void initGamePanel() {
-
     }
 
     /**
