@@ -1,5 +1,8 @@
 package it.unibo.scat.view.menu;
 
+import java.awt.Component;
+
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,9 +37,16 @@ public final class SettingsPanel extends JPanel {
         leaderBoardLabel = new CustomLabel("Show Leaderboard");
         infoLabel = new CustomLabel("Info");
 
+        newGameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        quitGameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leaderBoardLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        infoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        add(Box.createVerticalGlue());
         add(newGameLabel);
         add(leaderBoardLabel);
         add(infoLabel);
         add(quitGameLabel);
+        add(Box.createVerticalGlue());
     }
 }
