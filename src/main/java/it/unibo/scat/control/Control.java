@@ -1,6 +1,7 @@
 package it.unibo.scat.control;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.view.api.ViewInterface;
@@ -8,26 +9,47 @@ import it.unibo.scat.view.api.ViewInterface;
 /**
  * The main class for the "Control" section of the MVC pattern.
  */
-@SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will be used by upcoming game logic")
+// @SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will
+// be used by upcoming game logic")
+// @SuppressFBWarnings({ "EI2", "URF_UNREAD_FIELD" })
+@SuppressFBWarnings("EI2")
 public class Control implements ControlInterface {
+    private final ViewInterface viewInterface;
+    private final ModelInterface modelInterface;
 
-    private ViewInterface viewInterface;
-    private ModelInterface modelInterface;
+    /**
+     * @param vInterface ...
+     * @param mInterface ...
+     * 
+     */
+    public Control(final ViewInterface vInterface, final ModelInterface mInterface) {
+        this.viewInterface = vInterface;
+        this.modelInterface = mInterface;
+    }
 
     /**
      * ...
      */
-    @Override
-    public void notifyPauseGame() {
-
+    public void start() {
+        modelInterface.initEverything("data/entities.txt", "data/leaderboard.txt");
+        viewInterface.initEverything();
     }
 
     /**
      * ...
      */
     @Override
-    public void notifyPlayerMovement() {
+    public void notifyPauseGame() {
+        modelInterface.pauseGame();
+    }
 
+    /**
+     * @param direction ...
+     * 
+     */
+    @Override
+    public void notifyPlayerMovement(final Direction direction) {
+        modelInterface.movePlayer(direction);
     }
 
     /**
@@ -35,15 +57,14 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyPlayerShot() {
-
+        modelInterface.addPlayerShot();
     }
 
-    /**
-     * ...
-     */
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "Application termination is intended")
     @Override
-    public void notifyQuitGame() {
-
+    public final void notifyQuitGame() {
+        viewInterface.closeFrame();
+        System.exit(0);
     }
 
     /**
@@ -51,7 +72,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyResetGame() {
-
+        modelInterface.resetGame();
     }
 
     /**
@@ -59,7 +80,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyResumeGame() {
-
+        modelInterface.resumeGame();
     }
 
     /**
@@ -68,7 +89,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifySetUsername(final String username) {
-
+        modelInterface.setUsername(username);
     }
 
 }

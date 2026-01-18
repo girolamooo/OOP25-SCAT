@@ -6,20 +6,23 @@ package it.unibo.scat.common;
 public interface EntityView {
 
     /**
-     * @return ...
-     *
+     * EntityType getter.
+     * 
+     * @return the type of entity.
      */
     EntityType getType();
 
     /**
-     * @return ...
-     *
+     * Alive boolean getter.
+     * 
+     * @return true if the entity is alive, false otherwise.
      */
     boolean isAlive();
 
     /**
-     * @return ...
-     *
+     * Position getter.
+     * 
+     * @return the position.
      */
     Position getPosition();
 }

@@ -3,33 +3,38 @@ package it.unibo.scat.model.api;
 import java.util.List;
 
 import it.unibo.scat.common.EntityView;
+import it.unibo.scat.common.GameRecord;
 
 /**
  * Read-only interface for the Model class, seen from the View.
  */
 public interface ModelObservable {
 
-    /**
-     * @return ...
-     *
-     */
-    List<EntityView> getEntities();
+     /**
+      * Entity getter.
+      *
+      * @return list of entities.
+      */
+     List<EntityView> getEntities();
 
-    /**
-     * @return ...
-     *
-     */
-    String getUsername();
+     /**
+      * Username getter.
+      *
+      * @return the username.
+      */
+     String getUsername();
 
-    /**
-     * @return ...
-     *
-     */
-    int getScore();
+     /**
+      * Returns the current game score.
+      *
+      * @return the score
+      */
+     int getScore();
 
-    /**
-     * @return ...
-     *
-     */
-    List<Record> getLeaderboard();
+     /**
+      * Returns the list of game records stored in the leaderboard.
+      *
+      * @return the leaderboard records
+      */
+     List<GameRecord> getLeaderboard();
 }

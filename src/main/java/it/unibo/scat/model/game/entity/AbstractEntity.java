@@ -1,106 +1,170 @@
 package it.unibo.scat.model.game.entity;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.Position;
 
 /**
- * Abstract class for Entities.
+ * This class represents an abstract entity with basic properties such as
+ * health, status and position.
  */
-@SuppressWarnings("unused")
-@SuppressFBWarnings("UUF_UNUSED_FIELD")
 public abstract class AbstractEntity implements EntityView {
+    /** Default points value. */
+    protected static final int NO_POINTS = 0;
+    private static final int NO_HEALTH = 0;
     private boolean alive;
     private int health;
-    private int startingHealth;
-    private int width;
-    private int height;
+    private final int startingHealth;
+    private final int width;
+    private final int height;
     private Position position;
-    private Position startingPosition;
-    private EntityType entityType;
+    private final Position startingPosition;
+    private final EntityType entityType;
 
     /**
-     * @return ...
+     * @param type   the type of the entity.
+     * @param x      the initial x coordinate.
+     * @param y      the initial y coordinate.
+     * @param width  the witdh of the entity.
+     * @param height the height of the entity.
+     * @param health the initial health of the entity.
      * 
      */
-    public int onHit() {
-        return -1;
+    public AbstractEntity(final EntityType type, final int x, final int y, final int width, final int height,
+            final int health) {
+        alive = true;
+        entityType = type;
+        startingPosition = new Position(x, y);
+        position = new Position(x, y);
+        this.width = width;
+        this.height = height;
+        startingHealth = health;
+        this.health = health;
     }
 
     /**
-     * ...
+     * Reduces health, then if health is equal to 0, the entity that got hit dies.
+     * Each one of the dead invaders return the appropiate amount of points
+     * 
+     * @return number of points based on the type of invader that died.
      */
-    public void setPosition() {
-
+    public int onHit() {
+        decreaseHealth();
+        if (health == NO_HEALTH) {
+            die();
+        }
+        return NO_POINTS;
     }
 
     /**
-     *
+     * Sets the position of the entity.
+     * 
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
+    public void setPosition(final int x, final int y) {
+        position = new Position(x, y);
+    }
+
+    /**
+     * Sets alive to true.
      */
     private void setAlive() {
-
+        alive = true;
     }
 
     /**
-     *
+     * Decreases health by 1.
      */
-    public void decreaseHealth() {
-
+    private void decreaseHealth() {
+        health--;
     }
 
     /**
-     *
+     * Sets alive to false.
      */
-    public void die() {
-
+    private void die() {
+        alive = false;
     }
 
     /**
-     * ...
+     * Resets the entity to its initial state.
+     * Calls the internal reset methods for health and position.
      */
     public void reset() {
-
+        resetHealth();
+        resetStartingPosition();
     }
 
     /**
-     * ...
+     * Resets the health to the starting value and marks the entity as alive.
      */
     private void resetHealth() {
-
+        health = startingHealth;
+        setAlive();
     }
 
     /**
-     * ...
+     * Resets the position to the starting position.
      */
     private void resetStartingPosition() {
-
+        position = startingPosition;
     }
 
     /**
-     * @return ...
+     * @return the current position of the entity
      * 
      */
     @Override
     public Position getPosition() {
-        return null;
+        return new Position(position.getX(), position.getY());
     }
 
     /**
-     * @return ...
+     * Entity type getter.
      * 
+     * @return the entity type.
      */
     @Override
     public EntityType getType() {
-        return null;
+        return entityType;
     }
 
     /**
-     * @return ...
+     * Alive boolean getter.
      * 
+     * @return alive status.
      */
     @Override
     public boolean isAlive() {
-        return true;
+        return alive;
+    }
+
+    /**
+     * Width getter.
+     * 
+     * @return the width.
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @return the height of the entity.
+     * 
+     */
+    public int getHeight() {
+
+        return height;
+
+    }
+
+    /**
+     * Override of toString function, useful for debugging.
+     */
+    @Override
+    public final String toString() {
+        return "Entity: " + this.entityType + " pos:(" + this.position.getX() + "," + this.position.getY()
+                + ") dims: " + this.width + "x" + this.height + " health: " + this.health + " alive: " + this.alive;
     }
 }

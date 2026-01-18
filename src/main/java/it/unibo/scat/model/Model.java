@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
+import it.unibo.scat.common.GameRecord;
+import it.unibo.scat.common.GameResult;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.api.ModelObservable;
+import it.unibo.scat.model.game.CollisionReport;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
 import it.unibo.scat.model.leaderboard.Leaderboard;
@@ -15,8 +19,11 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
 /**
  * The main class for the "Model" section of the MVC pattern.
  */
-@SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will be used by upcoming game logic")
-public class Model implements ModelInterface, ModelObservable {
+@SuppressFBWarnings("URF_UNREAD_FIELD")
+// @SuppressFBWarnings("UUF_UNUSED_FIELD")
+public final class Model implements ModelInterface, ModelObservable {
+    private static final int WORLD_WIDTH = 59;
+    private static final int WORLD_HEIGHT = 35;
     private int score;
     private int level;
     private String username;
@@ -26,117 +33,170 @@ public class Model implements ModelInterface, ModelObservable {
     private GameLogic gameLogic;
 
     /**
-     * ...
+     * Creates and initializes the list of entities and the entity object, by
+     * reading them from file.
+     * Creates and initializes the leaderboard.
+     * 
+     * @param entitiesFile    the file of entities.
+     * @param leaderboardFile the leaderboard file.
+     */
+    @Override
+    public void initEverything(final String entitiesFile, final String leaderboardFile) {
+        gameWorld = new GameWorld(WORLD_WIDTH, WORLD_HEIGHT);
+        gameLogic = new GameLogic(gameWorld);
+        leaderboard = new Leaderboard(leaderboardFile);
+        score = 0;
+        level = 0;
+        gameState = GameState.valueOf("PAUSE");
+
+        gameWorld.initEntities(entitiesFile);
+        leaderboard.initLeaderboard();
+
+        // DEBUG
+        // gameWorld.printEntities();
+    }
+
+    /**
+     * increses the level by one.
      */
     public void increaseLevel() {
-
+        this.level++;
     }
 
     /**
-     * @param points ...
+     * Updates the current score by adding the given amount of points.
      *
+     * @param points the points to add to the score
      */
     public void updateScore(final int points) {
-
+        score += points;
     }
 
     /**
-     * ...
+     * Adds player's shot.
      */
     @Override
     public void addPlayerShot() {
-
+        gameLogic.addPlayerShot();
     }
 
     /**
-     * ...
+     * Ends the game.
      */
     @Override
     public void endGame() {
-
+        gameState = GameState.GAMEOVER;
     }
 
     /**
-     * ...
-     */
-    @Override
-    public void initEverything() {
-
-    }
-
-    /**
-     * @param direction ...
-     * @return ...
+     * Moves the player in the given direction.
+     * Gets the player from the gameWorld and updates its position.
      * 
+     * @param direction the movement direction
      */
     @Override
-    public int movePlayer(final int direction) {
-        return 0;
-    }
-
-    @Override
-    public void pause() {
-
+    public void movePlayer(final Direction direction) {
+        if (gameLogic.canPlayerMove(direction)) {
+            gameWorld.getPlayer().move(direction);
+        }
     }
 
     /**
-     * ...
+     * Pauses the game.
+     * Sets the game state to PAUSE.
+     */
+    @Override
+    public void pauseGame() {
+        gameState = GameState.PAUSE;
+    }
+
+    /**
+     * Resets all entities throught the gameLogic and restores score and difficulty.
      */
     @Override
     public void resetGame() {
-
+        gameLogic.resetEntities();
+        score = 0;
+        level = 0;
     }
 
     /**
-     * ...
+     * Resumes the game.
+     * Sets the game state to RUNNING.
      */
     @Override
-    public void resume() {
-
+    public void resumeGame() {
+        gameState = GameState.RUNNING;
     }
 
     /**
-     * ...
+     * Main function.
      */
     @Override
     public void update() {
+        final CollisionReport collisionReport;
+        final int newPoints;
 
+        gameLogic.moveEntities();
+
+        collisionReport = gameLogic.checkCollisions();
+        newPoints = gameLogic.handleCollisionReport(collisionReport);
+        updateScore(newPoints);
+
+        gameLogic.removeDeadShots();
+        gameLogic.handleBonusInvader();
+
+        if (gameWorld.shouldInvadersChangeDirection()) {
+            gameWorld.changeInvadersDirection();
+        }
+
+        if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
+            endGame();
+        }
     }
 
     /**
-     * @return ...
+     * Entities getter.
      * 
+     * @return the entity list.
      */
     @Override
     public List<EntityView> getEntities() {
-        return new ArrayList<>();
+        return new ArrayList<>(this.gameWorld.getEntities());
     }
 
     /**
-     * @return ...
+     * Leaderboard getter.
      * 
+     * @return the leaderboard.
      */
     @Override
-    public List<Record> getLeaderboard() {
-        return new ArrayList<>();
+    public List<GameRecord> getLeaderboard() {
+        return leaderboard.getAllRecords();
     }
 
-    /**
-     * @return ...
-     * 
-     */
     @Override
     public int getScore() {
-        return 0;
+        return score;
     }
 
     /**
-     * @return ...
+     * Username getter.
      * 
+     * @return the username.
      */
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
+    /**
+     * Username setter.
+     * 
+     * @param username the username that the player chose.
+     */
+    @Override
+    public void setUsername(final String username) {
+        this.username = username;
+    }
 }
