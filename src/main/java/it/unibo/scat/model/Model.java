@@ -50,7 +50,7 @@ public final class Model implements ModelInterface, ModelObservable {
         gameState = GameState.valueOf("PAUSE");
 
         gameWorld.initEntities(entitiesFile);
-        leaderboard.initLeaderboard(leaderboardFile);
+        leaderboard.initLeaderboard();
 
         // DEBUG
         // gameWorld.printEntities();
