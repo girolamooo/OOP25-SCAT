@@ -7,14 +7,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import it.unibo.scat.common.GameRecord;
+import it.unibo.scat.model.game.GameWorld;
 
 /**
  * This class handles the leaderboard logic.
@@ -24,13 +28,14 @@ public class Leaderboard {
     private final String leaderboardFile;
 
     /**
-     * Empty default Leaderboard constructor.
+     * Leaderboard constructor.
      * 
-     * @param leaderboardFile the file of the leaderboard.
+     * @param filename the name of the file containing the leaderboard records
+     * 
      */
-    public Leaderboard(final String leaderboardFile) {
-        this.games = new ArrayList<>();
-        this.leaderboardFile = leaderboardFile;
+    public Leaderboard(final String filename) {
+        this.leaderboardFile = filename;
+        games = new ArrayList<>();
     }
 
     /**
@@ -77,9 +82,17 @@ public class Leaderboard {
     }
 
     /**
-     * Updates the leaderboard file.
+     * Writes ex-novo the leaderboard file.
      */
     public void updateFile() {
+        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(leaderboardFile))) {
+            for (final GameRecord game : games) {
+                writer.write(
+                        game.getName() + ";" + game.getScore() + ";" + game.getLevel() + ";" + game.getDate() + "\n");
+            }
+        } catch (final IOException e) {
+            throw new IllegalStateException("Cannot write leaderboard on file: " + leaderboardFile + "Exsception: ", e);
+        }
 
         try (BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(leaderboardFile), StandardCharsets.UTF_8))) {
@@ -141,15 +154,16 @@ public class Leaderboard {
 
     }
 
-    // /**
-    // * ...
-    // */
-    // private void printLeaderboard() {
-    // final Logger logger = Logger.getLogger(GameWorld.class.getName());
-    // for (final var x : games) {
+    /**
+     * Debug function, to remove.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private void printLeaderboard() {
+        final Logger logger = Logger.getLogger(GameWorld.class.getName());
+        for (final var x : games) {
 
-    // logger.info(x.getName() + x.getScore() + x.getLevel() + x.getDate());
-    // }
-    // }
+            logger.info(x.getName() + " " + x.getScore() + " " + x.getLevel() + " " + x.getDate());
+        }
+    }
 
 }
