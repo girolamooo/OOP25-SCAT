@@ -7,21 +7,24 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 
 /**
  * This class handles the credits panel.
  */
+@SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+
 public final class CreditsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final transient MenuPanelInterface menuInterface;
 
     /**
-     * @param MenuPanelInterface ...
+     * @param mInterface ...
      * 
      */
-    public CreditsPanel(final MenuPanelInterface menuInterface) {
-        this.menuInterface = menuInterface;
+    public CreditsPanel(final MenuPanelInterface mInterface) {
+        this.menuInterface = mInterface;
         // final Color background = new Color(0, 0, 0, 150);
         // setBackground(background);
 

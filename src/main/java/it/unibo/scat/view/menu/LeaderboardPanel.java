@@ -7,21 +7,24 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 
 /**
  * This class handles the leaderboard panel.
  */
+@SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final transient MenuPanelInterface menuInterface;
 
     /**
-     * @param MenuPanelInterface ...
+     * @param mInterface ...
      * 
      */
-    public LeaderboardPanel(final MenuPanelInterface menuInterface) {
-        this.menuInterface = menuInterface;
+    public LeaderboardPanel(final MenuPanelInterface mInterface) {
+        this.menuInterface = mInterface;
         // final Color background = new Color(0, 0, 0, 150);
         // setBackground(background);
 
