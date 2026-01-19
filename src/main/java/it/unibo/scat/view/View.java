@@ -2,7 +2,6 @@ package it.unibo.scat.view;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -42,9 +41,9 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public void initEverything() {
-        initFrame();
         menuPanel = new MenuPanel(this);
         gamePanel = new GamePanel(this);
+        initFrame();
 
         // menuPanel.setBackground(Color.BLUE);
         // gamePanel.setBackground(Color.BLUE);
@@ -56,16 +55,39 @@ public final class View implements ViewInterface, MenuActionsInterface {
      * ...
      */
     private void initFrame() {
+        // frame = new JFrame();
+        // // frame.setUndecorated(true); // ... da mettere in seguito maybe
+        // frame.setTitle("SCAT ");
+        // frame.setBounds(bounds);
+        // frame.getContentPane().setLayout(new CardLayout());
+        // frame.setResizable(false);
+        // frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        // frame.setLocationRelativeTo(null);
+        // frame.getContentPane().setBackground(Color.DARK_GRAY);
+        // frame.setVisible(true);
+        // final Rectangle bounds =
+        // GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+
         frame = new JFrame();
-        // frame.setUndecorated(true); // ... da mettere in seguito maybe
-        frame.setTitle("SCAT 🚀👾");
-        frame.setBounds(bounds);
-        frame.getContentPane().setLayout(new CardLayout());
-        frame.setResizable(false);
+        frame.setTitle("SCAT🚀👾");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.getContentPane().setBackground(Color.DARK_GRAY);
+        frame.setResizable(false);
+
+        frame.getContentPane().setLayout(new CardLayout());
+        frame.getContentPane().add(gamePanel, "GAME"); // o come fai tu
+
+        frame.pack(); // per avere Insets reali
+        final java.awt.Insets ins = frame.getInsets();
+
+        final Dimension best = gamePanel.computeBestFrameSize(bounds, ins);
+        frame.setSize(best);
+
+        frame.setLocation(
+                bounds.x + (bounds.width - best.width) / 2,
+                bounds.y + (bounds.height - best.height) / 2);
+
         frame.setVisible(true);
+
     }
 
     /**
