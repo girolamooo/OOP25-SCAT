@@ -47,7 +47,7 @@ public final class View implements ViewInterface, MenuActionsInterface {
         gamePanel = new GamePanel();
 
         menuPanel.setBackground(Color.BLUE);
-        gamePanel.setBackground(Color.GREEN);
+        gamePanel.setBackground(Color.BLUE);
 
         showMenuPanel();
     }
@@ -60,12 +60,9 @@ public final class View implements ViewInterface, MenuActionsInterface {
         // frame.setUndecorated(true); // ... da mettere in seguito maybe
         frame.setTitle("SCAT 🚀👾");
         frame.setBounds(bounds);
-        // frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(),
-        // BoxLayout.Y_AXIS));
         frame.getContentPane().setLayout(new CardLayout());
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // frame.pack();
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setBackground(Color.DARK_GRAY);
         frame.setVisible(true);
