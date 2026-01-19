@@ -15,7 +15,7 @@ public final class SettingsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JLabel newGameLabel;
     private JLabel quitGameLabel;
-    private JLabel leaderBoardLabel;
+    private JLabel leaderboardLabel;
     private JLabel infoLabel;
 
     /**
@@ -24,29 +24,52 @@ public final class SettingsPanel extends JPanel {
     public SettingsPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        initComponents();
+        initNewGameLabel();
+        initInfoLabel();
+        initLeaderboardLabel();
+        initQuitGameLabel();
     }
 
     /**
      * ...
      */
-    private void initComponents() {
+    private void initNewGameLabel() {
         newGameLabel = new CustomLabel("New Game");
-        quitGameLabel = new CustomLabel("Quit Game");
-        leaderBoardLabel = new CustomLabel("Show Leaderboard");
-        infoLabel = new CustomLabel("Info");
-
         newGameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        quitGameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        leaderBoardLabel.setAlignmentX(CENTER_ALIGNMENT);
-        infoLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         add(Box.createVerticalGlue());
         add(newGameLabel);
+    }
+
+    /**
+     * ...
+     */
+    private void initLeaderboardLabel() {
+        leaderboardLabel = new CustomLabel("Show Leaderboard");
+        leaderboardLabel.setAlignmentX(CENTER_ALIGNMENT);
+
         add(Box.createVerticalStrut(100));
-        add(leaderBoardLabel);
+        add(leaderboardLabel);
+    }
+
+    /**
+     * ...
+     */
+    private void initInfoLabel() {
+        infoLabel = new CustomLabel("Info");
+        infoLabel.setAlignmentX(CENTER_ALIGNMENT);
+
         add(Box.createVerticalStrut(100));
         add(infoLabel);
+    }
+
+    /**
+     * ...
+     */
+    private void initQuitGameLabel() {
+        quitGameLabel = new CustomLabel("Quit Game");
+        quitGameLabel.setAlignmentX(CENTER_ALIGNMENT);
+
         add(Box.createVerticalStrut(100));
         add(quitGameLabel);
         add(Box.createVerticalGlue());
@@ -58,7 +81,7 @@ public final class SettingsPanel extends JPanel {
     public void useless() {
         newGameLabel.setAlignmentX(CENTER_ALIGNMENT);
         quitGameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        leaderBoardLabel.setAlignmentX(CENTER_ALIGNMENT);
+        leaderboardLabel.setAlignmentX(CENTER_ALIGNMENT);
         infoLabel.setAlignmentX(CENTER_ALIGNMENT);
     }
 }
