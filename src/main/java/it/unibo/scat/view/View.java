@@ -44,10 +44,10 @@ public final class View implements ViewInterface, MenuActionsInterface {
     public void initEverything() {
         initFrame();
         menuPanel = new MenuPanel(this);
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(this);
 
-        menuPanel.setBackground(Color.BLUE);
-        gamePanel.setBackground(Color.BLUE);
+        // menuPanel.setBackground(Color.BLUE);
+        // gamePanel.setBackground(Color.BLUE);
 
         showMenuPanel();
     }
