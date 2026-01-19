@@ -68,8 +68,8 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     private void initPanels() {
         settingsPanel = new SettingsPanel(viewInterface, this);
         usernamePanel = new UsernamePanel();
-        leaderboardPanel = new LeaderboardPanel();
-        creditsPanel = new CreditsPanel();
+        leaderboardPanel = new LeaderboardPanel(this);
+        creditsPanel = new CreditsPanel(this);
 
         // Se vuoi trasparenza del contenuto, tienili non opachi (o gestisci tu
         // background interno).
