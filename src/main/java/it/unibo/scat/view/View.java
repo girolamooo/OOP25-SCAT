@@ -55,19 +55,6 @@ public final class View implements ViewInterface, MenuActionsInterface {
      * ...
      */
     private void initFrame() {
-        // frame = new JFrame();
-        // // frame.setUndecorated(true); // ... da mettere in seguito maybe
-        // frame.setTitle("SCAT ");
-        // frame.setBounds(bounds);
-        // frame.getContentPane().setLayout(new CardLayout());
-        // frame.setResizable(false);
-        // frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // frame.setLocationRelativeTo(null);
-        // frame.getContentPane().setBackground(Color.DARK_GRAY);
-        // frame.setVisible(true);
-        // final Rectangle bounds =
-        // GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-
         frame = new JFrame();
         frame.setTitle("SCAT🚀👾");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -87,7 +74,6 @@ public final class View implements ViewInterface, MenuActionsInterface {
                 bounds.y + (bounds.height - best.height) / 2);
 
         frame.setVisible(true);
-
     }
 
     /**
