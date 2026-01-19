@@ -26,13 +26,15 @@ public final class CustomLabel extends JLabel {
         super(text);
 
         baseText = text;
+        // hoverText = baseText + " ‹";
+        // hoverText = "› " + baseText;
         hoverText = "› " + baseText + " ‹";
         // hoverText = "» " + baseText + " «";
         // hoverText = "✦︎" + baseText + "✦︎";
         // hoverText = baseText;
 
-        final Font baseFont = new Font("Calibri", Font.BOLD, 60);
-        final Font hoverFont = new Font("Calibri", Font.BOLD, 75);
+        final Font baseFont = new Font("Calibri", Font.BOLD, 80);
+        final Font hoverFont = new Font("Calibri", Font.BOLD, 85);
         /* .deriveFont(Map.of(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON)); */
 
         final FontMetrics fm = getFontMetrics(hoverFont);
@@ -46,13 +48,14 @@ public final class CustomLabel extends JLabel {
 
         setFocusable(false);
         setFont(baseFont);
-        setForeground(Color.BLACK);
+        setForeground(Color.WHITE);
         setHorizontalAlignment(CENTER);
         setVerticalAlignment(CENTER);
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(final MouseEvent e) {
+                setForeground(Color.RED);
                 setFont(hoverFont);
                 setText(hoverText);
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -60,6 +63,7 @@ public final class CustomLabel extends JLabel {
 
             @Override
             public void mouseExited(final MouseEvent e) {
+                setForeground(Color.WHITE);
                 setFont(baseFont);
                 setText(baseText);
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));

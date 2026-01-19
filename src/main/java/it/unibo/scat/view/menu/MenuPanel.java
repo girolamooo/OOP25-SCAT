@@ -48,7 +48,7 @@ public final class MenuPanel extends JPanel {
         try {
             background = ImageIO.read(
                     Objects.requireNonNull(
-                            getClass().getResource("/images/menu_background.jpg")));
+                            getClass().getResource("/images/menu_background2.jpg")));
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot load menu background", e);
         }
@@ -64,6 +64,11 @@ public final class MenuPanel extends JPanel {
         creditsPanel = new CreditsPanel();
 
         settingsPanel.setBackground(Color.GRAY);
+        usernamePanel.setBackground(Color.YELLOW);
+        leaderboardPanel.setBackground(Color.GREEN);
+        creditsPanel.setBackground(Color.red);
+
+        settingsPanel.setOpaque(false);
         usernamePanel.setBackground(Color.YELLOW);
         leaderboardPanel.setBackground(Color.GREEN);
         creditsPanel.setBackground(Color.red);

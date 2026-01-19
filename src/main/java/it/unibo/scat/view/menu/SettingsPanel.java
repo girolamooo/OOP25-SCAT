@@ -42,7 +42,7 @@ public final class SettingsPanel extends JPanel {
      * ...
      */
     private void initNewGameLabel() {
-        newGameLabel = new CustomLabel("New Game");
+        newGameLabel = new CustomLabel("PLAY");
         newGameLabel.setAlignmentX(CENTER_ALIGNMENT);
         newGameLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -60,7 +60,7 @@ public final class SettingsPanel extends JPanel {
      * ...
      */
     private void initLeaderboardLabel() {
-        leaderboardLabel = new CustomLabel("Show Leaderboard");
+        leaderboardLabel = new CustomLabel("LEADERBOARD");
         leaderboardLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         add(Box.createVerticalStrut(100));
@@ -71,7 +71,7 @@ public final class SettingsPanel extends JPanel {
      * ...
      */
     private void initInfoLabel() {
-        infoLabel = new CustomLabel("Info");
+        infoLabel = new CustomLabel("ABOUT");
         infoLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         add(Box.createVerticalStrut(100));
@@ -82,7 +82,7 @@ public final class SettingsPanel extends JPanel {
      * ...
      */
     private void initQuitGameLabel() {
-        quitGameLabel = new CustomLabel("Quit Game");
+        quitGameLabel = new CustomLabel("EXIT");
         quitGameLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         add(Box.createVerticalStrut(100));
