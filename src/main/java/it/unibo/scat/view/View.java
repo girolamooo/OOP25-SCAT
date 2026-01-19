@@ -43,7 +43,7 @@ public final class View implements ViewInterface, MenuActionsInterface {
     @Override
     public void initEverything() {
         initFrame();
-        menuPanel = new MenuPanel();
+        menuPanel = new MenuPanel(this);
         gamePanel = new GamePanel();
 
         menuPanel.setBackground(Color.BLUE);

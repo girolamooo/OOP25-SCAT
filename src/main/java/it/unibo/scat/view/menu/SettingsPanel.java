@@ -1,10 +1,14 @@
 package it.unibo.scat.view.menu;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.scat.view.api.MenuActionsInterface;
 import it.unibo.scat.view.components.CustomLabel;
 
 /**
@@ -13,15 +17,18 @@ import it.unibo.scat.view.components.CustomLabel;
 
 public final class SettingsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
+    private final MenuActionsInterface viewInterface;
     private JLabel newGameLabel;
     private JLabel quitGameLabel;
     private JLabel leaderboardLabel;
     private JLabel infoLabel;
 
     /**
-     * ...
+     * @param viewInterface ...
+     * 
      */
-    public SettingsPanel() {
+    public SettingsPanel(final MenuActionsInterface viewInterface) {
+        this.viewInterface = viewInterface;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         initNewGameLabel();
@@ -36,6 +43,13 @@ public final class SettingsPanel extends JPanel {
     private void initNewGameLabel() {
         newGameLabel = new CustomLabel("New Game");
         newGameLabel.setAlignmentX(CENTER_ALIGNMENT);
+        newGameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                viewInterface.showGamePanel();
+                viewInterface.resumeGame();
+            }
+        });
 
         add(Box.createVerticalGlue());
         add(newGameLabel);

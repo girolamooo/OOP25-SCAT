@@ -10,6 +10,8 @@ import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import it.unibo.scat.view.api.MenuActionsInterface;
+
 /**
  * Panel that contains all the graphics element for the menu.
  */
@@ -18,6 +20,7 @@ import javax.swing.JPanel;
 // @SuppressWarnings("PMD.UnusedPrivateField")
 public final class MenuPanel extends JPanel {
     private static final long serialVersionUID = 1L;
+    private final MenuActionsInterface viewInterface;
     private transient BufferedImage background;
     private SettingsPanel settingsPanel;
     private UsernamePanel usernamePanel;
@@ -25,9 +28,11 @@ public final class MenuPanel extends JPanel {
     private CreditsPanel creditsPanel;
 
     /**
-     * ...
+     * @param vInterface ...
+     * 
      */
-    public MenuPanel() {
+    public MenuPanel(final MenuActionsInterface vInterface) {
+        viewInterface = vInterface;
         setLayout(new BorderLayout());
 
         initBackground();
@@ -51,7 +56,7 @@ public final class MenuPanel extends JPanel {
      * ...
      */
     private void initPanels() {
-        settingsPanel = new SettingsPanel();
+        settingsPanel = new SettingsPanel(viewInterface);
         usernamePanel = new UsernamePanel();
         leaderboardPanel = new LeaderboardPanel();
         creditsPanel = new CreditsPanel();
