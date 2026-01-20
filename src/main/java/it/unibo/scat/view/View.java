@@ -2,7 +2,6 @@ package it.unibo.scat.view;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -25,7 +24,8 @@ import it.unibo.scat.view.menu.MenuPanel;
 /**
  * The main class for the "View" section of the MVC pattern.
  */
-@SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
+// @SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
+@SuppressFBWarnings("UUF_UNUSED_FIELD")
 // @SuppressWarnings("PMD.SingularField")
 public final class View implements ViewInterface, MenuActionsInterface {
     // private final Dimension frameDim = new
@@ -42,12 +42,12 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public void initEverything() {
-        initFrame();
         menuPanel = new MenuPanel(this);
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(this);
+        initFrame();
 
-        menuPanel.setBackground(Color.BLUE);
-        gamePanel.setBackground(Color.GREEN);
+        // menuPanel.setBackground(Color.BLUE);
+        // gamePanel.setBackground(Color.BLUE);
 
         showMenuPanel();
     }
@@ -57,17 +57,23 @@ public final class View implements ViewInterface, MenuActionsInterface {
      */
     private void initFrame() {
         frame = new JFrame();
-        // frame.setUndecorated(true); // ... da mettere in seguito maybe
-        frame.setTitle("SCAT 🚀👾");
-        frame.setBounds(bounds);
-        // frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(),
-        // BoxLayout.Y_AXIS));
-        frame.getContentPane().setLayout(new CardLayout());
-        frame.setResizable(false);
+        frame.setTitle("SCAT🚀👾");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.getContentPane().setBackground(Color.DARK_GRAY);
+        frame.setResizable(false);
+
+        frame.getContentPane().setLayout(new CardLayout());
+        frame.getContentPane().add(gamePanel, "GAME"); // o come fai tu
+
+        frame.pack(); // per avere Insets reali
+        final java.awt.Insets ins = frame.getInsets();
+
+        final Dimension best = gamePanel.computeBestFrameSize(bounds, ins);
+        frame.setSize(best);
+
+        frame.setLocation(
+                bounds.x + (bounds.width - best.width) / 2,
+                bounds.y + (bounds.height - best.height) / 2);
+
         frame.setVisible(true);
     }
 
@@ -140,6 +146,11 @@ public final class View implements ViewInterface, MenuActionsInterface {
     @Override
     public void setUsername(final String username) {
 
+    }
+
+    @Override
+    public int fetchPlayerHealth() {
+        return modelObservable.getPlayerHealth();
     }
 
     @Override
