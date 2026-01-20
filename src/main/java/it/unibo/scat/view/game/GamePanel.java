@@ -51,7 +51,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
      * ...
      */
     private void initCanvas() {
-        canvas = new Canvas();
+        canvas = new Canvas(viewInterface);
         canvas.setOpaque(false);
         add(canvas, BorderLayout.CENTER);
     }
