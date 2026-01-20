@@ -52,6 +52,7 @@ public final class StatusBar extends JPanel {
      */
     private void initPausePanel() {
         final int targetH = 80;
+        final int targetW = 210;
 
         pausePanel = new JPanel() {
             private static final long serialVersionUID = 1L;
@@ -77,16 +78,15 @@ public final class StatusBar extends JPanel {
                 final int drawH = targetH - 10;
                 final int drawW = (int) Math.round(imgW * scale);
 
-                final int x = (getWidth() - drawW) / 2;
                 final int y = (getHeight() - drawH) / 2;
 
-                g.drawImage(img, x, y, drawW, drawH, this);
+                g.drawImage(img, 0, y, drawW, drawH, this);
             }
 
         };
-        pausePanel.setPreferredSize(new Dimension(targetH, targetH));
-        pausePanel.setMinimumSize(new Dimension(targetH, targetH));
-        pausePanel.setMaximumSize(new Dimension(targetH, targetH));
+        pausePanel.setPreferredSize(new Dimension(targetW, targetH));
+        pausePanel.setMinimumSize(new Dimension(targetW, targetH));
+        pausePanel.setMaximumSize(new Dimension(targetW, targetH));
         pausePanel.setFocusable(false);
         pausePanel.setForeground(Color.WHITE);
         pausePanel.setOpaque(false);
