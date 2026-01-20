@@ -5,11 +5,15 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -34,7 +38,7 @@ public final class StatusBar extends JPanel {
     public StatusBar(final GamePanelInterface gamePanelInterface) {
         this.gamePanelInterface = gamePanelInterface;
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         // setBackground(Color.BLACK);
 
         initPauseButton();
@@ -93,6 +97,51 @@ public final class StatusBar extends JPanel {
      * ...
      */
     private void initLivesPanel() {
+        final int h = 80;
 
+        livesPanel = new JPanel();
+        livesPanel.setLayout(new BoxLayout(livesPanel, BoxLayout.X_AXIS));
+        livesPanel.setOpaque(false);
+        livesPanel.setPreferredSize(new Dimension(0, h));
+
+        final JLabel text = new JLabel("LIVES:");
+        text.setForeground(Color.WHITE);
+        text.setFont(new Font("Calibri", Font.BOLD, 50));
+        text.setPreferredSize(new Dimension(0, h));
+
+        final JPanel imageP = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                final Image img = new ImageIcon(
+                        Objects.requireNonNull(getClass().getResource("/images/life/life_2.png"))).getImage();
+
+                final int targetH = 80;
+
+                final int imgW = img.getWidth(this);
+                final int imgH = img.getHeight(this);
+
+                if (imgW <= 0 || imgH <= 0) {
+                    return;
+                }
+
+                final double scale = (double) targetH / imgH;
+                final int drawH = targetH;
+                final int drawW = (int) Math.round(imgW * scale);
+
+                final int x = (getWidth() - drawW) / 2;
+                final int y = (getHeight() - drawH) / 2;
+
+                g.drawImage(img, x, y, drawW, drawH, this);
+
+            }
+
+        };
+        imageP.setPreferredSize(new Dimension(0, h));
+        imageP.setOpaque(false);
+
+        livesPanel.add(text);
+        livesPanel.add(imageP);
+        add(livesPanel, BorderLayout.EAST);
     }
 }
