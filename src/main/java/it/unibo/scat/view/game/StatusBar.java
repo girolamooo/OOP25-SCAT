@@ -35,7 +35,7 @@ public final class StatusBar extends JPanel {
         this.gamePanelInterface = gamePanelInterface;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Color.BLACK);
+        // setBackground(Color.BLACK);
 
         initPauseButton();
         initLivesPanel();
