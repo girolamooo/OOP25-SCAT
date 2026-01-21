@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-//import javax.swing.text.html.parser.Entity;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
@@ -144,7 +142,7 @@ public class GameWorld {
      * @return the list of invaders.
      */
     public List<Invader> getInvaders() {
-        return new ArrayList<>();
+        return invaders;
     }
 
     /**
