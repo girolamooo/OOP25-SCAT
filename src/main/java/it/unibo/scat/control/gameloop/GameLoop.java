@@ -1,0 +1,129 @@
+package it.unibo.scat.control.gameloop;
+
+import javax.swing.SwingUtilities;
+
+import it.unibo.scat.common.GameState;
+import it.unibo.scat.model.api.ModelInterface;
+import it.unibo.scat.view.api.ViewInterface;
+
+/**
+ * Main game loop: updates the model at a fixed tick rate and schedules the view
+ * update on the EDT.
+ * The loop runs only when the game status is {@link GameStatus#PLAYING}.
+ */
+public final class GameLoop implements Runnable {
+
+    private final ModelInterface model;
+    private final ViewInterface view;
+    private final long tickMillis;
+
+    private final Object pauseLock = new Object();
+
+    private volatile boolean running;
+    private volatile GameState status;
+
+    /**
+     * Creates a new game loop.
+     *
+     * @param model      the game model
+     * @param view       the game view
+     * @param tickMillis the tick duration in milliseconds
+     */
+    public GameLoop(final ModelInterface model, final ViewInterface view, final long tickMillis) {
+        this.model = model;
+        this.view = view;
+        this.tickMillis = tickMillis;
+        this.status = GameState.RUNNING;
+    }
+
+    /**
+     * Starts the loop (idempotent).
+     */
+    public void start() {
+        this.running = true;
+    }
+
+    /**
+     * Stops the loop permanently.
+     */
+    public void stop() {
+        this.running = false;
+        resumeGame();
+    }
+
+    /**
+     * Sets the current game status.
+     *
+     * @param newStatus the new status
+     */
+    public void setStatus(final GameState newStatus) {
+        this.status = newStatus;
+        if (newStatus == GameState.RUNNING) {
+            resumeGame();
+        }
+    }
+
+    /**
+     * Pauses the loop (it will block until resumed).
+     */
+    public void pauseGame() {
+        this.status = GameState.PAUSE;
+    }
+
+    /**
+     * Resumes the loop if it was paused.
+     */
+    public void resumeGame() {
+        this.status = GameState.RUNNING;
+        synchronized (pauseLock) {
+            pauseLock.notifyAll();
+        }
+    }
+
+    @Override
+    public void run() {
+        while (running) {
+            waitIfNotPlaying();
+
+            if (!running) {
+                break;
+            }
+
+            final long start = System.currentTimeMillis();
+
+            model.update();
+
+            SwingUtilities.invokeLater(view::update);
+
+            final long elapsed = System.currentTimeMillis() - start;
+            sleepUninterruptibly(Math.max(0L, tickMillis - elapsed));
+        }
+    }
+
+    private void waitIfNotPlaying() {
+        if (status == GameState.RUNNING) {
+            return;
+        }
+        synchronized (pauseLock) {
+            while (running && status != GameState.RUNNING) {
+                try {
+                    pauseLock.wait();
+                } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void sleepUninterruptibly(final long millis) {
+        if (millis <= 0L) {
+            return;
+        }
+        try {
+            Thread.sleep(millis);
+        } catch (final InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
