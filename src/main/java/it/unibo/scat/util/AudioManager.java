@@ -31,6 +31,7 @@ public class AudioManager implements Audio {
      * @param music ...
      * @param loop  ...
      */
+    @Override
     public void play(final AudioTrack music, final boolean loop) {
         try (AudioInputStream audioIn = AudioSystem
                 .getAudioInputStream(ClassLoader.getSystemResource(music.getPath()))) {
@@ -54,6 +55,7 @@ public class AudioManager implements Audio {
      * 
      * @param volume ...
      */
+    @Override
     public void setVolume(final float volume) {
         if (clip == null) {
             return;
@@ -75,6 +77,7 @@ public class AudioManager implements Audio {
     /**
      * ...
      */
+    @Override
     public void stop() {
         if (clip != null && clip.isRunning()) {
             clip.stop();
