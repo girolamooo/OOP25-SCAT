@@ -54,6 +54,14 @@ public interface ModelInterface {
     void setGameState(GameState state);
 
     /**
+     * ...
+     * 
+     * @return ...
+     * 
+     */
+    GameState getGameState();
+
+    /**
      * Sets player's username.
      * 
      * @param username the username that the player chose.

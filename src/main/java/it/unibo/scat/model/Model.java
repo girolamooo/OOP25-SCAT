@@ -96,6 +96,11 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     @Override
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    @Override
     public void update() {
         final CollisionReport collisionReport;
         final int newPoints;
