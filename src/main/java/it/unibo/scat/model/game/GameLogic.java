@@ -339,6 +339,8 @@ public class GameLogic {
         if (isAlive) {
             if (isOutOfBorder(gameWorld.getBonusInvader())) {
                 gameWorld.removeEntity(gameWorld.getBonusInvader());
+            } else {
+                gameWorld.getBonusInvader().move();
             }
             return;
         }
