@@ -174,4 +174,8 @@ public final class View implements ViewInterface, MenuActionsInterface {
         gamePanel.update();
     }
 
+    @Override
+    public void startGame() {
+        controlInterface.notifyStartGame();
+    }
 }

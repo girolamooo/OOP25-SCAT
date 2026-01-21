@@ -83,4 +83,9 @@ public interface MenuActionsInterface {
      * 
      */
     int fetchPlayerHealth();
+
+    /**
+     * ...
+     */
+    void startGame();
 }
