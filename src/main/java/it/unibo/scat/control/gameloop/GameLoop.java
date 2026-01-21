@@ -3,6 +3,7 @@ package it.unibo.scat.control.gameloop;
 import javax.swing.SwingUtilities;
 
 import it.unibo.scat.common.GameState;
+import it.unibo.scat.model.Model;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.view.api.ViewInterface;
 
@@ -20,7 +21,6 @@ public final class GameLoop implements Runnable {
     private final Object pauseLock = new Object();
 
     private volatile boolean running;
-    private volatile GameState status;
 
     /**
      * Creates a new game loop.
@@ -33,7 +33,6 @@ public final class GameLoop implements Runnable {
         this.model = model;
         this.view = view;
         this.tickMillis = tickMillis;
-        this.status = GameState.RUNNING;
     }
 
     /**
@@ -51,30 +50,22 @@ public final class GameLoop implements Runnable {
         resumeGame();
     }
 
-    /**
-     * Sets the current game status.
-     *
-     * @param newStatus the new status
-     */
-    public void setStatus(final GameState newStatus) {
-        this.status = newStatus;
-        if (newStatus == GameState.RUNNING) {
-            resumeGame();
-        }
-    }
-
-    /**
-     * Pauses the loop (it will block until resumed).
-     */
-    public void pauseGame() {
-        this.status = GameState.PAUSE;
-    }
+    // /**
+    // * Sets the current game status.
+    // *
+    // * @param newStatus the new status
+    // */
+    // public void setStatus(final GameState newStatus) {
+    // this.status = newStatus;
+    // if (newStatus == GameState.RUNNING) {
+    // resumeGame();
+    // }
+    // }
 
     /**
      * Resumes the loop if it was paused.
      */
     public void resumeGame() {
-        this.status = GameState.RUNNING;
         synchronized (pauseLock) {
             pauseLock.notifyAll();
         }
@@ -101,11 +92,11 @@ public final class GameLoop implements Runnable {
     }
 
     private void waitIfNotPlaying() {
-        if (status == GameState.RUNNING) {
+        if (Model.getGameState() == GameState.RUNNING) {
             return;
         }
         synchronized (pauseLock) {
-            while (running && status != GameState.RUNNING) {
+            while (running && Model.getGameState() != GameState.RUNNING) {
                 try {
                     pauseLock.wait();
                 } catch (final InterruptedException e) {

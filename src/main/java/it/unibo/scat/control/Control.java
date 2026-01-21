@@ -2,8 +2,10 @@ package it.unibo.scat.control;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Direction;
+import it.unibo.scat.common.GameState;
 import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.control.gameloop.GameLoop;
+import it.unibo.scat.model.Model;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.view.api.ViewInterface;
 
@@ -56,8 +58,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyPauseGame() {
-        modelInterface.pauseGame();
-        gameLoop.pauseGame();
+        Model.setGameState(GameState.PAUSE);
     }
 
     /**
@@ -97,7 +98,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyResumeGame() {
-        modelInterface.resumeGame();
+        Model.setGameState(GameState.RUNNING);
         gameLoop.resumeGame();
     }
 
