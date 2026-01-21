@@ -31,7 +31,7 @@ public class Control implements ControlInterface {
         this.viewInterface = vInterface;
         this.modelInterface = mInterface;
 
-        gameLoop = new GameLoop(modelInterface, viewInterface, 16);
+        gameLoop = new GameLoop(modelInterface, viewInterface, 400);
         gameThread = new Thread(gameLoop, "game-loop");
     }
 
@@ -41,7 +41,6 @@ public class Control implements ControlInterface {
     public void init() {
         modelInterface.initEverything("data/entities.txt", "data/leaderboard.txt");
         viewInterface.initEverything();
-
     }
 
     /**
@@ -49,6 +48,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyStartGame() {
+        Model.setGameState(GameState.RUNNING);
         gameLoop.start();
         gameThread.start();
     }
