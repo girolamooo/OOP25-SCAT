@@ -180,7 +180,6 @@ public class GameLogic {
             return GameResult.INVADERS_WON;
         }
         if (!areInvadersAlive(gameWorld.getInvaders())) {
-            System.out.println("GAMEOVER: PLAYER WON");
             return GameResult.PLAYER_WON;
         }
         return GameResult.PLAYING;

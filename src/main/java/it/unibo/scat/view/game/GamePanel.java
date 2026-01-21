@@ -57,7 +57,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         canvas.setFocusable(true);
 
         canvas.addKeyListener(new GameKL(viewInterface.getControlInterface()));
-        SwingUtilities.invokeLater(() -> canvas.requestFocusInWindow());
+        SwingUtilities.invokeLater(canvas::requestFocusInWindow);
 
         add(canvas, BorderLayout.CENTER);
     }

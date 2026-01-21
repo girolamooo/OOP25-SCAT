@@ -2,7 +2,6 @@ package it.unibo.scat.model;
 
 import java.util.List;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameRecord;
@@ -18,15 +17,14 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
 /**
  * The main class for the "Model" section of the MVC pattern.
  */
-@SuppressFBWarnings("URF_UNREAD_FIELD")
-// @SuppressFBWarnings("UUF_UNUSED_FIELD")
+// @SuppressFBWarnings("URF_UNREAD_FIELD")
 public final class Model implements ModelInterface, ModelObservable {
     private static final int WORLD_WIDTH = 59;
     private static final int WORLD_HEIGHT = 35;
+    private static GameState gameState;
     private int score;
     private int level;
     private String username;
-    private static GameState gameState;
     private Leaderboard leaderboard;
     private GameWorld gameWorld;
     private GameLogic gameLogic;
@@ -46,7 +44,7 @@ public final class Model implements ModelInterface, ModelObservable {
         leaderboard = new Leaderboard(leaderboardFile);
         score = 0;
         level = 0;
-        gameState = GameState.valueOf("PAUSE");
+        setGameState(GameState.PAUSE);
 
         gameWorld.initEntities(entitiesFile);
         leaderboard.initLeaderboard();
@@ -89,12 +87,18 @@ public final class Model implements ModelInterface, ModelObservable {
         level = 0;
     }
 
-    // @Override
-    public static void setGameState(GameState state) {
+    /**
+     * @param state ...
+     * 
+     */
+    public static void setGameState(final GameState state) {
         gameState = state;
     }
 
-    // @Override
+    /**
+     * @return ...
+     * 
+     */
     public static GameState getGameState() {
         return gameState;
     }

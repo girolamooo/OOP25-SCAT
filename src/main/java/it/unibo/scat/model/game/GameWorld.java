@@ -141,6 +141,7 @@ public class GameWorld {
      * 
      * @return the list of invaders.
      */
+    @SuppressFBWarnings(EI_EXPOSE_REP)
     public List<Invader> getInvaders() {
         return invaders;
     }

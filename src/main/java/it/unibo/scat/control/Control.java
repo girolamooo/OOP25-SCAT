@@ -31,7 +31,8 @@ public class Control implements ControlInterface {
         this.viewInterface = vInterface;
         this.modelInterface = mInterface;
 
-        gameLoop = new GameLoop(modelInterface, viewInterface, 400);
+        final int tickMillis = 400;
+        gameLoop = new GameLoop(modelInterface, viewInterface, tickMillis);
         gameThread = new Thread(gameLoop, "game-loop");
     }
 
