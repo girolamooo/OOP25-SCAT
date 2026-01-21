@@ -108,6 +108,11 @@ public final class Model implements ModelInterface, ModelObservable {
         final CollisionReport collisionReport;
         final int newPoints;
 
+        if (!gameLogic.areInvadersAlive(gameWorld.getInvaders())) {
+            increaseLevel();
+            gameLogic.resetEntities();
+        }
+
         gameLogic.moveEntities();
 
         collisionReport = gameLogic.checkCollisions();
@@ -158,5 +163,13 @@ public final class Model implements ModelInterface, ModelObservable {
         }
 
         return gameWorld.getPlayer().getHealth();
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public int getLevel() {
+        return level;
     }
 }

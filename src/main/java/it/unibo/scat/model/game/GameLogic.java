@@ -204,7 +204,7 @@ public class GameLogic {
      * @return true if at least one invader is alive, false otherwise
      * 
      */
-    private boolean areInvadersAlive(final List<Invader> invaders) {
+    public boolean areInvadersAlive(final List<Invader> invaders) {
         for (final Invader x : invaders) {
 
             if (x.isAlive()) {
