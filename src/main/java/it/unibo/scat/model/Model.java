@@ -1,6 +1,5 @@
 package it.unibo.scat.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -125,7 +124,7 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public List<EntityView> getEntities() {
-        return new ArrayList<>(this.gameWorld.getEntities());
+        return List.copyOf(gameWorld.getEntities());
     }
 
     @Override
