@@ -18,13 +18,13 @@ public interface Audio {
      * ...
      * 
      */
-    public void stop();
+    void stop();
 
     /**
      * ...
      * 
      * @param volume ...
      */
-    public void setVolume(float volume);
+    void setVolume(float volume);
 
 }
