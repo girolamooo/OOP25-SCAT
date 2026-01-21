@@ -169,4 +169,9 @@ public final class View implements ViewInterface, MenuActionsInterface {
         frame.repaint();
     }
 
+    @Override
+    public void update() {
+        gamePanel.update();
+    }
+
 }

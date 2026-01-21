@@ -175,4 +175,12 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     public int getPlayerHealth() {
         return viewInterface.fetchPlayerHealth();
     }
+
+    /**
+     * ...
+     */
+    public void update() {
+        statusBar.repaint();
+        canvas.repaint();
+    }
 }
