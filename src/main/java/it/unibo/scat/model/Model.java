@@ -27,7 +27,7 @@ public final class Model implements ModelInterface, ModelObservable {
     private int score;
     private int level;
     private String username;
-    private GameState gameState;
+    private static GameState gameState;
     private Leaderboard leaderboard;
     private GameWorld gameWorld;
     private GameLogic gameLogic;
@@ -90,13 +90,13 @@ public final class Model implements ModelInterface, ModelObservable {
         level = 0;
     }
 
-    @Override
-    public void setGameState(GameState state) {
+    // @Override
+    public static void setGameState(GameState state) {
         gameState = state;
     }
 
-    @Override
-    public GameState getGameState() {
+    // @Override
+    public static GameState getGameState() {
         return gameState;
     }
 
