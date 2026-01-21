@@ -9,8 +9,8 @@ import it.unibo.scat.view.api.ViewInterface;
 
 /**
  * Main game loop: updates the model at a fixed tick rate and schedules the view
- * update on the EDT.
- * The loop runs only when the game status is {@link GameStatus#PLAYING}.
+ * update.
+ * The loop runs only when the game status is {@link GameState#RUNNING}.
  */
 public final class GameLoop implements Runnable {
 
@@ -79,6 +79,9 @@ public final class GameLoop implements Runnable {
         }
     }
 
+    /**
+     * ...
+     */
     private void waitIfNotPlaying() {
         if (Model.getGameState() == GameState.RUNNING) {
             return;
@@ -98,6 +101,10 @@ public final class GameLoop implements Runnable {
         }
     }
 
+    /**
+     * @param millis ...
+     * 
+     */
     private static void sleepUninterruptibly(final long millis) {
         if (millis <= 0L) {
             return;
