@@ -148,7 +148,8 @@ public class GameLogic {
         final int shotX = player.getPosition().getX() + (player.getWidth() / 2);
         final int shotY = player.getPosition().getY() - shotHeight;
 
-        final Shot newShot = new Shot(EntityType.SHOT, shotX, shotY, shotWidth, shotHeight, shotHealth, Direction.UP);
+        final Shot newShot = new Shot(EntityType.PLAYER_SHOT, shotX, shotY, shotWidth, shotHeight, shotHealth,
+                Direction.UP);
 
         gameWorld.addEntity(newShot);
 
@@ -275,7 +276,8 @@ public class GameLogic {
     public void generateInvaderShot() {
         final Invader invader = getRandomInvader();
 
-        final Shot newShot = new Shot(EntityType.SHOT, invader.getPosition().getX(), invader.getPosition().getY() + 2,
+        final Shot newShot = new Shot(EntityType.INVADER_SHOT, invader.getPosition().getX(),
+                invader.getPosition().getY() + 2,
                 1, 2, 1, Direction.DOWN);
 
         gameWorld.addEntity(newShot);

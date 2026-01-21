@@ -25,4 +25,25 @@ public interface EntityView {
      * @return the position.
      */
     Position getPosition();
+
+    /**
+     * ...
+     * 
+     * @return ...
+     */
+    int getWidth();
+
+    /**
+     * ...
+     * 
+     * @return ...
+     */
+    int getHeight();
+
+    /**
+     * ...
+     * 
+     * @return ...
+     */
+    int getHealth();
 }

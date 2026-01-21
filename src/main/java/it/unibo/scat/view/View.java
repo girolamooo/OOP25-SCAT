@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -100,7 +99,7 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public List<EntityView> fetchEntitiesFromModel() {
-        return new ArrayList<>();
+        return modelObservable.getEntities();
     }
 
     @Override
@@ -110,7 +109,7 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public int fetchScore() {
-        return 0;
+        return modelObservable.getScore();
     }
 
     @Override
