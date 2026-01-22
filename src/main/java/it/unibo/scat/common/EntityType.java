@@ -8,7 +8,8 @@ public enum EntityType {
     INVADER_2,
     INVADER_3,
     INVADER_4,
-    SHOT,
+    PLAYER_SHOT,
+    INVADER_SHOT,
     BUNKER,
     PLAYER
 }

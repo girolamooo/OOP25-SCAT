@@ -1,9 +1,7 @@
 package it.unibo.scat.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameRecord;
@@ -19,15 +17,13 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
 /**
  * The main class for the "Model" section of the MVC pattern.
  */
-@SuppressFBWarnings("URF_UNREAD_FIELD")
-// @SuppressFBWarnings("UUF_UNUSED_FIELD")
+// @SuppressFBWarnings("URF_UNREAD_FIELD")
 public final class Model implements ModelInterface, ModelObservable {
-    private static final int WORLD_WIDTH = 59;
-    private static final int WORLD_HEIGHT = 35;
+    private static GameState gameState;
     private int score;
     private int level;
+
     private String username;
-    private GameState gameState;
     private Leaderboard leaderboard;
     private GameWorld gameWorld;
     private GameLogic gameLogic;
@@ -42,12 +38,12 @@ public final class Model implements ModelInterface, ModelObservable {
      */
     @Override
     public void initEverything(final String entitiesFile, final String leaderboardFile) {
-        gameWorld = new GameWorld(WORLD_WIDTH, WORLD_HEIGHT);
+        gameWorld = new GameWorld();
         gameLogic = new GameLogic(gameWorld);
         leaderboard = new Leaderboard(leaderboardFile);
         score = 0;
         level = 0;
-        gameState = GameState.valueOf("PAUSE");
+        setGameState(GameState.PAUSE);
 
         gameWorld.initEntities(entitiesFile);
         leaderboard.initLeaderboard();
@@ -64,36 +60,18 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     /**
-     * Updates the current score by adding the given amount of points.
-     *
-     * @param points the points to add to the score
+     * @param points the points to add to the current score.
+     * 
      */
     public void updateScore(final int points) {
         score += points;
     }
 
-    /**
-     * Adds player's shot.
-     */
     @Override
     public void addPlayerShot() {
         gameLogic.addPlayerShot();
     }
 
-    /**
-     * Ends the game.
-     */
-    @Override
-    public void endGame() {
-        gameState = GameState.GAMEOVER;
-    }
-
-    /**
-     * Moves the player in the given direction.
-     * Gets the player from the gameWorld and updates its position.
-     * 
-     * @param direction the movement direction
-     */
     @Override
     public void movePlayer(final Direction direction) {
         if (gameLogic.canPlayerMove(direction)) {
@@ -101,18 +79,6 @@ public final class Model implements ModelInterface, ModelObservable {
         }
     }
 
-    /**
-     * Pauses the game.
-     * Sets the game state to PAUSE.
-     */
-    @Override
-    public void pauseGame() {
-        gameState = GameState.PAUSE;
-    }
-
-    /**
-     * Resets all entities throught the gameLogic and restores score and difficulty.
-     */
     @Override
     public void resetGame() {
         gameLogic.resetEntities();
@@ -121,55 +87,51 @@ public final class Model implements ModelInterface, ModelObservable {
     }
 
     /**
-     * Resumes the game.
-     * Sets the game state to RUNNING.
+     * @param state ...
+     * 
      */
-    @Override
-    public void resumeGame() {
-        gameState = GameState.RUNNING;
+    public static void setGameState(final GameState state) {
+        gameState = state;
     }
 
     /**
-     * Main function.
+     * @return ...
+     * 
      */
+    public static GameState getGameState() {
+        return gameState;
+    }
+
     @Override
     public void update() {
         final CollisionReport collisionReport;
         final int newPoints;
 
-        gameLogic.moveEntities();
+        gameLogic.handleInvadersMovement();
+        gameLogic.handleShotsMovement();
+        gameLogic.handleBonusInvader();
+
+        if (!gameLogic.areInvadersAlive(gameWorld.getInvaders())) {
+            increaseLevel();
+            gameLogic.resetEntities();
+        }
 
         collisionReport = gameLogic.checkCollisions();
         newPoints = gameLogic.handleCollisionReport(collisionReport);
         updateScore(newPoints);
 
         gameLogic.removeDeadShots();
-        gameLogic.handleBonusInvader();
-
-        if (gameWorld.shouldInvadersChangeDirection()) {
-            gameWorld.changeInvadersDirection();
-        }
 
         if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
-            endGame();
+            setGameState(GameState.GAMEOVER);
         }
     }
 
-    /**
-     * Entities getter.
-     * 
-     * @return the entity list.
-     */
     @Override
     public List<EntityView> getEntities() {
-        return new ArrayList<>(this.gameWorld.getEntities());
+        return List.copyOf(gameWorld.getEntities());
     }
 
-    /**
-     * Leaderboard getter.
-     * 
-     * @return the leaderboard.
-     */
     @Override
     public List<GameRecord> getLeaderboard() {
         return leaderboard.getAllRecords();
@@ -180,23 +142,30 @@ public final class Model implements ModelInterface, ModelObservable {
         return score;
     }
 
-    /**
-     * Username getter.
-     * 
-     * @return the username.
-     */
     @Override
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Username setter.
-     * 
-     * @param username the username that the player chose.
-     */
     @Override
     public void setUsername(final String username) {
         this.username = username;
+    }
+
+    @Override
+    public int getPlayerHealth() {
+        if (gameWorld.getPlayer() == null) {
+            return 0;
+        }
+
+        return gameWorld.getPlayer().getHealth();
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public int getLevel() {
+        return level;
     }
 }

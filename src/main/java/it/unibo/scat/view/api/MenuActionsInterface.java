@@ -5,7 +5,8 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import it.unibo.scat.common.EntityView;
-import it.unibo.scat.model.leaderboard.Leaderboard;
+import it.unibo.scat.common.GameRecord;
+import it.unibo.scat.control.api.ControlInterface;
 
 /**
  * Interface for the View class, used by MenuPanel, GamePanel.
@@ -54,7 +55,7 @@ public interface MenuActionsInterface {
      * @return ...
      *
      */
-    Leaderboard fetchLeaderboard();
+    List<GameRecord> fetchLeaderboard();
 
     /**
      * @return ...
@@ -70,21 +71,30 @@ public interface MenuActionsInterface {
     /**
      * ...
      */
-    void hideGamePanel();
-
-    /**
-     * ...
-     */
     void showMenuPanel();
-
-    /**
-     * ...
-     */
-    void hideMenuPanel();
 
     /**
      * @return ...
      *
      */
     int fetchScore();
+
+    /**
+     * @return ...
+     * 
+     */
+    int fetchPlayerHealth();
+
+    /**
+     * ...
+     */
+    void startGame();
+
+    /**
+     * ....
+     * 
+     * @return ...
+     */
+    ControlInterface getControlInterface();
+
 }
