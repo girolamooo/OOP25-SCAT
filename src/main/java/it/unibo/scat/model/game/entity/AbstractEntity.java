@@ -145,6 +145,7 @@ public abstract class AbstractEntity implements EntityView {
      * 
      * @return the width.
      */
+    @Override
     public int getWidth() {
         return width;
     }
@@ -153,10 +154,18 @@ public abstract class AbstractEntity implements EntityView {
      * @return the height of the entity.
      * 
      */
+    @Override
     public int getHeight() {
-
         return height;
+    }
 
+    /**
+     * @return health of the entity
+     * 
+     */
+    @Override
+    public int getHealth() {
+        return health;
     }
 
     /**

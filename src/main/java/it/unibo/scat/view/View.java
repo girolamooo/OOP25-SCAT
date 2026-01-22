@@ -2,32 +2,33 @@ package it.unibo.scat.view;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.EntityView;
+import it.unibo.scat.common.GameRecord;
 import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.model.api.ModelObservable;
-import it.unibo.scat.model.leaderboard.Leaderboard;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.api.MenuActionsInterface;
 import it.unibo.scat.view.api.ViewInterface;
+import it.unibo.scat.view.game.GameKL;
 import it.unibo.scat.view.game.GamePanel;
 import it.unibo.scat.view.menu.MenuPanel;
 
 /**
  * The main class for the "View" section of the MVC pattern.
  */
-@SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
+// @SuppressFBWarnings({ "UUF_UNUSED_FIELD", "URF_UNREAD_FIELD" })
+@SuppressFBWarnings("UUF_UNUSED_FIELD")
 // @SuppressWarnings("PMD.SingularField")
 public final class View implements ViewInterface, MenuActionsInterface {
     // private final Dimension frameDim = new
@@ -46,14 +47,14 @@ public final class View implements ViewInterface, MenuActionsInterface {
     @Override
     public void initEverything() {
         backgroundSound = new AudioManager();
-        initFrame();
+
         menuPanel = new MenuPanel(this);
-        gamePanel = new GamePanel();
-        menuPanel.setBackground(Color.BLUE);
-        gamePanel.setBackground(Color.GREEN);
+        gamePanel = new GamePanel(this);
+        gamePanel.setFocusable(true);
+        gamePanel.addKeyListener(new GameKL(controlInterface));
 
+        initFrame();
         showMenuPanel();
-
     }
 
     /**
@@ -61,17 +62,23 @@ public final class View implements ViewInterface, MenuActionsInterface {
      */
     private void initFrame() {
         frame = new JFrame();
-        // frame.setUndecorated(true); // ... da mettere in seguito maybe
-        frame.setTitle("SCAT 🚀👾");
-        frame.setBounds(bounds);
-        // frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(),
-        // BoxLayout.Y_AXIS));
-        frame.getContentPane().setLayout(new CardLayout());
-        frame.setResizable(false);
+        frame.setTitle("SCAT🚀👾");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.getContentPane().setBackground(Color.DARK_GRAY);
+        frame.setResizable(false);
+
+        frame.getContentPane().setLayout(new CardLayout());
+        frame.getContentPane().add(gamePanel, "GAME");
+
+        frame.pack();
+        final java.awt.Insets ins = frame.getInsets();
+
+        final Dimension best = gamePanel.computeBestFrameSize(bounds, ins);
+        frame.setSize(best);
+
+        frame.setLocation(
+                bounds.x + (bounds.width - best.width) / 2,
+                bounds.y + (bounds.height - best.height) / 2);
+
         frame.setVisible(true);
     }
 
@@ -93,37 +100,38 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public void closeFrame() {
-
+        this.frame.dispose();
     }
 
     @Override
     public List<EntityView> fetchEntitiesFromModel() {
-        return new ArrayList<>();
+        return modelObservable.getEntities();
     }
 
     @Override
-    public Leaderboard fetchLeaderboard() {
-        return null;
+    public List<GameRecord> fetchLeaderboard() {
+        return modelObservable.getLeaderboard();
     }
 
     @Override
     public int fetchScore() {
-        return 0;
+        return modelObservable.getScore();
     }
 
     @Override
     public String fetchUsername() {
-        return null;
+        return modelObservable.getUsername();
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     @Override
     public JFrame getFrame() {
-        return null;
+        return this.frame;
     }
 
     @Override
     public void pauseGame() {
-
+        controlInterface.notifyPauseGame();
     }
 
     @Override
@@ -133,36 +141,57 @@ public final class View implements ViewInterface, MenuActionsInterface {
 
     @Override
     public void resetGame() {
-
+        controlInterface.notifyResetGame();
     }
 
     @Override
     public void resumeGame() {
-
+        controlInterface.notifyResumeGame();
     }
 
     @Override
     public void setUsername(final String username) {
+        controlInterface.notifySetUsername(username);
+    }
 
+    @Override
+    public int fetchPlayerHealth() {
+        return modelObservable.getPlayerHealth();
     }
 
     @Override
     public void showGamePanel() {
-        backgroundSound.stop();
         frame.getContentPane().removeAll();
         frame.getContentPane().add(gamePanel, BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
+        SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
+
+        backgroundSound.stop();
     }
 
     @Override
     public void showMenuPanel() {
-        backgroundSound.play(AudioTrack.SOUND_TRACK, true);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(menuPanel, BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
 
+        backgroundSound.play(AudioTrack.SOUND_TRACK, true);
     }
 
+    @Override
+    public void update() {
+        gamePanel.update();
+    }
+
+    @Override
+    public void startGame() {
+        controlInterface.notifyStartGame();
+    }
+
+    @Override
+    public ControlInterface getControlInterface() {
+        return controlInterface;
+    }
 }

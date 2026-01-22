@@ -57,7 +57,7 @@ public final class SettingsPanel extends JPanel {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 viewInterface.showGamePanel();
-                viewInterface.resumeGame();
+                viewInterface.startGame();
                 effectSound.play(AudioTrack.OPTION_SELECTED, false);
             }
 

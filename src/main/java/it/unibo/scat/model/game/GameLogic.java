@@ -148,7 +148,8 @@ public class GameLogic {
         final int shotX = player.getPosition().getX() + (player.getWidth() / 2);
         final int shotY = player.getPosition().getY() - shotHeight;
 
-        final Shot newShot = new Shot(EntityType.SHOT, shotX, shotY, shotWidth, shotHeight, shotHealth, Direction.UP);
+        final Shot newShot = new Shot(EntityType.PLAYER_SHOT, shotX, shotY, shotWidth, shotHeight, shotHealth,
+                Direction.UP);
 
         gameWorld.addEntity(newShot);
 
@@ -203,7 +204,7 @@ public class GameLogic {
      * @return true if at least one invader is alive, false otherwise
      * 
      */
-    private boolean areInvadersAlive(final List<Invader> invaders) {
+    public boolean areInvadersAlive(final List<Invader> invaders) {
         for (final Invader x : invaders) {
 
             if (x.isAlive()) {
@@ -275,7 +276,8 @@ public class GameLogic {
     public void generateInvaderShot() {
         final Invader invader = getRandomInvader();
 
-        final Shot newShot = new Shot(EntityType.SHOT, invader.getPosition().getX(), invader.getPosition().getY() + 2,
+        final Shot newShot = new Shot(EntityType.INVADER_SHOT, invader.getPosition().getX(),
+                invader.getPosition().getY() + 2,
                 1, 2, 1, Direction.DOWN);
 
         gameWorld.addEntity(newShot);
@@ -336,6 +338,8 @@ public class GameLogic {
         if (isAlive) {
             if (isOutOfBorder(gameWorld.getBonusInvader())) {
                 gameWorld.removeEntity(gameWorld.getBonusInvader());
+            } else {
+                gameWorld.getBonusInvader().move();
             }
             return;
         }
