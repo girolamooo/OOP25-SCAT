@@ -114,9 +114,9 @@ public final class Canvas extends JPanel {
                 Objects.requireNonNull(getClass().getResource("/entities/invaders/invader_3_2.png"))).getImage();
 
         invader4[0] = new ImageIcon(
-                Objects.requireNonNull(getClass().getResource("/entities/invaders/invader_4_1.png"))).getImage();
+                Objects.requireNonNull(getClass().getResource("/entities/invaders/BONUS_INVADER_1.png"))).getImage();
         invader4[1] = new ImageIcon(
-                Objects.requireNonNull(getClass().getResource("/entities/invaders/invader_4_2.png"))).getImage();
+                Objects.requireNonNull(getClass().getResource("/entities/invaders/BONUS_INVADER_2.png"))).getImage();
     }
 
     @Override
@@ -162,7 +162,7 @@ public final class Canvas extends JPanel {
             case INVADER_3 -> {
                 return invader3[animationFrame];
             }
-            case INVADER_4 -> {
+            case BONUS_INVADER -> {
                 return invader4[animationFrame];
             }
             case PLAYER -> {

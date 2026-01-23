@@ -274,7 +274,7 @@ public class GameLogic {
      */
     public boolean canInvadersShoot() {
         final long currTime = System.currentTimeMillis();
-        return (currTime - Invader.getLastShotTime()) >= Invader.getShootingCooldown();
+        return (currTime - Invader.getLastShotTime()) >= Costants.INVADERS_SHOOTING_COOLDOWN;
     }
 
     /**
@@ -403,7 +403,7 @@ public class GameLogic {
     public boolean canPlayerShoot() {
         final long actualTime = System.currentTimeMillis();
 
-        return actualTime - Player.getLastShotTime() >= Player.getShootingCooldown();
+        return actualTime - Player.getLastShotTime() >= Costants.PLAYER_SHOOTING_COOLDOWN;
     }
 
     /**
