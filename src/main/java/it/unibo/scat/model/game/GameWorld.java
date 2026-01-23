@@ -154,7 +154,7 @@ public class GameWorld {
         entities.add(e);
 
         if (e instanceof Invader) {
-            if (e.getType() == EntityType.INVADER_4) {
+            if (e.getType() == EntityType.BONUS_INVADER) {
 
                 bonusInvader = (Invader) e;
                 return;
@@ -178,7 +178,7 @@ public class GameWorld {
         entities.remove(e);
 
         if (e instanceof Invader) {
-            if (e.getType() == EntityType.INVADER_4) {
+            if (e.getType() == EntityType.BONUS_INVADER) {
                 bonusInvader = null;
             } else {
                 invaders.remove((Invader) e);
@@ -314,7 +314,7 @@ public class GameWorld {
         final int x = left ? leftPos : rightPos;
         final int y = 2;
 
-        final Invader invader = new Invader(EntityType.INVADER_4, x, y, 3, 2, 1);
+        final Invader invader = new Invader(EntityType.BONUS_INVADER, x, y, 3, 2, 1);
         invader.setCurrDirection(direction);
         invader.setNextDirection(direction);
 

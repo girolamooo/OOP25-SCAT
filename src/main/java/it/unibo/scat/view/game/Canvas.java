@@ -162,7 +162,7 @@ public final class Canvas extends JPanel {
             case INVADER_3 -> {
                 return invader3[animationFrame];
             }
-            case INVADER_4 -> {
+            case BONUS_INVADER -> {
                 return invader4[animationFrame];
             }
             case PLAYER -> {
@@ -177,7 +177,7 @@ public final class Canvas extends JPanel {
             case BUNKER -> {
                 final int bunker2Life = 20;
                 if (entity.getHealth() > bunker2Life) {
-                    return bunker[2];
+                    return bunker[0];
                 }
 
                 final int bunker1Life = 10;
@@ -185,7 +185,7 @@ public final class Canvas extends JPanel {
                     return bunker[1];
                 }
 
-                return bunker[0];
+                return bunker[2];
             }
         }
 

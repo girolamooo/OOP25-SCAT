@@ -44,16 +44,17 @@ public class GameLogic {
      */
     public CollisionReport checkCollisions() {
         final List<AbstractEntity> entitiesThatGotShot = new ArrayList<>();
-        final List<Shot> shotList = gameWorld.getShots();
+        final List<Shot> shotList = List.copyOf(gameWorld.getShots());
+        final List<AbstractEntity> entityList = List.copyOf(gameWorld.getEntities());
 
         for (final Shot shot : shotList) {
-            for (final AbstractEntity entity : gameWorld.getEntities()) {
+            for (final AbstractEntity entity : entityList) {
+                final boolean isDead = !entity.isAlive();
                 final boolean isSameEntity = entity.equals(shot);
                 final boolean isCollision = areColliding(shot, entity);
-                final boolean isUselessCollision = isPlayerShot(shot) && entity instanceof Player
-                        || isInvaderShot(shot) && entity instanceof Invader;
+                final boolean areOnSameTeam = areOnSameTeam(shot, entity);
 
-                if (isSameEntity || !isCollision || isUselessCollision) {
+                if (isSameEntity || !isCollision || areOnSameTeam || isDead) {
                     continue;
                 }
                 entitiesThatGotShot.add(shot);
@@ -61,6 +62,25 @@ public class GameLogic {
             }
         }
         return new CollisionReport(entitiesThatGotShot);
+    }
+
+    /**
+     * This functions returns true if two entities (the first argument is assumed to
+     * be always a shot) are on the same team.
+     * 
+     * @param shot   ...
+     * @param entity ...
+     * @return ...
+     * 
+     */
+    private boolean areOnSameTeam(final Shot shot, final AbstractEntity entity) {
+        if (entity instanceof Shot) {
+            return isPlayerShot(shot) && isPlayerShot((Shot) entity)
+                    || isInvaderShot(shot) && isInvaderShot((Shot) entity);
+        } else {
+            return isPlayerShot(shot) && entity instanceof Player
+                    || isInvaderShot(shot) && entity instanceof Invader;
+        }
     }
 
     /**
@@ -131,7 +151,9 @@ public class GameLogic {
         int points = 0;
 
         for (final AbstractEntity entity : cr.getEntities()) {
-            points += entity.onHit();
+            if (entity.isAlive()) {
+                points += entity.onHit();
+            }
         }
         return points;
     }
@@ -274,7 +296,7 @@ public class GameLogic {
      */
     public boolean canInvadersShoot() {
         final long currTime = System.currentTimeMillis();
-        return (currTime - Invader.getLastShotTime()) >= Invader.getShootingCooldown();
+        return (currTime - Invader.getLastShotTime()) >= Costants.INVADERS_SHOOTING_COOLDOWN;
     }
 
     /**
@@ -323,14 +345,16 @@ public class GameLogic {
     }
 
     /**
-     * Removes the dead shots.
+     * Removes every dead shot.
+     * A shot is dead if:
+     * - has no health (isAlive is false)
+     * - or if it is out of border (isOutOfBorder is true)
      */
     public void removeDeadShots() {
-        for (final Shot shot : gameWorld.getShots()) {
-            if (!shot.isAlive() || isOutOfBorder(shot)) {
-                gameWorld.removeEntity(shot);
-            }
-        }
+        final List<Shot> snapshot = List.copyOf(gameWorld.getShots());
+        snapshot.stream()
+                .filter(shot -> !shot.isAlive() || isOutOfBorder(shot))
+                .forEach(gameWorld::removeEntity);
     }
 
     /**
@@ -401,7 +425,7 @@ public class GameLogic {
     public boolean canPlayerShoot() {
         final long actualTime = System.currentTimeMillis();
 
-        return actualTime - Player.getLastShotTime() >= Player.getShootingCooldown();
+        return actualTime - Player.getLastShotTime() >= Costants.PLAYER_SHOOTING_COOLDOWN;
     }
 
     /**
@@ -433,7 +457,7 @@ public class GameLogic {
      * @return true if the player can move left, false otherwise
      */
     private boolean canPlayerMoveLeft() {
-        return gameWorld.getPlayer().getPosition().getX() + gameWorld.getPlayer().getWidth() >= Costants.BORDER_LEFT;
+        return gameWorld.getPlayer().getPosition().getX() > Costants.BORDER_LEFT;
     }
 
     /**
