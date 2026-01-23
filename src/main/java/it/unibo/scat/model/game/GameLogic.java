@@ -435,7 +435,7 @@ public class GameLogic {
      * @return true if the player can move left, false otherwise
      */
     private boolean canPlayerMoveLeft() {
-        return gameWorld.getPlayer().getPosition().getX() + gameWorld.getPlayer().getWidth() >= Costants.BORDER_LEFT;
+        return gameWorld.getPlayer().getPosition().getX() > Costants.BORDER_LEFT;
     }
 
     /**
