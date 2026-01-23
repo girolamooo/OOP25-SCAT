@@ -50,10 +50,9 @@ public class GameLogic {
             for (final AbstractEntity entity : gameWorld.getEntities()) {
                 final boolean isSameEntity = entity.equals(shot);
                 final boolean isCollision = areColliding(shot, entity);
-                final boolean isUselessCollision = isPlayerShot(shot) && entity instanceof Player
-                        || isInvaderShot(shot) && entity instanceof Invader;
+                final boolean areOnSameTeam = areOnSameTeam(shot, entity);
 
-                if (isSameEntity || !isCollision || isUselessCollision) {
+                if (isSameEntity || !isCollision || areOnSameTeam) {
                     continue;
                 }
                 entitiesThatGotShot.add(shot);
@@ -61,6 +60,25 @@ public class GameLogic {
             }
         }
         return new CollisionReport(entitiesThatGotShot);
+    }
+
+    /**
+     * This functions returns true if two entities (the first argument is assumed to
+     * be always a shot) are on the same team.
+     * 
+     * @param e1 ...
+     * @param e2 ...
+     * @return ...
+     * 
+     */
+    private boolean areOnSameTeam(final Shot s1, final AbstractEntity e2) {
+        if (e2 instanceof Shot) {
+            return isPlayerShot(s1) && isPlayerShot((Shot) e2)
+                    || isInvaderShot(s1) && isInvaderShot((Shot) e2);
+        } else {
+            return isPlayerShot(s1) && e2 instanceof Player
+                    || isInvaderShot(s1) && e2 instanceof Invader;
+        }
     }
 
     /**
