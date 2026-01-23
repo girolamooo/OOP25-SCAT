@@ -66,18 +66,18 @@ public class GameLogic {
      * This functions returns true if two entities (the first argument is assumed to
      * be always a shot) are on the same team.
      * 
-     * @param e1 ...
-     * @param e2 ...
+     * @param shot   ...
+     * @param entity ...
      * @return ...
      * 
      */
-    private boolean areOnSameTeam(final Shot s1, final AbstractEntity e2) {
-        if (e2 instanceof Shot) {
-            return isPlayerShot(s1) && isPlayerShot((Shot) e2)
-                    || isInvaderShot(s1) && isInvaderShot((Shot) e2);
+    private boolean areOnSameTeam(final Shot shot, final AbstractEntity entity) {
+        if (entity instanceof Shot) {
+            return isPlayerShot(shot) && isPlayerShot((Shot) entity)
+                    || isInvaderShot(shot) && isInvaderShot((Shot) entity);
         } else {
-            return isPlayerShot(s1) && e2 instanceof Player
-                    || isInvaderShot(s1) && e2 instanceof Invader;
+            return isPlayerShot(shot) && entity instanceof Player
+                    || isInvaderShot(shot) && entity instanceof Invader;
         }
     }
 
