@@ -306,7 +306,7 @@ public class GameWorld {
         final boolean left = new java.util.Random().nextBoolean();
         final Direction direction = left ? Direction.RIGHT : Direction.LEFT;
         final int x = left ? leftPos : rightPos;
-        final int y = 2;
+        final int y = 1;
 
         final Invader invader = new Invader(EntityType.BONUS_INVADER, x, y, 3, 2, 1);
         invader.setCurrDirection(direction);

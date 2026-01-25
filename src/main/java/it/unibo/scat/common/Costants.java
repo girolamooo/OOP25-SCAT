@@ -10,7 +10,7 @@ public final class Costants {
     public static final int BORDER_LEFT = 1;
     public static final int BORDER_UP = 1;
 
-    public static final int INVADER_BOTTOM_LIMIT = 26;
+    public static final int INVADER_BOTTOM_LIMIT = 27;
 
     // POINTS
     public static final int POINTS_INVADER1 = 10;
