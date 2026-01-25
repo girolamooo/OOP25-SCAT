@@ -51,9 +51,6 @@ public class GameWorld {
         final int idxType = 0;
         final int idxX = 1;
         final int idxY = 2;
-        final int idxWidth = 3;
-        final int idxHeight = 4;
-        final int idxHealth = 5;
 
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
@@ -64,8 +61,6 @@ public class GameWorld {
             String line;
             int x;
             int y;
-            int width;
-            int height;
             EntityType type;
             AbstractEntity newEntity;
 
