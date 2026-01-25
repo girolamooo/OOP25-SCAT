@@ -39,6 +39,7 @@ public final class View implements ViewInterface, MenuActionsInterface {
     private MenuPanel menuPanel;
     private GamePanel gamePanel;
     private AudioManager backgroundSound;
+    private int chosenShipIndex;
 
     @Override
     public void initEverything() {
@@ -189,5 +190,15 @@ public final class View implements ViewInterface, MenuActionsInterface {
     @Override
     public ControlInterface getControlInterface() {
         return controlInterface;
+    }
+
+    @Override
+    public int getChosenShipIndex() {
+        return chosenShipIndex;
+    }
+
+    @Override
+    public void setChosenShipIndex(final int index) {
+        chosenShipIndex = index;
     }
 }
