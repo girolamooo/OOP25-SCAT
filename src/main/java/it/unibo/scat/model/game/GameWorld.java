@@ -84,7 +84,7 @@ public class GameWorld {
                     }
                     default -> {
                         newEntity = new Invader(type, x, y, Costants.INVADER_WIDTH, Costants.INVADER_HEIGHT,
-                                Costants.PLAYER_HEALTH);
+                                Costants.INVADERS_HEALTH);
                     }
                 }
 
