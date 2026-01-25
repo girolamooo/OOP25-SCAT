@@ -28,8 +28,28 @@ public final class Costants {
     public static final int PLAYER_SHOOTING_COOLDOWN = 500;
     public static final int INVADERS_SHOOTING_COOLDOWN = INVADER_STEP_MS / 5;
 
+    // ENTITIES HEALTH
+    public static final int BUNKER_HEALTH1 = 30;
+    public static final int BUNKER_HEALTH2 = 20;
+    public static final int BUNKER_HEALTH3 = 10;
+    public static final int PLAYER_HEALTH = 3;
+    public static final int INVADERS_HEALTH = 1;
+    public static final int SHOT_HEALTH = 1;
+
+    // ENTITIES DIMENSION
+    public static final int BUNKER_WIDTH = 5;
+    public static final int BUNKER_HEIGHT = 3;
+    public static final int PLAYER_WIDTH = 3;
+    public static final int PLAYER_HEIGHT = 3;
+    public static final int INVADER_WIDTH = 2;
+    public static final int INVADER_HEIGHT = 2;
+    public static final int BONUS_INVADER_WIDTH = 3;
+    public static final int BONUS_INVADER_HEIGHT = 2;
+    public static final int SHOT_WIDTH = 1;
+    public static final int SHOT_HEIGHT = 2;
+
     // UTIL
-    public static final int ZERO = 0; // useful for some functions that have to return 0 in default case
+    public static final int ZERO = 0;
 
     /**
      * Private constructor to avoid initialization.
