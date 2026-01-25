@@ -66,7 +66,6 @@ public class GameWorld {
             int y;
             int width;
             int height;
-            int health;
             EntityType type;
             AbstractEntity newEntity;
 
@@ -77,20 +76,20 @@ public class GameWorld {
                 type = EntityType.valueOf(field[idxType]);
                 x = Integer.parseInt(field[idxX]);
                 y = Integer.parseInt(field[idxY]);
-                width = Integer.parseInt(field[idxWidth]);
-                height = Integer.parseInt(field[idxHeight]);
-                health = Integer.parseInt(field[idxHealth]);
 
                 switch (type) {
                     case BUNKER -> {
-                        newEntity = new Bunker(type, x, y, width, height, health);
+                        newEntity = new Bunker(type, x, y, Costants.BUNKER_WIDTH, Costants.BUNKER_HEIGHT,
+                                Costants.BUNKER_HEALTH1);
                     }
                     case PLAYER -> {
-                        newEntity = new Player(type, x, y, width, height, health);
+                        newEntity = new Player(type, x, y, Costants.PLAYER_WIDTH, Costants.PLAYER_HEIGHT,
+                                Costants.PLAYER_HEALTH);
                         this.player = (Player) newEntity;
                     }
                     default -> {
-                        newEntity = new Invader(type, x, y, width, height, health);
+                        newEntity = new Invader(type, x, y, Costants.INVADER_WIDTH, Costants.INVADER_HEIGHT,
+                                Costants.PLAYER_HEALTH);
                     }
                 }
 
