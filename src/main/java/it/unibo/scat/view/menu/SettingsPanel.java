@@ -56,8 +56,8 @@ public final class SettingsPanel extends JPanel {
         playLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                // menuInterface.showUsernamePanel();
-                viewInterface.showGamePanel();
+                menuInterface.showUsernamePanel();
+                // viewInterface.showGamePanel();
                 viewInterface.startGame();
                 effectSound.play(AudioTrack.OPTION_SELECTED, false);
             }
