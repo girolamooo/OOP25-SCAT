@@ -6,30 +6,45 @@ import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * ...
+ */
 public final class UIConstants {
+    // IMAGE PATHS
+    public static final String[] SHIP_PATHS = {
+            "/entities/player/ship1.png",
+            "/entities/player/ship2.png",
+            "/entities/player/ship3.png",
+            "/entities/player/ship4.png",
+            "/entities/player/ship5.png",
+            "/entities/player/ship6.png",
+    };
 
     // FONTS
-    public final static Font TITLE_FONT;
-    public final static Font TITLE_FONT_HOVER;
-
-    public final static Font MEDIUM_FONT;
-    public final static Font SMALL_FONT;
-    // public final static Font TITLE_HOVER_FONT;
+    public static final Font TITLE_FONT;
+    public static final Font TITLE_FONT_HOVER;
+    public static final Font MEDIUM_FONT;
+    public static final Font SMALL_FONT;
 
     static {
+        final float titleBase = 60f;
+        final float titleHover = 65f;
+        final float medium = 32f;
+        final float small = 20f;
+
         try (InputStream is = UIConstants.class.getResourceAsStream("/fonts/PressStart2P.ttf")) {
 
-            Font base = Font.createFont(Font.TRUETYPE_FONT, is);
+            final Font base = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment
                     .getLocalGraphicsEnvironment()
                     .registerFont(base);
 
-            TITLE_FONT = base.deriveFont(60f);
-            TITLE_FONT_HOVER = base.deriveFont(65f);
-            MEDIUM_FONT = base.deriveFont(32f);
-            SMALL_FONT = base.deriveFont(18f);
+            TITLE_FONT = base.deriveFont(titleBase);
+            TITLE_FONT_HOVER = base.deriveFont(titleHover);
+            MEDIUM_FONT = base.deriveFont(medium);
+            SMALL_FONT = base.deriveFont(small);
 
-        } catch (IOException | FontFormatException e) {
+        } catch (final IOException | FontFormatException e) {
             throw new ExceptionInInitializerError(e);
         }
     }
