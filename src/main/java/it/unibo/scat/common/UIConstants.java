@@ -22,7 +22,7 @@ public final class UIConstants {
             "/entities/player/ship6.png");
 
     // COLORS
-    public static final Color PANELS_BG_COLOR = new Color(255, 255, 255, 25);
+    public static final Color PANELS_BG_COLOR = new Color(255, 255, 255, 10);
 
     // FONTS
     public static final Font TITLE_FONT;

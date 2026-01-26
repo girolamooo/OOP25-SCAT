@@ -1,12 +1,17 @@
 package it.unibo.scat.view.menu.usernamepanel;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -41,6 +46,7 @@ public final class UsernamePanel extends JPanel {
         initUsernameField();
         initShipText();
         initButtonsWrapper();
+        initPlayButton();
     }
 
     /**
@@ -49,7 +55,7 @@ public final class UsernamePanel extends JPanel {
     private void initUsernameText() {
         final JLabel label = new JLabel("ENTER USERNAME");
         label.setAlignmentX(CENTER_ALIGNMENT);
-        label.setFont(UIConstants.TITLE_FONT);
+        label.setFont(UIConstants.MEDIUM_FONT);
         label.setFocusable(false);
         label.setForeground(Color.GREEN);
 
@@ -95,7 +101,7 @@ public final class UsernamePanel extends JPanel {
     private void initShipText() {
         final JLabel label = new JLabel("CHOOSE SHIP");
         label.setAlignmentX(CENTER_ALIGNMENT);
-        label.setFont(UIConstants.TITLE_FONT);
+        label.setFont(UIConstants.MEDIUM_FONT);
         label.setFocusable(false);
         label.setForeground(Color.GREEN);
 
@@ -119,6 +125,48 @@ public final class UsernamePanel extends JPanel {
 
         add(Box.createVerticalStrut(VERTICAL_SPACE));
         add(buttonsWrapper);
+    }
+
+    /**
+     * ...
+     */
+    private void initPlayButton() {
+
+        final JButton playButton = new JButton("PLAY");
+        playButton.setFocusable(false);
+        playButton.setFont(UIConstants.TITLE_FONT);
+        playButton.setBackground(Color.GREEN);
+        playButton.setForeground(Color.BLACK);
+        playButton.setAlignmentX(CENTER_ALIGNMENT);
+
+        final FontMetrics fm = getFontMetrics(UIConstants.MEDIUM_FONT);
+        final int maxWidth = fm.charWidth('W') * 15 + getInsets().left
+                + getInsets().right;
+        final int maxHeight = fm.getHeight() * 2 + getInsets().top
+                + getInsets().bottom;
+
+        final Dimension d = new Dimension(maxWidth, maxHeight);
+        playButton.setPreferredSize(d);
+        playButton.setMinimumSize(d);
+        playButton.setMaximumSize(d);
+
+        playButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(final MouseEvent e) {
+                playButton.setBackground(Color.WHITE);
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(final MouseEvent e) {
+                playButton.setBackground(Color.GREEN);
+
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        add(Box.createVerticalStrut(VERTICAL_SPACE * 3));
+        add(playButton);
         add(Box.createVerticalGlue());
     }
 }
