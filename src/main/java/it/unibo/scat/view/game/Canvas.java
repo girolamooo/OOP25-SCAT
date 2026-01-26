@@ -3,6 +3,7 @@ package it.unibo.scat.view.game;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,7 +66,7 @@ public final class Canvas extends JPanel {
      * ...
      */
     public void update() {
-        entities = new ArrayList<>(menuActionsInterface.fetchEntitiesFromModel());
+        entities = new LinkedList<>(menuActionsInterface.fetchEntitiesFromModel());
 
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i).getType() == EntityType.PLAYER && i != entities.size() - 1) {
