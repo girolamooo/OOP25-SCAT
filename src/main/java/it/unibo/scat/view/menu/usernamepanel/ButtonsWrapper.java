@@ -36,7 +36,7 @@ public final class ButtonsWrapper extends JPanel {
                     menuActionsInterface.setChosenShipIndex(index);
 
                     for (int a = 0; a < buttonsCounter; a++) {
-                        buttons[a].setSelected(false);
+                        buttons[a].setSelection(false);
                         buttons[a].repaint();
                     }
 

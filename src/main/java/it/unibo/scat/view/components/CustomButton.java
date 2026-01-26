@@ -21,7 +21,7 @@ public final class CustomButton extends JButton {
     private static final long serialVersionUID = 1L;
     private static final Color DEFAULT_COLOR = Color.BLACK;
     private static final Color HOVER_COLOR = Color.LIGHT_GRAY;
-    private final Color selectedColor = new Color(14, 158, 2);
+    private static final Color SELECTED_COLOR = new Color(14, 158, 2);
     private Color actualColor = DEFAULT_COLOR;
     private final transient Image image;
     private boolean selected;
@@ -58,7 +58,7 @@ public final class CustomButton extends JButton {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         if (selected) {
-            actualColor = selectedColor;
+            actualColor = SELECTED_COLOR;
         }
         setBackground(actualColor);
         final int space = 10;
