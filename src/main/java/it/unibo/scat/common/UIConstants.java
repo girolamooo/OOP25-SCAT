@@ -5,20 +5,20 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * ...
  */
 public final class UIConstants {
     // IMAGE PATHS
-    public static final String[] SHIP_PATHS = {
+    public static final List<String> SHIP_PATHS = List.of(
             "/entities/player/ship1.png",
             "/entities/player/ship2.png",
             "/entities/player/ship3.png",
             "/entities/player/ship4.png",
             "/entities/player/ship5.png",
-            "/entities/player/ship6.png",
-    };
+            "/entities/player/ship6.png");
 
     // FONTS
     public static final Font TITLE_FONT;
