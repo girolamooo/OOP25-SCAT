@@ -1,5 +1,6 @@
 package it.unibo.scat.common;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -19,6 +20,9 @@ public final class UIConstants {
             "/entities/player/ship4.png",
             "/entities/player/ship5.png",
             "/entities/player/ship6.png");
+
+    // COLORS
+    public static final Color PANELS_BG_COLOR = new Color(255, 255, 255, 25);
 
     // FONTS
     public static final Font TITLE_FONT;
