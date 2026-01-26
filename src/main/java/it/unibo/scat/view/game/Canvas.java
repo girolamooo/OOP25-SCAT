@@ -24,6 +24,7 @@ import it.unibo.scat.view.api.MenuActionsInterface;
 
 public final class Canvas extends JPanel {
     private static final long serialVersionUID = 1L;
+    // private static final int PLAYER_SIZE = 6;
     private final transient MenuActionsInterface menuActionsInterface;
     private transient List<EntityView> entities;
     private transient Image voidImage;
@@ -52,7 +53,7 @@ public final class Canvas extends JPanel {
         invader4 = new Image[2];
         bunker = new Image[3];
         shot = new Image[2];
-        player = new Image[6];
+        player = new Image[UIConstants.PLAYER_PATHS.size()];
         entities = null; // to do for the checkstyle
 
         initImages();
@@ -92,8 +93,10 @@ public final class Canvas extends JPanel {
                 Objects.requireNonNull(getClass().getResource(UIConstants.PLAYER_PATHS.get(3)))).getImage();
         player[4] = new ImageIcon(
                 Objects.requireNonNull(getClass().getResource(UIConstants.PLAYER_PATHS.get(4)))).getImage();
-        player[5] = new ImageIcon(
-                Objects.requireNonNull(getClass().getResource(UIConstants.PLAYER_PATHS.get(5)))).getImage();
+        player[UIConstants.PLAYER_PATHS.size() - 1] = new ImageIcon(
+                Objects.requireNonNull(
+                        getClass().getResource(UIConstants.PLAYER_PATHS.get(UIConstants.PLAYER_PATHS.size() - 1))))
+                .getImage();
 
         // SHOTS
         shot[0] = new ImageIcon(
