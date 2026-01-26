@@ -2,7 +2,9 @@ package it.unibo.scat.view.game;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.swing.ImageIcon;
@@ -26,7 +28,7 @@ public final class Canvas extends JPanel {
     private static final long serialVersionUID = 1L;
     // private static final int PLAYER_SIZE = 6;
     private final transient MenuActionsInterface menuActionsInterface;
-    private transient LinkedList<EntityView> entities;
+    private transient List<EntityView> entities;
     private transient Image voidImage;
     private final transient Image[] player;
     private final transient Image[] invader1;
@@ -64,13 +66,13 @@ public final class Canvas extends JPanel {
      * ...
      */
     public void update() {
-        entities = new LinkedList<>(menuActionsInterface.fetchEntitiesFromModel());
+        entities = new ArrayList<>(menuActionsInterface.fetchEntitiesFromModel());
 
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i).getType() == EntityType.PLAYER && i != entities.size() - 1) {
                 final EntityView temp = entities.get(i);
                 entities.remove(i);
-                entities.addLast(temp);
+                entities.add(temp);
                 break;
             }
         }
