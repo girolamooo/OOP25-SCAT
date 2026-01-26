@@ -6,7 +6,7 @@ package it.unibo.scat.common;
 public final class Constants {
     // WORLD
     public static final int BORDER_RIGHT = 59;
-    public static final int BORDER_BOTTOM = 36;
+    public static final int BORDER_BOTTOM = 37;
     public static final int BORDER_LEFT = 1;
     public static final int BORDER_UP = 1;
 
