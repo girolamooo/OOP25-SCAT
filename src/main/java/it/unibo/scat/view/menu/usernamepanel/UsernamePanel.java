@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -30,6 +32,7 @@ public final class UsernamePanel extends JPanel {
     private static final String USERNAME = "USERNAME";
     private static final int VERTICAL_SPACE = 40;
     private final transient MenuActionsInterface menuActionsInterface;
+    private CustomTextField usernameField;
 
     /**
      * @param menuActionsInterface ...
@@ -67,7 +70,7 @@ public final class UsernamePanel extends JPanel {
      * ...
      */
     private void initUsernameField() {
-        final CustomTextField usernameField = new CustomTextField();
+        usernameField = new CustomTextField();
         usernameField.setAlignmentX(CENTER_ALIGNMENT);
         usernameField.setText(USERNAME);
         usernameField.setForeground(Color.GRAY);
@@ -160,9 +163,22 @@ public final class UsernamePanel extends JPanel {
             @Override
             public void mouseExited(final MouseEvent e) {
                 playButton.setBackground(Color.GREEN);
-
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
+        });
+
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent ae) {
+                if (usernameField.getText().isBlank() || USERNAME.equals(usernameField.getText())
+                        || menuActionsInterface.getChosenShipIndex() < 0) {
+                    return;
+                }
+
+                menuActionsInterface.setUsername(usernameField.getText());
+                menuActionsInterface.showGamePanel();
+            }
+
         });
 
         add(Box.createVerticalStrut(VERTICAL_SPACE * 3));

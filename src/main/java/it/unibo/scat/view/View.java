@@ -39,7 +39,7 @@ public final class View implements ViewInterface, MenuActionsInterface {
     private MenuPanel menuPanel;
     private GamePanel gamePanel;
     private AudioManager backgroundSound;
-    private int chosenShipIndex;
+    private int chosenShipIndex = -1;
 
     @Override
     public void initEverything() {
