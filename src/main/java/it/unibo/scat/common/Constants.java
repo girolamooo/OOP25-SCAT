@@ -3,7 +3,7 @@ package it.unibo.scat.common;
 /**
  * ...
  */
-public final class Costants {
+public final class Constants {
     // WORLD
     public static final int BORDER_RIGHT = 59;
     public static final int BORDER_BOTTOM = 36;
@@ -52,6 +52,6 @@ public final class Costants {
     /**
      * Private constructor to avoid initialization.
      */
-    private Costants() {
+    private Constants() {
     }
 }
