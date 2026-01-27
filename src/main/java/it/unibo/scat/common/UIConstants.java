@@ -15,7 +15,7 @@ public final class UIConstants {
         // IMAGE PATHS
         public static final String PLAYER_SHOT_PATH = "/entities/shots/player_shot.png";
         public static final String INVADER_SHOT_PATH = "/entities/shots/player_shot.png";
-        public static final String MENU_BACKGROUND_PATH = "/backgrounds/menu_background.png";
+        public static final String MENU_BACKGROUND_PATH = "/backgrounds/menu_background.jpg";
         public static final List<String> GAME_BACKGROUNDS_PATHS = List.of(
                         "/backgrounds/game_background1.jpg",
                         "/backgrounds/game_background2.jpg",
@@ -47,7 +47,7 @@ public final class UIConstants {
         public static final String NULL_PATH = "/entities/null.png";
 
         // COLORS
-        public static final Color PANELS_BG_COLOR = new Color(255, 255, 255, 10);
+        public static final Color PANELS_BG_COLOR = new Color(255, 255, 255, 50);
         public static final Color WHITE_50_OPACITY = new Color(255, 255, 255, 125);
 
         // FONTS
