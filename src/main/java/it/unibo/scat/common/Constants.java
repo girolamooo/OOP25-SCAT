@@ -20,7 +20,7 @@ public final class Constants {
 
     // GAMELOOP
     public static final int GAME_STEP_MS = 16;
-    public static final int SHOT_STEP_MS = 100;
+    public static final int SHOT_STEP_MS = 64;
     public static final int BONUSINVADER_STEP_MS = 600;
     public static final int INVADER_STEP_MS = 400;
 

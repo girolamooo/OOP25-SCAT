@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.UIConstants;
 import it.unibo.scat.view.api.MenuActionsInterface;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 import it.unibo.scat.view.menu.usernamepanel.UsernamePanel;
@@ -57,7 +58,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     private void initBackground() {
         try {
             background = ImageIO.read(
-                    Objects.requireNonNull(getClass().getResource("/backgrounds/menu_background2.jpg")));
+                    Objects.requireNonNull(getClass().getResource(UIConstants.MENU_BACKGROUND_PATH)));
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot load menu background", e);
         }

@@ -1,7 +1,7 @@
 package it.unibo.scat;
 
+import it.unibo.scat.common.Observer;
 import it.unibo.scat.control.Control;
-import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.model.Model;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.api.ModelObservable;
@@ -23,20 +23,21 @@ public final class App {
      *
      */
     public static void main(final String[] args) {
-        final ModelInterface model = new Model();
-        final ModelObservable modelObs = (ModelObservable) model;
+        final Model model = new Model();
+
+        final ModelInterface modelInterface = model;
+        final ModelObservable modelObs = model;
 
         final View view = new View();
         final ViewInterface viewInterface = view;
+        final Observer viewObserver = view;
 
-        final Control controller = new Control(viewInterface, model);
-        final ControlInterface controlInterface = controller;
+        final Control controller = new Control(viewInterface, modelInterface);
 
-        // D.I.
-        view.setControlInterface(controlInterface);
+        view.setControlInterface(controller);
         view.setModelObservable(modelObs);
+        model.setObserver(viewObserver);
 
         controller.init();
     }
-
 }

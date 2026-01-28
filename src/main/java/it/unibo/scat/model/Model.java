@@ -1,12 +1,15 @@
 package it.unibo.scat.model;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityView;
 import it.unibo.scat.common.GameRecord;
 import it.unibo.scat.common.GameResult;
 import it.unibo.scat.common.GameState;
+import it.unibo.scat.common.Observable;
+import it.unibo.scat.common.Observer;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.model.api.ModelObservable;
 import it.unibo.scat.model.game.CollisionReport;
@@ -18,10 +21,11 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
  * The main class for the "Model" section of the MVC pattern.
  */
 // @SuppressFBWarnings("URF_UNREAD_FIELD")
-public final class Model implements ModelInterface, ModelObservable {
+public final class Model implements ModelInterface, ModelObservable, Observable {
     private static GameState gameState;
-    private int score;
-    private int level;
+    private volatile Observer observer;
+    private final AtomicInteger score = new AtomicInteger(0);
+    private final AtomicInteger level = new AtomicInteger(1);
 
     private String username;
     private Leaderboard leaderboard;
@@ -41,8 +45,6 @@ public final class Model implements ModelInterface, ModelObservable {
         gameWorld = new GameWorld();
         gameLogic = new GameLogic(gameWorld);
         leaderboard = new Leaderboard(leaderboardFile);
-        score = 0;
-        level = 0;
         setGameState(GameState.PAUSE);
 
         gameWorld.initEntities(entitiesFile);
@@ -74,6 +76,7 @@ public final class Model implements ModelInterface, ModelObservable {
         updateScore(newPoints);
 
         gameLogic.removeDeadShots();
+        notifyObserver();
 
         if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
             setGameState(GameState.GAMEOVER);
@@ -84,7 +87,8 @@ public final class Model implements ModelInterface, ModelObservable {
      * increses the level by one.
      */
     public void increaseLevel() {
-        this.level++;
+        level.incrementAndGet();
+        notifyObserver();
     }
 
     /**
@@ -92,12 +96,14 @@ public final class Model implements ModelInterface, ModelObservable {
      * 
      */
     public void updateScore(final int points) {
-        score += points;
+        this.score.addAndGet(points);
+        notifyObserver();
     }
 
     @Override
     public void addPlayerShot() {
         gameLogic.addPlayerShot();
+        notifyObserver();
     }
 
     @Override
@@ -105,13 +111,15 @@ public final class Model implements ModelInterface, ModelObservable {
         if (gameLogic.canPlayerMove(direction)) {
             gameWorld.getPlayer().move(direction);
         }
+        notifyObserver();
     }
 
     @Override
     public void resetGame() {
         gameLogic.resetEntities();
-        score = 0;
-        level = 0;
+        score.set(0);
+        level.set(0);
+        notifyObserver();
     }
 
     /**
@@ -142,7 +150,7 @@ public final class Model implements ModelInterface, ModelObservable {
 
     @Override
     public int getScore() {
-        return score;
+        return score.get();
     }
 
     @Override
@@ -153,6 +161,7 @@ public final class Model implements ModelInterface, ModelObservable {
     @Override
     public void setUsername(final String username) {
         this.username = username;
+        notifyObserver();
     }
 
     @Override
@@ -169,6 +178,19 @@ public final class Model implements ModelInterface, ModelObservable {
      * 
      */
     public int getLevel() {
-        return level;
+        return level.get();
+    }
+
+    @Override
+    public void setObserver(final Observer o) {
+        this.observer = o;
+    }
+
+    @Override
+    public void notifyObserver() {
+        if (this.observer == null) {
+            throw new IllegalStateException("Observer is null in Model");
+        }
+        observer.update();
     }
 }
