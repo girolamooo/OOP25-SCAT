@@ -9,6 +9,7 @@ import it.unibo.scat.common.Constants;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.common.GameResult;
+import it.unibo.scat.model.api.EntityFactory;
 import it.unibo.scat.model.game.entity.AbstractEntity;
 import it.unibo.scat.model.game.entity.Invader;
 import it.unibo.scat.model.game.entity.Player;
@@ -23,6 +24,7 @@ import it.unibo.scat.model.game.entity.Shot;
 @SuppressFBWarnings({ "EI2", "DMI_RANDOM_USED_ONLY_ONCE" })
 public class GameLogic {
     private final GameWorld gameWorld;
+    private final EntityFactory entityFactory;
     private int invadersAccMs;
     private int shotAccMs;
     private int bonusInvaderAccMs;
@@ -30,10 +32,12 @@ public class GameLogic {
     /**
      * GameLogic constructor.
      *
-     * @param gWorld the game world.
+     * @param gWorld        the game world
+     * @param entityFactory ...
      */
-    public GameLogic(final GameWorld gWorld) {
+    public GameLogic(final GameWorld gWorld, final EntityFactory entityFactory) {
         this.gameWorld = gWorld;
+        this.entityFactory = entityFactory;
     }
 
     /**
@@ -167,13 +171,10 @@ public class GameLogic {
         }
 
         final Player player = gameWorld.getPlayer();
-
         final int shotX = player.getPosition().getX() + (player.getWidth() / 2);
         final int shotY = player.getPosition().getY() - Constants.SHOT_HEIGHT + 1;
 
-        final Shot newShot = new Shot(EntityType.PLAYER_SHOT, shotX, shotY, Constants.SHOT_WIDTH, Constants.SHOT_HEIGHT,
-                Constants.SHOT_HEALTH,
-                Direction.UP);
+        final Shot newShot = (Shot) entityFactory.createEntity(EntityType.PLAYER_SHOT, shotX, shotY);
 
         gameWorld.addEntity(newShot);
         Player.setLastShotTime(System.currentTimeMillis());
@@ -301,16 +302,17 @@ public class GameLogic {
      * Generates a new shot fired by a random alive invader and adds it to the game
      * world.
      */
-    public void generateInvaderShot() {
+    public void addInvaderShot() {
         final Invader invader = getRandomInvader();
+
         if (invader == null) {
             return;
         }
 
-        final Shot newShot = new Shot(EntityType.INVADER_SHOT, invader.getPosition().getX(),
-                invader.getPosition().getY() + 2,
-                Constants.SHOT_WIDTH, Constants.SHOT_HEIGHT, Constants.SHOT_HEALTH, Direction.DOWN);
+        final int shotX = invader.getPosition().getX();
+        final int shotY = invader.getPosition().getY() + 2;
 
+        final Shot newShot = (Shot) entityFactory.createEntity(EntityType.INVADER_SHOT, shotX, shotY);
         gameWorld.addEntity(newShot);
     }
 

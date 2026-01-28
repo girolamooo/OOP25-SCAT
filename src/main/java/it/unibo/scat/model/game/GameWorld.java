@@ -13,8 +13,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Constants;
 import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.EntityType;
+import it.unibo.scat.model.api.EntityFactory;
 import it.unibo.scat.model.game.entity.AbstractEntity;
-import it.unibo.scat.model.game.entity.Bunker;
 import it.unibo.scat.model.game.entity.Invader;
 import it.unibo.scat.model.game.entity.Player;
 import it.unibo.scat.model.game.entity.Shot;
@@ -25,6 +25,7 @@ import it.unibo.scat.model.game.entity.Shot;
 @SuppressFBWarnings("DMI_RANDOM_USED_ONLY_ONCE")
 public class GameWorld {
     private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
+    private final EntityFactory entityFactory;
     private final List<AbstractEntity> entities;
     private final List<Invader> invaders;
     private final List<Shot> shots;
@@ -33,8 +34,11 @@ public class GameWorld {
 
     /**
      * GameWorld constructor.
+     * 
+     * @param entityFactory ...
      */
-    public GameWorld() {
+    public GameWorld(final EntityFactory entityFactory) {
+        this.entityFactory = entityFactory;
         entities = new ArrayList<>();
         invaders = new ArrayList<>();
         shots = new ArrayList<>();
@@ -48,10 +52,6 @@ public class GameWorld {
      * @param filename the file containing the entities configuration
      */
     public void initEntities(final String filename) {
-        final int idxType = 0;
-        final int idxX = 1;
-        final int idxY = 2;
-
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(
@@ -68,34 +68,19 @@ public class GameWorld {
             while (line != null) {
                 final String[] field = line.trim().split(";");
 
-                type = EntityType.valueOf(field[idxType]);
-                x = Integer.parseInt(field[idxX]);
-                y = Integer.parseInt(field[idxY]);
+                type = EntityType.valueOf(field[0]);
+                x = Integer.parseInt(field[1]);
+                y = Integer.parseInt(field[2]);
 
-                switch (type) {
-                    case BUNKER -> {
-                        newEntity = new Bunker(type, x, y, Constants.BUNKER_WIDTH, Constants.BUNKER_HEIGHT,
-                                Constants.BUNKER_HEALTH);
-                    }
-                    case PLAYER -> {
-                        newEntity = new Player(type, x, y, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT,
-                                Constants.PLAYER_HEALTH);
-                        this.player = (Player) newEntity;
-                    }
-                    default -> {
-                        newEntity = new Invader(type, x, y, Constants.INVADER_WIDTH, Constants.INVADER_HEIGHT,
-                                Constants.INVADERS_HEALTH);
-                    }
-                }
-
+                newEntity = entityFactory.createEntity(type, x, y);
                 addEntity(newEntity);
+
                 line = reader.readLine();
             }
 
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot load entities from file: " + filename + "Exception: ", e);
         }
-
     }
 
     /**
@@ -143,7 +128,6 @@ public class GameWorld {
      * @param e the entity to add
      */
     @SuppressFBWarnings(EI_EXPOSE_REP)
-
     public void addEntity(final AbstractEntity e) {
         entities.add(e);
 
@@ -156,6 +140,10 @@ public class GameWorld {
                 invaders.add((Invader) e);
                 return;
             }
+        }
+
+        if (e instanceof Player) {
+            player = (Player) e;
         }
 
         if (e instanceof Shot) {
