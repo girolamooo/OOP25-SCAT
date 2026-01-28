@@ -143,7 +143,6 @@ public class GameWorld {
      * @param e the entity to add
      */
     @SuppressFBWarnings(EI_EXPOSE_REP)
-
     public void addEntity(final AbstractEntity e) {
         entities.add(e);
 
@@ -156,6 +155,10 @@ public class GameWorld {
                 invaders.add((Invader) e);
                 return;
             }
+        }
+
+        if (e instanceof Player) {
+            player = (Player) e;
         }
 
         if (e instanceof Shot) {
