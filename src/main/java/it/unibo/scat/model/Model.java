@@ -22,7 +22,7 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
 // @SuppressFBWarnings("URF_UNREAD_FIELD")
 public final class Model implements ModelInterface, ModelObservable, Observable {
     private static GameState gameState;
-    private Observer observer;
+    private volatile Observer observer;
     private int score;
     private int level;
 
@@ -44,7 +44,6 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
         gameWorld = new GameWorld();
         gameLogic = new GameLogic(gameWorld);
         leaderboard = new Leaderboard(leaderboardFile);
-        observer = null;
         score = 0;
         level = 0;
         setGameState(GameState.PAUSE);
@@ -78,6 +77,7 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
         updateScore(newPoints);
 
         gameLogic.removeDeadShots();
+        notifyObserver();
 
         if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
             setGameState(GameState.GAMEOVER);
@@ -89,6 +89,7 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
      */
     public void increaseLevel() {
         this.level++;
+        notifyObserver();
     }
 
     /**
@@ -97,11 +98,13 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
      */
     public void updateScore(final int points) {
         score += points;
+        notifyObserver();
     }
 
     @Override
     public void addPlayerShot() {
         gameLogic.addPlayerShot();
+        notifyObserver();
     }
 
     @Override
@@ -109,6 +112,7 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
         if (gameLogic.canPlayerMove(direction)) {
             gameWorld.getPlayer().move(direction);
         }
+        notifyObserver();
     }
 
     @Override
@@ -116,6 +120,7 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
         gameLogic.resetEntities();
         score = 0;
         level = 0;
+        notifyObserver();
     }
 
     /**
@@ -157,6 +162,7 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
     @Override
     public void setUsername(final String username) {
         this.username = username;
+        notifyObserver();
     }
 
     @Override
@@ -178,11 +184,14 @@ public final class Model implements ModelInterface, ModelObservable, Observable 
 
     @Override
     public void setObserver(final Observer o) {
-        observer = o;
+        this.observer = o;
     }
 
     @Override
     public void notifyObserver() {
+        if (observer == null) {
+            throw new NullPointerException("NullPointerException: Observer is null");
+        }
         observer.update();
     }
 }

@@ -32,12 +32,11 @@ public final class App {
         final ViewInterface viewInterface = view;
         final Observer viewObserver = view;
 
-        model.setObserver(view);
-
         final Control controller = new Control(viewInterface, modelInterface);
 
         view.setControlInterface(controller);
         view.setModelObservable(modelObs);
+        model.setObserver(viewObserver);
 
         controller.init();
     }
