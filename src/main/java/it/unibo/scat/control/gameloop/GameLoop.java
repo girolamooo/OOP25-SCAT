@@ -70,7 +70,7 @@ public final class GameLoop implements Runnable {
 
             model.update();
 
-            // SwingUtilities.invokeLater(view::update);
+            // SwingUtilities.invokeLater(view::update); to remove ...
 
             final long elapsed = System.currentTimeMillis() - start;
             sleepUninterruptibly(Math.max(0L, Constants.GAME_STEP_MS - elapsed));
