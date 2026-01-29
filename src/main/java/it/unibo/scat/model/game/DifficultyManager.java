@@ -6,13 +6,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  * ...
  */
 public final class DifficultyManager {
-    private static final int TEMPPPPPPPPPPPPPPP = 200;
 
     private static final int MIN_INVADERS_STEP_MS = 500;
     private static final int STEP_SPEED_INCREMENT = 20;
+
+    private static final int MAX_INVADERS_COOLDOWN = 600;
     // i use it for knowing that the invaders don't get too much speed at a certain
     // point of time.
     private static final int MIN_STEP_LIMIT = 100;
+
+    private static final int MIN_COOLDOWNN_LIMIT = 200;
+    private static final int COOLDOWN_REDUCTION_PER_LEVEL = 40;
     private final AtomicInteger level = new AtomicInteger(1);
 
     /**
@@ -40,10 +44,17 @@ public final class DifficultyManager {
     }
 
     /**
-     * @return ...
+     * Calculates and returns the cooldown of the shooting of the invaders. When the
+     * level increases, the shots get fired more often.
+     * 
+     * @return invader shooting cooldown value.
      */
     public int getInvadersShootingCooldown() {
-        return TEMPPPPPPPPPPPPPPP * 4;
+        final int reduction = calculateIncrementLevel(COOLDOWN_REDUCTION_PER_LEVEL);
+
+        final int currentCooldown = MAX_INVADERS_COOLDOWN - reduction;
+
+        return Math.max(MIN_COOLDOWNN_LIMIT, currentCooldown);
     }
 
     /**
