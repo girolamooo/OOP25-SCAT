@@ -25,6 +25,7 @@ import it.unibo.scat.model.game.entity.Shot;
 public class GameLogic {
     private final GameWorld gameWorld;
     private final EntityFactory entityFactory;
+    private final DifficultyManager difficultyManager;
     private int invadersAccMs;
     private int shotAccMs;
     private int bonusInvaderAccMs;
@@ -38,6 +39,7 @@ public class GameLogic {
     public GameLogic(final GameWorld gWorld, final EntityFactory entityFactory) {
         this.gameWorld = gWorld;
         this.entityFactory = entityFactory;
+        this.difficultyManager = new DifficultyManager();
     }
 
     /**
@@ -295,7 +297,22 @@ public class GameLogic {
      */
     public boolean canInvadersShoot() {
         final long currTime = System.currentTimeMillis();
-        return (currTime - Invader.getLastShotTime()) >= Constants.INVADERS_SHOOTING_COOLDOWN;
+        return (currTime - Invader.getLastShotTime()) >= difficultyManager.getInvadersShootingCooldown();
+    }
+
+    /**
+     * ...
+     */
+    public void handleInvadersShot() {
+        if (!canInvadersShoot()) {
+            return;
+        }
+
+        for (int i = 0; i < 1; i++) {
+            addInvaderShot();
+        }
+
+        updateLastInvadersShotTime();
     }
 
     /**
@@ -396,14 +413,14 @@ public class GameLogic {
     public void handleInvadersMovement() {
         invadersAccMs += Constants.GAME_STEP_MS;
 
-        if (invadersAccMs >= Constants.INVADER_STEP_MS) {
+        if (invadersAccMs >= difficultyManager.getInvadersStepMs()) {
             moveInvaders();
 
             if (gameWorld.shouldInvadersChangeDirection()) {
                 gameWorld.changeInvadersDirection();
             }
 
-            invadersAccMs -= Constants.INVADER_STEP_MS;
+            invadersAccMs -= difficultyManager.getInvadersStepMs();
         }
     }
 
@@ -512,5 +529,13 @@ public class GameLogic {
      */
     private boolean isOverRightBorder(final AbstractEntity entity) {
         return entity.getPosition().getX() > Constants.BORDER_RIGHT;
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    public DifficultyManager getDifficultyManager() {
+        return difficultyManager;
     }
 }
