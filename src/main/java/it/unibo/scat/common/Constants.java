@@ -33,7 +33,7 @@ public final class Constants {
     public static final int INVADERS_SHOOTING_COOLDOWN = INVADER_STEP_MS * 3;
 
     // ENTITIES HEALTH
-    public static final int BUNKER_HEALTH = 30;
+    public static final int BUNKER_HEALTH = 20;
     public static final int PLAYER_HEALTH = 3;
     public static final int INVADERS_HEALTH = 1;
     public static final int SHOT_HEALTH = 1;

@@ -49,7 +49,7 @@ public final class Model implements ModelInterface, ModelState, Observable {
         gameWorld = new GameWorld(entityFactory);
         gameLogic = new GameLogic(gameWorld, entityFactory);
         leaderboard = new Leaderboard(leaderboardFile);
-        setGameState(GameState.PAUSE);
+        // setGameState(GameState.PAUSE);
 
         gameWorld.initEntities(entitiesFile);
         leaderboard.initLeaderboard();
