@@ -14,7 +14,7 @@ import java.util.List;
 public final class UIConstants {
         // IMAGE PATHS
         public static final String PLAYER_SHOT_PATH = "/entities/shots/player_shot.png";
-        public static final String INVADER_SHOT_PATH = "/entities/shots/player_shot.png";
+        public static final String INVADER_SHOT_PATH = "/entities/shots/invader_shot.png";
         public static final String MENU_BACKGROUND_PATH = "/backgrounds/menu_background.jpg";
         public static final List<String> GAME_BACKGROUNDS_PATHS = List.of(
                         "/backgrounds/game_background1.jpg",
