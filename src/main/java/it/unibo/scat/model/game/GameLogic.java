@@ -297,7 +297,8 @@ public class GameLogic {
      */
     public boolean canInvadersShoot() {
         final long currTime = System.currentTimeMillis();
-        return (currTime - Invader.getLastShotTime()) >= difficultyManager.getInvadersShootingCooldown();
+        return (currTime - Invader.getLastShotTime()) >= difficultyManager
+                .getInvadersShootingCooldown(gameWorld.getInvaders().size());
     }
 
     /**
