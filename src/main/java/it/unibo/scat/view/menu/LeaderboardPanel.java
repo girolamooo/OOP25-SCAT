@@ -58,6 +58,10 @@ public final class LeaderboardPanel extends JPanel {
 
     public void initBackButton() {
         final JButton backButton = new JButton("BACK");
+        backButton.setFont(MONO_FONT);
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(ARCADE_BLACK);
+        backButton.setFocusPainted(false);
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent ae) {
