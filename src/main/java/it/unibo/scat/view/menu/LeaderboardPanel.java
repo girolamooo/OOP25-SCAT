@@ -52,7 +52,11 @@ public final class LeaderboardPanel extends JPanel {
         add(label);
         setLayout();
         initContentTable();
+        initBackButton();
 
+    }
+
+    public void initBackButton() {
         final JButton backButton = new JButton("BACK");
         backButton.addActionListener(new ActionListener() {
             @Override
