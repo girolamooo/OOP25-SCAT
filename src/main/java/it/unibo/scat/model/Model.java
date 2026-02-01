@@ -89,7 +89,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
         if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
             setGameState(GameState.GAMEOVER);
         }
-
     }
 
     /**
@@ -143,7 +142,9 @@ public final class Model implements ModelInterface, ModelState, Observable {
 
     @Override
     public List<EntityView> getEntities() {
-        return List.copyOf(gameWorld.getEntities());
+        return List.copyOf(gameWorld.getEntities().stream()
+                .filter(EntityView::isAlive)
+                .toList());
     }
 
     @Override
