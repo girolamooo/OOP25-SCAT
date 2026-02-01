@@ -296,7 +296,8 @@ public class GameWorld {
         final int x = left ? leftPos : rightPos;
         final int y = 1;
 
-        final Invader invader = new Invader(EntityType.BONUS_INVADER, x, y, 3, 2, 1);
+        final Invader invader = new Invader(EntityType.BONUS_INVADER, x, y, Constants.BONUS_INVADER_WIDTH,
+                Constants.BONUS_INVADER_HEIGHT, 1);
         invader.setCurrDirection(direction);
         invader.setNextDirection(direction);
 
