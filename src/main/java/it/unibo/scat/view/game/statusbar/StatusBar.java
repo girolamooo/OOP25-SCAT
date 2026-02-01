@@ -121,8 +121,6 @@ public final class StatusBar extends JPanel {
      * ...
      */
     private void initScoreLabel() {
-        final int fontHeight = 50;
-
         scoreLabel = new JLabel() {
             @Override
             protected void paintComponent(final Graphics g) {

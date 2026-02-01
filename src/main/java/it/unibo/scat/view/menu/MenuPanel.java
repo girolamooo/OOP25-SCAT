@@ -29,7 +29,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     private static final String CARD_CREDITS = "CREDITS";
 
     private final transient MenuActionsInterface menuActionsInterface;
-    private transient BufferedImage current_background;
+    private transient BufferedImage currentBackground;
     private transient BufferedImage background1;
     private transient BufferedImage background2;
 
@@ -121,14 +121,14 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
-        if (current_background == null) {
+        if (currentBackground == null) {
             return;
         }
 
         final int panelW = getWidth();
         final int panelH = getHeight();
-        final int imgW = current_background.getWidth();
-        final int imgH = current_background.getHeight();
+        final int imgW = currentBackground.getWidth();
+        final int imgH = currentBackground.getHeight();
 
         final double scale = Math.max((double) panelW / imgW, (double) panelH / imgH);
 
@@ -137,13 +137,13 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
         final int x = (panelW - drawW) / 2;
         final int y = (panelH - drawH) / 2;
 
-        g.drawImage(current_background, x, y, drawW, drawH, null);
+        g.drawImage(currentBackground, x, y, drawW, drawH, null);
     }
 
     @Override
     public void showLeaderboardPanel() {
         cardLayout.show(this, CARD_LEADERBOARD);
-        current_background = background2;
+        currentBackground = background2;
         revalidate();
         repaint();
     }
@@ -151,7 +151,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     @Override
     public void showCreditsPanel() {
         cardLayout.show(this, CARD_CREDITS);
-        current_background = background2;
+        currentBackground = background2;
         revalidate();
         repaint();
     }
@@ -159,7 +159,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     @Override
     public void showSettingsPanel() {
         cardLayout.show(this, CARD_SETTINGS);
-        current_background = background1;
+        currentBackground = background1;
         revalidate();
         repaint();
     }
@@ -170,7 +170,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     @Override
     public void showUsernamePanel() {
         cardLayout.show(this, CARD_USERNAME);
-        current_background = background2;
+        currentBackground = background2;
         revalidate();
         repaint();
     }
