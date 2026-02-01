@@ -56,7 +56,6 @@ public final class StatusBar extends JPanel {
 
         pausePanel = new JPanel() {
             private static final long serialVersionUID = 1L;
-            private Image currentImage;
 
             private final Image pauseBaseImage = new ImageIcon(
                     Objects.requireNonNull(getClass().getResource("/images/pause/pause1.png"))).getImage();
@@ -70,6 +69,7 @@ public final class StatusBar extends JPanel {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
+                final Image currentImage;
 
                 if (isGamePaused) {
                     currentImage = isPausePanelHover ? resumeHoverImage : resumeBaseImage;
