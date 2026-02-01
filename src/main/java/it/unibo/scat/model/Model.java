@@ -201,4 +201,14 @@ public final class Model implements ModelInterface, ModelState, Observable {
     public int getInvadersStepMs() {
         return gameLogic.getDifficultyManager().getInvadersStepMs();
     }
+
+    @Override
+    public int getInvadersAccMs() {
+        return timeAccumulator.getInvadersAccMs();
+    }
+
+    @Override
+    public int getBonusInvaderAccMs() {
+        return timeAccumulator.getBonusInvaderAccMs();
+    }
 }
