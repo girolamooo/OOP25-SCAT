@@ -50,4 +50,16 @@ public interface ModelState {
       * 
       */
      int getInvadersStepMs();
+
+     /**
+      * @return ...
+      * 
+      */
+     int getInvadersAccMs();
+
+     /**
+      * @return ...
+      * 
+      */
+     int getBonusInvaderAccMs();
 }

@@ -26,9 +26,6 @@ public class GameLogic {
     private final GameWorld gameWorld;
     private final EntityFactory entityFactory;
     private final DifficultyManager difficultyManager;
-    private int invadersAccMs;
-    private int shotAccMs;
-    private int bonusInvaderAccMs;
 
     /**
      * GameLogic constructor.
@@ -389,20 +386,20 @@ public class GameLogic {
      * it if necessary.
      * If no bonus invader is present, spawns a new one with a 5%
      * probability.
+     * 
+     * @param bonusInvaderAccMs ...
+     *
      */
-    public void handleBonusInvader() {
+    public void handleBonusInvader(final int bonusInvaderAccMs) {
         final boolean isAlive = gameWorld.isBonusInvaderAlive();
 
         if (isAlive) {
-            bonusInvaderAccMs += Constants.GAME_STEP_MS;
-
             if (bonusInvaderAccMs >= Constants.BONUSINVADER_STEP_MS) {
                 if (isOutOfBorder(gameWorld.getBonusInvader())) {
                     gameWorld.removeEntity(gameWorld.getBonusInvader());
                 } else {
                     gameWorld.getBonusInvader().move();
                 }
-                bonusInvaderAccMs = 0;
             }
             return;
         }
@@ -414,32 +411,24 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * @param invadersAccMs ...
      */
-    public void handleInvadersMovement() {
-        invadersAccMs += Constants.GAME_STEP_MS;
-
+    public void handleInvadersMovement(final int invadersAccMs) {
         if (invadersAccMs >= difficultyManager.getInvadersStepMs()) {
             moveInvaders();
 
             if (gameWorld.shouldInvadersChangeDirection()) {
                 gameWorld.changeInvadersDirection();
             }
-
-            invadersAccMs -= difficultyManager.getInvadersStepMs();
         }
     }
 
     /**
-     * ...
+     * @param shotAccMs ...
      */
-    public void handleShotsMovement() {
-        shotAccMs += Constants.GAME_STEP_MS;
-
+    public void handleShotsMovement(final int shotAccMs) {
         if (shotAccMs >= Constants.SHOT_STEP_MS) {
             moveShots();
-
-            shotAccMs -= Constants.SHOT_STEP_MS;
         }
     }
 

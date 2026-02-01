@@ -16,6 +16,7 @@ import it.unibo.scat.model.api.ModelState;
 import it.unibo.scat.model.game.CollisionReport;
 import it.unibo.scat.model.game.GameLogic;
 import it.unibo.scat.model.game.GameWorld;
+import it.unibo.scat.model.game.TimeAccumulator;
 import it.unibo.scat.model.game.entity.EntityFactoryImpl;
 import it.unibo.scat.model.leaderboard.Leaderboard;
 
@@ -26,6 +27,7 @@ import it.unibo.scat.model.leaderboard.Leaderboard;
 public final class Model implements ModelInterface, ModelState, Observable {
     private volatile Observer observer;
     private GameState gameState;
+    private TimeAccumulator timeAccumulator;
     private final AtomicInteger score = new AtomicInteger(0);
 
     private String username;
@@ -52,6 +54,8 @@ public final class Model implements ModelInterface, ModelState, Observable {
         gameWorld.initEntities(entitiesFile);
         leaderboard.initLeaderboard();
 
+        timeAccumulator = new TimeAccumulator(gameLogic.getDifficultyManager());
+
         // DEBUG
         // gameWorld.printEntities();
     }
@@ -61,10 +65,11 @@ public final class Model implements ModelInterface, ModelState, Observable {
         final CollisionReport collisionReport;
         final int newPoints;
 
-        gameLogic.handleInvadersMovement();
-        gameLogic.handleShotsMovement();
-        gameLogic.handleBonusInvader();
+        timeAccumulator.incrementTimeAccumulators();
 
+        gameLogic.handleInvadersMovement(timeAccumulator.getInvadersAccMs());
+        gameLogic.handleShotsMovement(timeAccumulator.getShotsAccMs());
+        gameLogic.handleBonusInvader(timeAccumulator.getBonusInvaderAccMs());
         gameLogic.handleInvadersShot();
 
         // Da spostare SOTTO. Creare una classe handleGameEnd ?
@@ -76,8 +81,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
         collisionReport = gameLogic.checkCollisions();
         newPoints = gameLogic.handleCollisionReport(collisionReport);
 
-        // if (newPoints != 0)
-        // System.out.println("updating the score with new points: " + newPoints);
         updateScore(newPoints);
 
         gameLogic.removeDeadShots();
@@ -86,6 +89,7 @@ public final class Model implements ModelInterface, ModelState, Observable {
         if (gameLogic.checkGameEnd() != GameResult.PLAYING) {
             setGameState(GameState.GAMEOVER);
         }
+
     }
 
     /**
@@ -196,5 +200,15 @@ public final class Model implements ModelInterface, ModelState, Observable {
     @Override
     public int getInvadersStepMs() {
         return gameLogic.getDifficultyManager().getInvadersStepMs();
+    }
+
+    @Override
+    public int getInvadersAccMs() {
+        return timeAccumulator.getInvadersAccMs();
+    }
+
+    @Override
+    public int getBonusInvaderAccMs() {
+        return timeAccumulator.getBonusInvaderAccMs();
     }
 }
