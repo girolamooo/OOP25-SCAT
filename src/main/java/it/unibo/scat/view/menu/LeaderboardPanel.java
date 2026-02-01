@@ -13,10 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import it.unibo.scat.common.UIConstants;
-import javax.swing.table.DefaultTableCellRenderer;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.api.MenuActionsInterface;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
@@ -25,36 +26,37 @@ import it.unibo.scat.common.GameRecord;
 /**
  * This class handles the leaderboard panel.
  */
-@SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
-
+@SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final transient MenuPanelInterface menuInterface;
-    private final transient MenuActionsInterface menuActionsInterface;
-    private List<GameRecord> records;
     private static final Color ARCADE_BLACK = Color.BLACK;
     private static final Color ARCADE_GREEN = new Color(51, 255, 51);
+    private static final int COLUMN_COUNT = 5;
+    private static final int TABLE_ROW_HEIGHT = 10;
+    private final transient MenuPanelInterface menuInterface;
+    private final transient MenuActionsInterface menuActionsInterface;
+    private final transient List<GameRecord> records;
 
     /**
-     * @param mInterface ...
+     * @param mInterface       ...
+     * @param mActionInterface ...
      * 
      */
     public LeaderboardPanel(final MenuPanelInterface mInterface, final MenuActionsInterface mActionInterface) {
         this.menuInterface = mInterface;
         this.menuActionsInterface = mActionInterface;
         records = menuActionsInterface.fetchLeaderboard();
-        // final Color background = new Color(0, 0, 0, 150);
-        // setBackground(background);
-
         final JLabel label = new JLabel("GLOBAL RANKING");
         add(label);
         setLayout();
         initContentTable();
         initBackButton();
-
     }
 
-    public void initBackButton() {
+    /**
+     * ...
+     */
+    private void initBackButton() {
         final JButton backButton = new JButton("BACK");
         backButton.setFont(UIConstants.SMALL_FONT);
         backButton.setForeground(Color.WHITE);
@@ -70,22 +72,30 @@ public final class LeaderboardPanel extends JPanel {
         add(backButton, BorderLayout.SOUTH);
     }
 
-    public void setLayout() {
-        this.setLayout(new BorderLayout());
+    /**
+     * ...
+     */
+    private void setLayout() {
         final JPanel centerPanel = new JPanel();
+        this.setLayout(new BorderLayout());
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         this.add(centerPanel, BorderLayout.CENTER);
         centerPanel.add(Box.createVerticalGlue());
-
         centerPanel.add(new JLabel("LEADERBOARD"));
     }
 
-    public void initContentTable() {
-        String[] columnNames = { "RANK", "NAME", "SCORE", "LEVEL", "DATE" };
+    /**
+     * ...
+     */
+    private void initContentTable() {
+        // @formatter:off
+        final String[] columnNames = {"RANK", "NAME", "SCORE", "LEVEL", "DATE"};
+        // @formatter:on
+        final Object[][] data = new Object[records.size()][COLUMN_COUNT];
 
-        Object[][] data = new Object[records.size()][5];
-        for (GameRecord record : records) {
-            int index = records.indexOf(record);
+        for (final GameRecord record : records) {
+
+            final int index = records.indexOf(record);
             data[index][0] = index + 1;
             data[index][1] = record.getName();
             data[index][2] = record.getScore();
@@ -93,10 +103,10 @@ public final class LeaderboardPanel extends JPanel {
             data[index][4] = record.getDate().toString();
         }
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable table = new JTable(model);
+        final DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        final JTable table = new JTable(model);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -107,16 +117,16 @@ public final class LeaderboardPanel extends JPanel {
         table.setForeground(Color.WHITE);
         table.setFont(UIConstants.SMALL_FONT);
         table.setGridColor(ARCADE_BLACK);
-        table.setRowHeight(30);
+        table.setRowHeight(TABLE_ROW_HEIGHT);
         table.setEnabled(false);
 
-        JTableHeader header = table.getTableHeader();
+        final JTableHeader header = table.getTableHeader();
         header.setBackground(ARCADE_BLACK);
         header.setForeground(ARCADE_GREEN);
         header.setFont(UIConstants.SMALL_FONT);
         header.setReorderingAllowed(false);
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        final JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.getViewport().setBackground(ARCADE_BLACK);
         scrollPane.setBorder(null);
 
