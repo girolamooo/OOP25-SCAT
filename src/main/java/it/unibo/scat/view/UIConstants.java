@@ -58,10 +58,10 @@ public final class UIConstants {
         public static final Font SMALL_FONT;
 
         static {
-                final float titleBase = 60f;
-                final float titleHover = 65f;
-                final float medium = 32f;
-                final float small = 20f;
+                final float titleBase = 45f;
+                final float titleHover = 50f;
+                final float medium = 30f;
+                final float small = 18f;
 
                 try (InputStream is = UIConstants.class.getResourceAsStream(FONT_PATH)) {
 

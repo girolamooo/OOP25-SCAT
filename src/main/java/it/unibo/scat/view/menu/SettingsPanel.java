@@ -89,7 +89,7 @@ public final class SettingsPanel extends JPanel {
             }
         });
 
-        add(Box.createVerticalStrut(100));
+        add(Box.createVerticalStrut(50));
         add(leaderboardLabel);
     }
 
@@ -112,7 +112,7 @@ public final class SettingsPanel extends JPanel {
             }
         });
 
-        add(Box.createVerticalStrut(100));
+        add(Box.createVerticalStrut(50));
         add(creditsLabel);
     }
 
@@ -134,7 +134,7 @@ public final class SettingsPanel extends JPanel {
             }
         });
 
-        add(Box.createVerticalStrut(100));
+        add(Box.createVerticalStrut(50));
         add(quitGameLabel);
         add(Box.createVerticalGlue());
     }
