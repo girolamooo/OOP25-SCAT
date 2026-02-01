@@ -1,4 +1,4 @@
-package it.unibo.scat.common;
+package it.unibo.scat.view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,7 +16,8 @@ public final class UIConstants {
         public static final String FONT_PATH = "/fonts/PressStart2P.ttf";
         public static final String PLAYER_SHOT_PATH = "/entities/shots/player_shot.png";
         public static final String INVADER_SHOT_PATH = "/entities/shots/invader_shot.png";
-        public static final String MENU_BACKGROUND_PATH = "/backgrounds/menu_background.jpg";
+        public static final String MENU_BACKGROUND1_PATH = "/backgrounds/menu_background1.jpg";
+        public static final String MENU_BACKGROUND2_PATH = "/backgrounds/menu_background2.jpg";
         public static final List<String> GAME_BACKGROUNDS_PATHS = List.of(
                         "/backgrounds/game_background1.jpg",
                         "/backgrounds/game_background2.jpg",
@@ -58,10 +59,10 @@ public final class UIConstants {
         public static final Font SMALL_FONT;
 
         static {
-                final float titleBase = 60f;
-                final float titleHover = 65f;
-                final float medium = 32f;
-                final float small = 20f;
+                final float titleBase = 50f;
+                final float titleHover = 55f;
+                final float medium = 30f;
+                final float small = 18f;
 
                 try (InputStream is = UIConstants.class.getResourceAsStream(FONT_PATH)) {
 

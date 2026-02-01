@@ -289,14 +289,15 @@ public class GameWorld {
      */
     public void spawnBonusInvader() {
         final int leftPos = -1;
-        final int rightPos = 59;
+        final int rightPos = Constants.BORDER_RIGHT - Constants.BONUS_INVADER_WIDTH;
 
         final boolean left = new java.util.Random().nextBoolean();
         final Direction direction = left ? Direction.RIGHT : Direction.LEFT;
         final int x = left ? leftPos : rightPos;
         final int y = 1;
 
-        final Invader invader = new Invader(EntityType.BONUS_INVADER, x, y, 3, 2, 1);
+        final Invader invader = new Invader(EntityType.BONUS_INVADER, x, y, Constants.BONUS_INVADER_WIDTH,
+                Constants.BONUS_INVADER_HEIGHT, 1);
         invader.setCurrDirection(direction);
         invader.setNextDirection(direction);
 
