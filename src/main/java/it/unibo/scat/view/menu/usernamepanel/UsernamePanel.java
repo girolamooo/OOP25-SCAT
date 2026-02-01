@@ -119,11 +119,10 @@ public final class UsernamePanel extends JPanel {
         final ButtonsWrapper buttonsWrapper = new ButtonsWrapper(menuActionsInterface);
         buttonsWrapper.setOpaque(false);
 
-        final int width = 300;
+        final int width = 400;
         final int height = width * 2 / 3;
         final Dimension d = new Dimension(width, height);
         buttonsWrapper.setPreferredSize(d);
-        buttonsWrapper.setMinimumSize(d);
         buttonsWrapper.setMaximumSize(d);
 
         add(buttonsWrapper);

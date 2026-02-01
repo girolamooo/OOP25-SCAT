@@ -58,8 +58,8 @@ public final class UIConstants {
         public static final Font SMALL_FONT;
 
         static {
-                final float titleBase = 45f;
-                final float titleHover = 50f;
+                final float titleBase = 50f;
+                final float titleHover = 55f;
                 final float medium = 30f;
                 final float small = 18f;
 
