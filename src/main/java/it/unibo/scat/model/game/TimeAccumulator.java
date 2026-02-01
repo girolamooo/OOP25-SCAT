@@ -51,24 +51,24 @@ public final class TimeAccumulator {
      * @return ...
      * 
      */
-    public AtomicInteger getInvadersAccMs() {
-        return invadersAccMs;
+    public int getInvadersAccMs() {
+        return invadersAccMs.get();
     }
 
     /**
      * @return ...
      * 
      */
-    public AtomicInteger getBonusInvaderAccMs() {
-        return bonusInvaderAccMs;
+    public int getBonusInvaderAccMs() {
+        return bonusInvaderAccMs.get();
     }
 
     /**
      * @return ...
      * 
      */
-    public AtomicInteger getShotsAccMs() {
-        return shotsAccMs;
+    public int getShotsAccMs() {
+        return shotsAccMs.get();
     }
 
 }
