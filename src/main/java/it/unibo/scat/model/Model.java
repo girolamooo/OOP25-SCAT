@@ -65,7 +65,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
         final CollisionReport collisionReport;
         final int newPoints;
 
-        timeAccumulator.handleTimeAccumulators();
         timeAccumulator.incrementTimeAccumulators();
 
         gameLogic.handleInvadersMovement(timeAccumulator.getInvadersAccMs());

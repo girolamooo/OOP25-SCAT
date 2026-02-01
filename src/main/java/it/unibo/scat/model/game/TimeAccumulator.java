@@ -24,7 +24,7 @@ public final class TimeAccumulator {
     /**
      * ...
      */
-    public void handleTimeAccumulators() {
+    private void consumeAccumulators() {
         if (invadersAccMs.get() >= difficultyManager.getInvadersStepMs()) {
             invadersAccMs.set(invadersAccMs.get() - difficultyManager.getInvadersStepMs());
         }
@@ -42,6 +42,8 @@ public final class TimeAccumulator {
      * ...
      */
     public void incrementTimeAccumulators() {
+        consumeAccumulators();
+
         invadersAccMs.set(invadersAccMs.get() + Constants.GAME_STEP_MS);
         bonusInvaderAccMs.set(bonusInvaderAccMs.get() + Constants.GAME_STEP_MS);
         shotsAccMs.set(shotsAccMs.get() + Constants.GAME_STEP_MS);
