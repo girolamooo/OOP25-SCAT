@@ -201,9 +201,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         currentBackgroundIndex = viewInterface.getLevel() - 1;
         if (currentBackgroundIndex >= backgrounds.size()) {
             currentBackgroundIndex %= backgrounds.size();
-            System.out.println("AAAAAAAAAAAAAAAAAAAAA");
         }
-        System.out.println("BgIndex: " + currentBackgroundIndex);
     }
 
     /**
