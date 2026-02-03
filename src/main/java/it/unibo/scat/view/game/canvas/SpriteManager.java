@@ -83,9 +83,10 @@ public final class SpriteManager {
                 scaledImages.put(
                                 EntityType.INVADER_SHOT,
                                 new Image[] {
-                                                scale(loadSingle(UIConstants.INVADER_SHOT_PATH),
+                                                scale(loadSingle(
+                                                                UIConstants.INVADER_SHOT_PATH),
                                                                 Constants.SHOT_WIDTH * scaleX,
-                                                                Constants.SHOT_HEIGHT * scaleY)
+                                                                Constants.SHOT_HEIGHT * scaleY),
                                 });
         }
 

@@ -3,8 +3,10 @@ package it.unibo.scat.view.game.canvas;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -25,7 +27,7 @@ public final class Canvas extends JPanel {
     private static final long serialVersionUID = 1L;
     private final transient MenuActionsInterface menuActionsInterface;
     private transient volatile List<EntityView> entities;
-    private transient Image voidImage;
+    private final transient Image voidImage;
     private final AtomicInteger invadersAnimationFrame = new AtomicInteger(0);
     private final AtomicInteger bonusInvaderAnimationFrame = new AtomicInteger(0);
     private int lastInvadersHash;
@@ -41,6 +43,8 @@ public final class Canvas extends JPanel {
     public Canvas(final MenuActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
         entities = null; // to do for the checkstyle
+        voidImage = new ImageIcon(
+                Objects.requireNonNull(SpriteManager.class.getResource(UIConstants.NULL_PATH))).getImage();
 
         setForeground(UIConstants.WHITE_50_OPACITY);
         setFont(UIConstants.SMALL_FONT);
@@ -148,22 +152,13 @@ public final class Canvas extends JPanel {
     private Image fetchImage(final EntityView entity) {
 
         switch (entity.getType()) {
-            case INVADER_1 -> {
-                return spriteManger.getImage(entity.getType(), invadersAnimationFrame.get());
-            }
-            case INVADER_2 -> {
-                return spriteManger.getImage(entity.getType(), invadersAnimationFrame.get());
-            }
-            case INVADER_3 -> {
+            case INVADER_1, INVADER_2, INVADER_3 -> {
                 return spriteManger.getImage(entity.getType(), invadersAnimationFrame.get());
             }
             case BONUS_INVADER -> {
                 return spriteManger.getImage(entity.getType(), bonusInvaderAnimationFrame.get());
             }
-            case PLAYER -> {
-                return spriteManger.getImage(entity.getType(), menuActionsInterface.getChosenShipIndex());
-            }
-            case PLAYER_SHOT -> {
+            case PLAYER, PLAYER_SHOT -> {
                 return spriteManger.getImage(entity.getType(), menuActionsInterface.getChosenShipIndex());
             }
             case INVADER_SHOT -> {
@@ -186,8 +181,8 @@ public final class Canvas extends JPanel {
      * ...
      */
     private void initSpriteManger() {
-        int scaleX = getWidth() / Constants.BORDER_RIGHT;
-        int scaleY = getHeight() / Constants.BORDER_BOTTOM;
+        final int scaleX = getWidth() / Constants.BORDER_RIGHT;
+        final int scaleY = getHeight() / Constants.BORDER_BOTTOM;
         spriteManger = new SpriteManager(scaleX, scaleY);
     }
 }
