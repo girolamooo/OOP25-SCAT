@@ -67,11 +67,13 @@ public final class Model implements ModelInterface, ModelState, Observable {
 
         timeAccumulator.incrementTimeAccumulators();
 
+        // Movements
         gameLogic.handleInvadersMovement(timeAccumulator.getInvadersAccMs());
         gameLogic.handleShotsMovement(timeAccumulator.getShotsAccMs());
         gameLogic.handleBonusInvader(timeAccumulator.getBonusInvaderAccMs());
         gameLogic.handleInvadersShot();
 
+        // Collisions
         collisionReport = gameLogic.checkCollisions();
         newPoints = gameLogic.handleCollisionReport(collisionReport);
 
@@ -107,7 +109,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
      */
     public void increaseLevel() {
         gameLogic.getDifficultyManager().incrementLevel();
-        notifyObserver();
     }
 
     /**
@@ -116,7 +117,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
      */
     public void updateScore(final int points) {
         this.score.addAndGet(points);
-        notifyObserver();
     }
 
     @Override
