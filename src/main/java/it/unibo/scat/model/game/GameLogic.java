@@ -311,7 +311,7 @@ public class GameLogic {
     /**
      * ...
      */
-    public void handleInvadersShot() {
+    public void handleInvadersShooting() {
         if (!canInvadersShoot()) {
             return;
         }
