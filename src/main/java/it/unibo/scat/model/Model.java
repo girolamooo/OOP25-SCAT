@@ -109,7 +109,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
      */
     public void increaseLevel() {
         gameLogic.getDifficultyManager().incrementLevel();
-        notifyObserver();
     }
 
     /**
@@ -118,7 +117,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
      */
     public void updateScore(final int points) {
         this.score.addAndGet(points);
-        notifyObserver();
     }
 
     @Override
