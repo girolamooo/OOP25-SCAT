@@ -1,5 +1,6 @@
 package it.unibo.scat.view.menu;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -30,9 +31,9 @@ public final class CreditsPanel extends JPanel {
     private static final String CALIBRI = "Calibri";
 
     private static final Font FONT_TITLE = new Font(CALIBRI, Font.BOLD, 40);
-    private static final Font FONT_INFO = new Font(CALIBRI, Font.BOLD, 15);
+    private static final Font FONT_INFO = new Font(CALIBRI, Font.BOLD, 20);
     private static final Font FONT_BUTTON = new Font(CALIBRI, Font.BOLD, 30);
-    private static final Font FONT_STORY = new Font(CALIBRI, Font.ITALIC, 14);
+    private static final Font FONT_STORY = new Font(CALIBRI, Font.ITALIC, 18);
 
     private final transient MenuPanelInterface menuInterface;
     private final transient AudioManager soundEffect;
@@ -45,46 +46,55 @@ public final class CreditsPanel extends JPanel {
         this.menuInterface = mInterface;
         this.soundEffect = new AudioManager();
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
         setOpaque(false);
 
-        initContent();
+        add(createCredits(), BorderLayout.CENTER);
         initBackButton();
     }
 
     /**
-     * ...
+     * Creates and returns the credits panel.
+     * 
+     * @return the credits panel.
      */
-    private void initContent() {
-        add(Box.createVerticalGlue());
-        add(Box.createVerticalStrut(TOP_MARGIN));
-        addCustomLabel("CREDITS PANEL", FONT_TITLE);
+    private JPanel createCredits() {
+        final JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.add(Box.createVerticalGlue());
+        p.setOpaque(false);
 
-        add(Box.createVerticalStrut(TITLE_SPACING));
+        addCustomLabel(p, "CREDITS PANEL", FONT_TITLE);
 
-        addCustomLabel("Tribute to the original 'Space Invaders', the legendary game", FONT_STORY);
-        addCustomLabel("designed by Tomohiro Nishikado and released by Taito in 1978.", FONT_STORY);
-        addCustomLabel("A global phenomenon of the late 70s, it sold over 360,000 arcade cabinets", FONT_STORY);
-        addCustomLabel("and grossed billions worldwide.", FONT_STORY);
+        p.add(Box.createVerticalStrut(TITLE_SPACING));
 
-        addCustomLabel(
+        addCustomLabel(p, "Tribute to the original 'Space Invaders', the legendary game", FONT_STORY);
+        addCustomLabel(p, "designed by Tomohiro Nishikado and released by Taito in 1978.", FONT_STORY);
+        addCustomLabel(p, "A global phenomenon of the late 70s, it sold over 360,000 arcade cabinets", FONT_STORY);
+        addCustomLabel(p, "and grossed billions worldwide.", FONT_STORY);
+
+        addCustomLabel(p,
                 "This remake was developed as a project for the OOP course at the University of Bologna.",
                 FONT_STORY);
 
-        addCustomLabel("Credits to:", FONT_STORY);
+        addCustomLabel(p, "Credits to:", FONT_STORY);
 
-        add(Box.createVerticalStrut(BOTTOM_SPACING));
-        addCustomLabel("GIROLAMO RONZONI - girolamo.ronzoni@studio.unibo.it", FONT_INFO);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+        addCustomLabel(p, "GIROLAMO RONZONI - girolamo.ronzoni@studio.unibo.it", FONT_INFO);
 
-        add(Box.createVerticalStrut(BOTTOM_SPACING));
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
 
-        addCustomLabel("LEONARDO LIOI - leonardo.lioi@studio.unibo.it", FONT_INFO);
+        addCustomLabel(p, "LEONARDO LIOI - leonardo.lioi@studio.unibo.it", FONT_INFO);
 
-        add(Box.createVerticalStrut(BOTTOM_SPACING));
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
 
-        addCustomLabel("MARIO LUNGU - mario.lungu@studio.unibo.it", FONT_INFO);
+        addCustomLabel(p, "MARIO LUNGU - mario.lungu@studio.unibo.it", FONT_INFO);
 
-        add(Box.createVerticalStrut(BOTTOM_SPACING));
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+
+        p.add(Box.createVerticalGlue());
+
+        return p;
     }
 
     /**
@@ -123,16 +133,17 @@ public final class CreditsPanel extends JPanel {
             }
         });
 
-        add(backLabel);
+        add(backLabel, BorderLayout.SOUTH);
     }
 
     /**
      * Creates labels similar to CustomLabel.
      *
-     * @param text ...
-     * @param font ...
+     * @param target ...
+     * @param text   ...
+     * @param font   ...
      */
-    private void addCustomLabel(final String text, final Font font) {
+    private void addCustomLabel(final JPanel target, final String text, final Font font) {
         final JLabel label = new JLabel(text);
         label.setFont(font);
         label.setForeground(Color.WHITE);
@@ -150,8 +161,7 @@ public final class CreditsPanel extends JPanel {
                 label.setForeground(Color.WHITE);
             }
         });
-
-        add(label);
-        add(Box.createVerticalStrut(SPACING_NAMES));
+        target.add(label);
+        target.add(Box.createVerticalStrut(SPACING_NAMES));
     }
 }
