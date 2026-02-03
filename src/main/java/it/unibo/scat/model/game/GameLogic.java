@@ -191,9 +191,9 @@ public class GameLogic {
      * Also removes every shot currently present in the world.
      */
     public void resetEntities() {
-        gameWorld.getEntities().forEach(x -> {
-            x.reset();
-        });
+        for (final AbstractEntity e : List.copyOf(gameWorld.getEntities())) {
+            e.reset();
+        }
     }
 
     /**
@@ -281,9 +281,14 @@ public class GameLogic {
      * ...
      */
     public void moveShots() {
+        final List<Shot> toRemove = new ArrayList<>();
         for (final Shot shot : gameWorld.getShots()) {
             shot.move();
+            if (!shot.isAlive()) {
+                toRemove.add(shot);
+            }
         }
+        toRemove.forEach(gameWorld::removeEntity);
     }
 
     /**
