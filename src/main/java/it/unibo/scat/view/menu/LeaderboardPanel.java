@@ -29,8 +29,6 @@ import it.unibo.scat.common.GameRecord;
 @SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private static final Color ARCADE_BLACK = Color.BLACK;
-    private static final Color ARCADE_GREEN = new Color(51, 255, 51);
     private static final int COLUMN_COUNT = 5;
     private static final int TABLE_ROW_HEIGHT = 10;
     private final transient MenuPanelInterface menuInterface;
@@ -60,7 +58,7 @@ public final class LeaderboardPanel extends JPanel {
         final JButton backButton = new JButton("BACK");
         backButton.setFont(UIConstants.SMALL_FONT);
         backButton.setForeground(Color.WHITE);
-        backButton.setBackground(ARCADE_BLACK);
+        backButton.setBackground(UIConstants.ARCADE_BLACK);
         backButton.setFocusPainted(false);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -113,21 +111,21 @@ public final class LeaderboardPanel extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        table.setBackground(ARCADE_BLACK);
+        table.setBackground(UIConstants.ARCADE_BLACK);
         table.setForeground(Color.WHITE);
         table.setFont(UIConstants.SMALL_FONT);
-        table.setGridColor(ARCADE_BLACK);
+        table.setGridColor(UIConstants.ARCADE_GREEN);
         table.setRowHeight(TABLE_ROW_HEIGHT);
         table.setEnabled(false);
 
         final JTableHeader header = table.getTableHeader();
-        header.setBackground(ARCADE_BLACK);
-        header.setForeground(ARCADE_GREEN);
+        header.setBackground(UIConstants.ARCADE_BLACK);
+        header.setForeground(UIConstants.ARCADE_GREEN);
         header.setFont(UIConstants.SMALL_FONT);
         header.setReorderingAllowed(false);
 
         final JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.getViewport().setBackground(ARCADE_BLACK);
+        scrollPane.getViewport().setBackground(UIConstants.ARCADE_BLACK);
         scrollPane.setBorder(null);
 
         this.add(scrollPane, BorderLayout.CENTER);
