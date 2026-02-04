@@ -53,7 +53,7 @@ public final class Model implements ModelInterface, ModelState, Observable {
 
         gameWorld.initEntities(entitiesFile);
         leaderboard.initLeaderboard();
-
+        leaderboard.addTestData();
         timeAccumulator = new TimeAccumulator(gameLogic.getDifficultyManager());
 
         // DEBUG
