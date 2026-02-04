@@ -63,6 +63,7 @@ public class Leaderboard {
             int score;
             int level;
             LocalDate date;
+
             line = reader.readLine();
             while (line != null) {
                 final String[] field = line.trim().split(";");
@@ -107,7 +108,7 @@ public class Leaderboard {
     }
 
     /**
-     * adds a new record to the leaderboard and updates the file.
+     * Adds a new record to the leaderboard and updates the file.
      * 
      * @param newRecord the record to add
      */
@@ -117,8 +118,6 @@ public class Leaderboard {
     }
 
     /**
-     * Returns a list of all game records.
-     * 
      * @return all the records of the leaderboard.
      * 
      */
