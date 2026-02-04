@@ -48,10 +48,18 @@ public class Leaderboard {
         final int idxScore = 1;
         final int idxLevel = 2;
         final int idxDate = 3;
-
+        final Path path = Path.of(leaderboardFile);
         try {
-            if (!Files.exists(Path.of(leaderboardFile))) {
-                Files.createFile(Path.of(leaderboardFile));
+
+            final Path parent = path.getParent();
+            if (parent != null && !Files.exists(parent)) {
+                Files.createDirectories(parent);
+            }
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+            }
+            if (!Files.exists(path)) {
+                Files.createFile(path);
             }
         } catch (Exception e) {
             throw new IllegalStateException("Cannot create leaderboard file: " + leaderboardFile + " Exception: ", e);
@@ -122,6 +130,7 @@ public class Leaderboard {
      */
     public void addNewGameRecord(final GameRecord newRecord) {
         games.add(newRecord);
+        updateFile();
     }
 
     /**
