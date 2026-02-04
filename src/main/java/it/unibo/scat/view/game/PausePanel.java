@@ -43,9 +43,9 @@ public final class PausePanel extends JPanel {
         addTitle();
 
         // iniz bottoni
-        resumeButton = new JButton();
-        menuButton = new JButton();
-        quitButton = new JButton();
+        resumeButton = createButton("RESUME");
+        menuButton = createButton("MENU");
+        quitButton = createButton("QUIT");
 
     }
 
