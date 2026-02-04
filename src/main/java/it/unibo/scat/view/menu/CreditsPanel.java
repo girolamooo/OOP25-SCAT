@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
@@ -174,18 +173,18 @@ public final class CreditsPanel extends JPanel {
         invadersRow.setLayout(new BoxLayout(invadersRow, BoxLayout.Y_AXIS));
         invadersRow.setOpaque(false);
 
-        final String equals = "  =    ";
+        final String equals = " =    ";
         invadersRow
-                .add(createInvaderPanel(UIConstants.INVADER1_PATHS.get(0), equals
+                .add(createInvaderPanel("/entities/gifs/gif1.gif", equals
                         + Constants.POINTS_INVADER1 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
         invadersRow
-                .add(createInvaderPanel(UIConstants.INVADER2_PATHS.get(0), equals
+                .add(createInvaderPanel("/entities/gifs/gif2.gif", equals
                         + Constants.POINTS_INVADER2 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
         invadersRow
-                .add(createInvaderPanel(UIConstants.INVADER3_PATHS.get(0), equals
+                .add(createInvaderPanel("/entities/gifs/gif3.gif", equals
                         + Constants.POINTS_INVADER3 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
         invadersRow.add(
-                createInvaderPanel(UIConstants.BONUS_INVADER_PATH,
+                createInvaderPanel("/entities/gifs/gif4.gif",
                         "=   " + Constants.POINTS_BONUS_INVADER + " " + POINTS,
                         BONUS_INVADER_WIDTH, INVADER_HEIGHT));
         p.add(invadersRow);
@@ -217,13 +216,24 @@ public final class CreditsPanel extends JPanel {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setOpaque(false);
 
-        final JLabel imageLabel;
+        // ImageIcon gifIcon = new ImageIcon(
+        // Objects.requireNonNull(getClass().getResource(path)));
 
-        final Image scaledImg = new ImageIcon(
-                Objects.requireNonNull(getClass().getResource(path))).getImage()
-                .getScaledInstance(width, heigth, Image.SCALE_SMOOTH);
+        // final JLabel imageLabel = new JLabel() {
+        // @Override
+        // protected void paintComponent(Graphics g) {
+        // super.paintComponent(g);
+        // g.drawImage(gifIcon.getImage(), 0, 0, width, heigth, this);
+        // }
+        // };
 
-        imageLabel = new JLabel(new ImageIcon(scaledImg));
+        ImageIcon gifIcon = new ImageIcon(
+                Objects.requireNonNull(getClass().getResource(path)));
+
+        final JLabel imageLabel = new JLabel(gifIcon);
+
+        // imageLabel.setPreferredSize(new Dimension(width, heigth));
+
         imageLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         final JLabel score = new JLabel("    " + points);

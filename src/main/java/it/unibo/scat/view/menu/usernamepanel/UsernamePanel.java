@@ -17,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.UIConstants;
@@ -43,7 +42,7 @@ public final class UsernamePanel extends JPanel {
         this.menuActionsInterface = menuActionsInterface;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(UIConstants.PANELS_BG_COLOR);
-        setBorder(new LineBorder(Color.BLACK, 10));
+        setBorder(UIConstants.PANELS_BORDER);
 
         initUsernameText();
         initUsernameField();
