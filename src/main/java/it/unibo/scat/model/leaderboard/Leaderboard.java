@@ -153,4 +153,15 @@ public class Leaderboard {
 
     }
 
+    /**
+     * Fills the leaderboard with some data for testing purposes.
+     */
+    public void addTestData() {
+        if (games.isEmpty()) { // Aggiunge dati solo se la classifica è vuota
+            addNewGameRecord(new GameRecord("MARIO", 2000, 2, LocalDate.now()));
+            addNewGameRecord(new GameRecord("GIROLAMO", 1700, 2, LocalDate.now()));
+            addNewGameRecord(new GameRecord("LEONARDO", 1500, 2, LocalDate.now()));
+        }
+    }
+
 }
