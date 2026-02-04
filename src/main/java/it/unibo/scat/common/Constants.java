@@ -5,7 +5,7 @@ package it.unibo.scat.common;
  */
 public final class Constants {
     // PATHS
-    public static final String LEADERBOARD_PATH = "data/leaderboard.txt";
+    public static final String LEADERBOARD_PATH = "leaderboard-stats/leaderboard.txt";
     public static final String ENTITIES_PATH = "data/entities.txt";
 
     // WORLD
