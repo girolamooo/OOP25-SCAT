@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -30,7 +32,7 @@ import it.unibo.scat.common.GameRecord;
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int COLUMN_COUNT = 5;
-    private static final int TABLE_ROW_HEIGHT = 10;
+    private static final int TABLE_ROW_HEIGHT = 25;
     private final transient MenuPanelInterface menuInterface;
     private final transient MenuActionsInterface menuActionsInterface;
     private final transient List<GameRecord> records;
@@ -44,9 +46,16 @@ public final class LeaderboardPanel extends JPanel {
         this.menuInterface = mInterface;
         this.menuActionsInterface = mActionInterface;
         records = menuActionsInterface.fetchLeaderboard();
-        final JLabel label = new JLabel("GLOBAL RANKING");
-        add(label);
-        setLayout();
+
+        setLayout(new BorderLayout());
+        this.setBackground(UIConstants.ARCADE_BLACK);
+        final JLabel titleLabel = new JLabel("GLOBAL RANKING", JLabel.CENTER);
+        titleLabel.setOpaque(false);
+        titleLabel.setFont(UIConstants.SMALL_FONT);
+        titleLabel.setForeground(UIConstants.ARCADE_GREEN);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+        this.add(titleLabel, BorderLayout.NORTH);
         initContentTable();
         initBackButton();
     }
@@ -68,18 +77,6 @@ public final class LeaderboardPanel extends JPanel {
 
         });
         add(backButton, BorderLayout.SOUTH);
-    }
-
-    /**
-     * ...
-     */
-    private void setLayout() {
-        final JPanel centerPanel = new JPanel();
-        this.setLayout(new BorderLayout());
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        this.add(centerPanel, BorderLayout.CENTER);
-        centerPanel.add(Box.createVerticalGlue());
-        centerPanel.add(new JLabel("LEADERBOARD"));
     }
 
     /**
@@ -114,7 +111,7 @@ public final class LeaderboardPanel extends JPanel {
         table.setBackground(UIConstants.ARCADE_BLACK);
         table.setForeground(Color.WHITE);
         table.setFont(UIConstants.SMALL_FONT);
-        table.setGridColor(UIConstants.ARCADE_GREEN);
+        table.setGridColor(UIConstants.ARCADE_BLACK);
         table.setRowHeight(TABLE_ROW_HEIGHT);
         table.setEnabled(false);
 
