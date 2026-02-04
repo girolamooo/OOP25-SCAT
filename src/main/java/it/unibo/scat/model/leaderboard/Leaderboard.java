@@ -2,6 +2,7 @@ package it.unibo.scat.model.leaderboard;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,11 +49,15 @@ public class Leaderboard {
         final int idxLevel = 2;
         final int idxDate = 3;
 
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        Objects.requireNonNull(
-                                getClass().getClassLoader().getResourceAsStream(leaderboardFile)),
-                        StandardCharsets.UTF_8))) {
+        try {
+            if (!Files.exists(Path.of(leaderboardFile))) {
+                Files.createFile(Path.of(leaderboardFile));
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Cannot create leaderboard file: " + leaderboardFile + " Exception: ", e);
+        }
+
+        try (BufferedReader reader = Files.newBufferedReader(Path.of(leaderboardFile), StandardCharsets.UTF_8)) {
 
             String line;
             String name;
