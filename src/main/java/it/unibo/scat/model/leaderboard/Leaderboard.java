@@ -2,10 +2,8 @@ package it.unibo.scat.model.leaderboard;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,18 +13,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
-import java.util.logging.Logger;
 
 import it.unibo.scat.common.GameRecord;
-import it.unibo.scat.model.game.GameWorld;
 
 /**
  * This class handles the leaderboard logic.
  */
 public class Leaderboard {
     private final List<GameRecord> games;
-    private final String leaderboardFile;
+    private final String leaderboardFile; // CORREGGERLO
 
     /**
      * Leaderboard constructor.
@@ -48,31 +43,26 @@ public class Leaderboard {
         final int idxScore = 1;
         final int idxLevel = 2;
         final int idxDate = 3;
-        final Path path = Path.of(leaderboardFile);
+        final Path pathLeaderboard = Path.of(leaderboardFile);
         try {
 
-            final Path parent = path.getParent();
+            final Path parent = pathLeaderboard.getParent();
             if (parent != null && !Files.exists(parent)) {
                 Files.createDirectories(parent);
             }
-            if (!Files.exists(path)) {
-                Files.createFile(path);
+            if (!Files.exists(pathLeaderboard)) {
+                Files.createFile(pathLeaderboard);
             }
-            if (!Files.exists(path)) {
-                Files.createFile(path);
-            }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new IllegalStateException("Cannot create leaderboard file: " + leaderboardFile + " Exception: ", e);
         }
 
-        try (BufferedReader reader = Files.newBufferedReader(Path.of(leaderboardFile), StandardCharsets.UTF_8)) {
-
+        try (BufferedReader reader = Files.newBufferedReader(pathLeaderboard, StandardCharsets.UTF_8)) {
             String line;
             String name;
             int score;
             int level;
             LocalDate date;
-
             line = reader.readLine();
             while (line != null) {
                 final String[] field = line.trim().split(";");
@@ -91,13 +81,14 @@ public class Leaderboard {
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot load records from file: " + leaderboardFile + "Exception: ", e);
         }
-
+        sortGames();
     }
 
     /**
      * Completely rewrites the leaderboard file with the current sorted records.
      */
     public void updateFile() {
+        sortGames();
         try (BufferedWriter writer = Files.newBufferedWriter(Path.of(leaderboardFile))) {
             for (final GameRecord game : games) {
                 writer.write(
@@ -121,10 +112,11 @@ public class Leaderboard {
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot write records into file: " + leaderboardFile + "Exception: ", e);
         }
+
     }
 
     /**
-     * adds a new record to the leaderboard.
+     * adds a new record to the leaderboard and updates the file.
      * 
      * @param newRecord the record to add
      */
@@ -166,18 +158,6 @@ public class Leaderboard {
 
         });
 
-    }
-
-    /**
-     * Debug function, to remove.
-     */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private void printLeaderboard() {
-        final Logger logger = Logger.getLogger(GameWorld.class.getName());
-        for (final var x : games) {
-
-            logger.info(x.getName() + " " + x.getScore() + " " + x.getLevel() + " " + x.getDate());
-        }
     }
 
 }
