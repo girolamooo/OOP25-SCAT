@@ -71,10 +71,6 @@ public final class SpriteManager {
                                 UIConstants.INVADER3_PATHS,
                                 Constants.INVADER_WIDTH, Constants.INVADER_HEIGHT,
                                 scaleX, scaleY);
-                put(EntityType.BONUS_INVADER,
-                                UIConstants.BONUS_INVADER_PATHS,
-                                Constants.BONUS_INVADER_WIDTH, Constants.BONUS_INVADER_HEIGHT,
-                                scaleX, scaleY);
                 put(EntityType.BUNKER,
                                 UIConstants.BUNKER_PATHS,
                                 Constants.BUNKER_WIDTH, Constants.BUNKER_HEIGHT,
@@ -88,6 +84,12 @@ public final class SpriteManager {
                                                                 Constants.SHOT_WIDTH * scaleX,
                                                                 Constants.SHOT_HEIGHT * scaleY),
                                 });
+                scaledImages.put(EntityType.BONUS_INVADER, new Image[] {
+                                scale(loadSingle(
+                                                UIConstants.BONUS_INVADER_PATH),
+                                                Constants.BONUS_INVADER_WIDTH * scaleX,
+                                                Constants.BONUS_INVADER_HEIGHT * scaleY),
+                });
         }
 
         /**

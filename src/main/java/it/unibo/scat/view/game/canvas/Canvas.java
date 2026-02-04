@@ -29,9 +29,7 @@ public final class Canvas extends JPanel {
     private transient volatile List<EntityView> entities;
     private final transient Image voidImage;
     private final AtomicInteger invadersAnimationFrame = new AtomicInteger(0);
-    private final AtomicInteger bonusInvaderAnimationFrame = new AtomicInteger(0);
     private int lastInvadersHash;
-    private int lastBonusHash;
 
     private transient SpriteManager spriteManger;
 
@@ -46,9 +44,7 @@ public final class Canvas extends JPanel {
         voidImage = new ImageIcon(
                 Objects.requireNonNull(SpriteManager.class.getResource(UIConstants.NULL_PATH))).getImage();
 
-        setForeground(UIConstants.WHITE_50_OPACITY);
         setFont(UIConstants.SMALL_FONT);
-
         update();
     }
 
@@ -62,12 +58,6 @@ public final class Canvas extends JPanel {
         if (invHash != lastInvadersHash) {
             invadersAnimationFrame.set(invadersAnimationFrame.get() == 1 ? 0 : 1);
             lastInvadersHash = invHash;
-        }
-
-        final int bonusInvHash = hashPositions(entities, EntityType.BONUS_INVADER);
-        if (bonusInvHash != lastBonusHash) {
-            bonusInvaderAnimationFrame.set(bonusInvaderAnimationFrame.get() == 1 ? 0 : 1);
-            lastBonusHash = bonusInvHash;
         }
     }
 
@@ -156,7 +146,7 @@ public final class Canvas extends JPanel {
                 return spriteManger.getImage(entity.getType(), invadersAnimationFrame.get());
             }
             case BONUS_INVADER -> {
-                return spriteManger.getImage(entity.getType(), bonusInvaderAnimationFrame.get());
+                return spriteManger.getImage(entity.getType(), 0);
             }
             case PLAYER, PLAYER_SHOT -> {
                 return spriteManger.getImage(entity.getType(), menuActionsInterface.getChosenShipIndex());

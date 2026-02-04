@@ -6,9 +6,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
+import java.util.Objects;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,6 +21,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Constants;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
+import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 
 /**
@@ -29,26 +31,25 @@ import it.unibo.scat.view.menu.api.MenuPanelInterface;
 
 public final class CreditsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private static final int TITLE_SPACING = 10;
-    private static final int BOTTOM_SPACING = 10;
-    private static final int SPACING_NAMES = 5;
+    private static final int TITLE_SPACING = 50;
+    private static final int BOTTOM_SPACING = 20;
     private static final int NAV_H = 40;
     private static final int NAV_V = 10;
-    private static final String CALIBRI = "Calibri";
     private static final String CREDITS = "CREDITS";
     private static final String TUTORIAL = "TUTORIAL";
     private static final String POINTS = "POINTS";
 
+    private static final int BONUS_INVADER_WIDTH = 90;
     private static final int INVADER_WIDTH = 60;
-    private static final int INVADER_HEIGHT = 40;
-    private static final int INVAVER_H = 40;
-    private static final int INVADER_V = 5;
-    private static final int UNDER_INVADER = 5;
-    private static final Font FONT_TITLE = new Font(CALIBRI, Font.BOLD, 40);
-    private static final Font FONT_INFO = new Font(CALIBRI, Font.BOLD, 20);
-    private static final Font FONT_BUTTON = new Font(CALIBRI, Font.BOLD, 30);
-    private static final Font FONT_STORY = new Font(CALIBRI, Font.ITALIC, 18);
-    private static final Font FONT_POINTS = new Font(CALIBRI, Font.BOLD, 12);
+    private static final int INVADER_HEIGHT = 60;
+    private static final Font FONT_TITLE = UIConstants.TITLE_FONT;
+    private static final Font FONT_INFO = UIConstants.MEDIUM_SMALL_FONT;
+    private static final Font FONT_BUTTON = UIConstants.MEDIUM_SMALL_FONT;
+    private static final Font FONT_STORY = UIConstants.MEDIUM_SMALL_FONT;
+    private static final Font FONT_POINTS = UIConstants.SMALL_FONT;
+
+    private static final Color TITLE_COLOR = Color.GREEN;
+    private static final Color TEXT_COLOR = Color.WHITE;
 
     private final transient MenuPanelInterface menuInterface;
     private final transient AudioManager soundEffect;
@@ -104,34 +105,53 @@ public final class CreditsPanel extends JPanel {
         p.add(Box.createVerticalGlue());
         p.setOpaque(false);
 
-        addCustomLabel(p, "CREDITS PANEL", FONT_TITLE);
-
+        addCustomLabel(p, "Space Combat", FONT_TITLE, TITLE_COLOR);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+        addCustomLabel(p, "Alien Takeover", FONT_TITLE, TITLE_COLOR);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+        addCustomLabel(p, "(SCAT)", FONT_TITLE, TITLE_COLOR);
         p.add(Box.createVerticalStrut(TITLE_SPACING));
 
-        addCustomLabel(p, "Tribute to the original 'Space Invaders', the legendary game", FONT_STORY);
-        addCustomLabel(p, "designed by Tomohiro Nishikado and released by Taito in 1978.", FONT_STORY);
-        addCustomLabel(p, "A global phenomenon of the late 70s, it sold over 360,000 arcade cabinets", FONT_STORY);
-        addCustomLabel(p, "and grossed billions worldwide.", FONT_STORY);
+        addCustomLabel(p,
+                "Tribute to the original 'Space Invaders', the legendary game",
+                FONT_STORY, TEXT_COLOR);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
 
         addCustomLabel(p,
-                "This remake was developed as a project for the OOP course at the University of Bologna.",
-                FONT_STORY);
-
-        addCustomLabel(p, "Credits to:", FONT_STORY);
-
+                "designed by Tomohiro Nishikado and released by Taito in 1978.",
+                FONT_STORY, TEXT_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
-        addCustomLabel(p, "GIROLAMO RONZONI - girolamo.ronzoni@studio.unibo.it", FONT_INFO);
-
+        addCustomLabel(p,
+                "A global phenomenon of the late 70s, it sold over 360,000 arcade",
+                FONT_STORY, TEXT_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
 
-        addCustomLabel(p, "LEONARDO LIOI - leonardo.lioi@studio.unibo.it", FONT_INFO);
+        addCustomLabel(p,
+                "cabinets and grossed billions worldwide.  ",
+                FONT_STORY, TEXT_COLOR);
+        p.add(Box.createVerticalStrut(TITLE_SPACING));
+
+        addCustomLabel(p,
+                "This remake was developed as a project",
+                FONT_STORY, TEXT_COLOR);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+
+        addCustomLabel(p,
+                "for the OOP course at the University of Bologna",
+                FONT_STORY, TEXT_COLOR);
+        p.add(Box.createVerticalStrut(TITLE_SPACING));
+
+        addCustomLabel(p, "CREDITS TO:", FONT_TITLE, TITLE_COLOR);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+        addCustomLabel(p, "Girolamo Ronzoni", UIConstants.MEDIUM_FONT, TEXT_COLOR);
 
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
 
-        addCustomLabel(p, "MARIO LUNGU - mario.lungu@studio.unibo.it", FONT_INFO);
+        addCustomLabel(p, "Leonardo Lioi", UIConstants.MEDIUM_FONT, TEXT_COLOR);
 
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
 
+        addCustomLabel(p, "Mario Lungu", UIConstants.MEDIUM_FONT, TEXT_COLOR);
         p.add(Box.createVerticalGlue());
 
         return p;
@@ -149,36 +169,35 @@ public final class CreditsPanel extends JPanel {
 
         p.add(Box.createVerticalGlue());
 
-        addCustomLabel(p, "INVADERS", FONT_TITLE);
-        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+        addCustomLabel(p, "INVADERS", FONT_TITLE, TITLE_COLOR);
+        p.add(Box.createVerticalStrut(TITLE_SPACING));
 
-        final JPanel invadersRow = new JPanel(new FlowLayout(FlowLayout.CENTER, INVAVER_H, INVADER_V));
+        final JPanel invadersRow = new JPanel();
+        invadersRow.setLayout(new BoxLayout(invadersRow, BoxLayout.Y_AXIS));
         invadersRow.setOpaque(false);
 
         invadersRow
-                .add(createInvaderPanel("entities/invaders/invader_1_1.png", Constants.POINTS_INVADER1 + " " + POINTS));
+                .add(createInvaderPanel(UIConstants.INVADER1_PATHS.get(0),
+                        Constants.POINTS_INVADER1 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
         invadersRow
-                .add(createInvaderPanel("entities/invaders/invader_2_1.png", Constants.POINTS_INVADER2 + " " + POINTS));
+                .add(createInvaderPanel(UIConstants.INVADER2_PATHS.get(0),
+                        Constants.POINTS_INVADER2 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
         invadersRow
-                .add(createInvaderPanel("entities/invaders/invader_3_1.png", Constants.POINTS_INVADER3 + " " + POINTS));
+                .add(createInvaderPanel(UIConstants.INVADER3_PATHS.get(0),
+                        Constants.POINTS_INVADER3 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
         invadersRow.add(
-                createInvaderPanel("entities/invaders/invader_4_1.png", Constants.POINTS_BONUS_INVADER + " " + POINTS));
-
+                createInvaderPanel(UIConstants.BONUS_INVADER_PATH, Constants.POINTS_BONUS_INVADER + " " + POINTS,
+                        BONUS_INVADER_WIDTH, INVADER_HEIGHT));
         p.add(invadersRow);
+        p.add(Box.createVerticalGlue());
 
-        addCustomLabel(p, "HOW TO PLAY?", FONT_TITLE);
-
+        addCustomLabel(p, "HOW TO PLAY?", FONT_TITLE, TITLE_COLOR);
         p.add(Box.createVerticalStrut(TITLE_SPACING));
-
-        addCustomLabel(p, "MOVE LEFT: LEFT ARROW", FONT_INFO);
-
+        addCustomLabel(p, "MOVE LEFT: LEFT ARROW", FONT_INFO, TEXT_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
-
-        addCustomLabel(p, "MOVE RIGHT: RIGHT ARROW", FONT_INFO);
-
+        addCustomLabel(p, "MOVE RIGHT: RIGHT ARROW", FONT_INFO, TEXT_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
-
-        addCustomLabel(p, "SHOOT: SPACE", FONT_INFO);
+        addCustomLabel(p, "SHOOT: SPACE", FONT_INFO, TEXT_COLOR);
 
         p.add(Box.createVerticalGlue());
         return p;
@@ -189,32 +208,29 @@ public final class CreditsPanel extends JPanel {
      * 
      * @param path   ...
      * @param points ...
+     * @param width  ...
+     * @param heigth ...
      * @return ...
      */
-    private JPanel createInvaderPanel(final String path, final String points) {
+    private JPanel createInvaderPanel(final String path, final String points, final int width, final int heigth) {
         final JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setOpaque(false);
 
-        final URL url = ClassLoader.getSystemResource(path);
+        final JLabel imageLabel;
 
-        final JLabel image;
+        final Image scaledImg = new ImageIcon(
+                Objects.requireNonNull(getClass().getResource(path))).getImage()
+                .getScaledInstance(width, heigth, Image.SCALE_SMOOTH);
 
-        final ImageIcon originalIcon = new ImageIcon(url);
-        final java.awt.Image scaledImg = originalIcon.getImage()
-                .getScaledInstance(INVADER_WIDTH, INVADER_HEIGHT, java.awt.Image.SCALE_SMOOTH);
-
-        image = new JLabel(new ImageIcon(scaledImg));
-
-        image.setAlignmentX(CENTER_ALIGNMENT);
+        imageLabel = new JLabel(new ImageIcon(scaledImg));
+        imageLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         final JLabel score = new JLabel(points);
         score.setFont(FONT_POINTS);
         score.setForeground(Color.WHITE);
-        score.setAlignmentX(CENTER_ALIGNMENT);
 
-        p.add(image);
-        p.add(Box.createVerticalStrut(UNDER_INVADER));
+        p.add(imageLabel);
         p.add(score);
 
         return p;
@@ -298,25 +314,14 @@ public final class CreditsPanel extends JPanel {
      * @param target ...
      * @param text   ...
      * @param font   ...
+     * @param color  ...
      */
-    private void addCustomLabel(final JPanel target, final String text, final Font font) {
+    private void addCustomLabel(final JPanel target, final String text, final Font font, final Color color) {
         final JLabel label = new JLabel(text);
+        label.setForeground(color);
         label.setFont(font);
-        label.setForeground(Color.WHITE);
         label.setAlignmentX(CENTER_ALIGNMENT);
-
-        label.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(final MouseEvent e) {
-                label.setForeground(Color.LIGHT_GRAY);
-            }
-
-            @Override
-            public void mouseExited(final MouseEvent e) {
-                label.setForeground(Color.WHITE);
-            }
-        });
+        label.setAlignmentY(CENTER_ALIGNMENT);
         target.add(label);
-        target.add(Box.createVerticalStrut(SPACING_NAMES));
     }
 }

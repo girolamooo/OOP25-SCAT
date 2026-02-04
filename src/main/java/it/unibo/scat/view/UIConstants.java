@@ -43,9 +43,7 @@ public final class UIConstants {
         public static final List<String> INVADER3_PATHS = List.of(
                         "/entities/invaders/invader_3_1.png",
                         "/entities/invaders/invader_3_2.png");
-        public static final List<String> BONUS_INVADER_PATHS = List.of(
-                        "/entities/invaders/invader_4_1.png",
-                        "/entities/invaders/invader_4_2.png");
+        public static final String BONUS_INVADER_PATH = "/entities/invaders/invader_4_1.png";
         public static final List<String> PAUSE_BUTTON_PATHS = List.of(
                         "/images/pause/pause1.png",
                         "/images/pause/pause2.png");
@@ -69,12 +67,14 @@ public final class UIConstants {
         public static final Font TITLE_FONT;
         public static final Font TITLE_FONT_HOVER;
         public static final Font MEDIUM_FONT;
+        public static final Font MEDIUM_SMALL_FONT;
         public static final Font SMALL_FONT;
 
         static {
                 final float titleBase = 50f;
                 final float titleHover = 55f;
                 final float medium = 30f;
+                final float mediumSmall = 24f;
                 final float small = 18f;
 
                 try (InputStream is = UIConstants.class.getResourceAsStream(FONT_PATH)) {
@@ -87,6 +87,7 @@ public final class UIConstants {
                         TITLE_FONT = base.deriveFont(titleBase);
                         TITLE_FONT_HOVER = base.deriveFont(titleHover);
                         MEDIUM_FONT = base.deriveFont(medium);
+                        MEDIUM_SMALL_FONT = base.deriveFont(mediumSmall);
                         SMALL_FONT = base.deriveFont(small);
 
                 } catch (final IOException | FontFormatException e) {
