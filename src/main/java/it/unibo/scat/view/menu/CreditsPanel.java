@@ -39,9 +39,6 @@ public final class CreditsPanel extends JPanel {
     private static final String TUTORIAL = "TUTORIAL";
     private static final String POINTS = "POINTS";
 
-    private static final int BONUS_INVADER_WIDTH = 90;
-    private static final int INVADER_WIDTH = 60;
-    private static final int INVADER_HEIGHT = 60;
     private static final Font FONT_TITLE = UIConstants.FONT_L;
     private static final Font FONT_INFO = UIConstants.FONT_XS;
     private static final Font FONT_BUTTON = UIConstants.FONT_XS;
@@ -176,17 +173,16 @@ public final class CreditsPanel extends JPanel {
         final String equals = " =    ";
         invadersRow
                 .add(createInvaderPanel("/entities/gifs/gif1.gif", equals
-                        + Constants.POINTS_INVADER1 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
+                        + Constants.POINTS_INVADER1 + " " + POINTS));
         invadersRow
                 .add(createInvaderPanel("/entities/gifs/gif2.gif", equals
-                        + Constants.POINTS_INVADER2 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
+                        + Constants.POINTS_INVADER2 + " " + POINTS));
         invadersRow
                 .add(createInvaderPanel("/entities/gifs/gif3.gif", equals
-                        + Constants.POINTS_INVADER3 + " " + POINTS, INVADER_WIDTH, INVADER_HEIGHT));
+                        + Constants.POINTS_INVADER3 + " " + POINTS));
         invadersRow.add(
                 createInvaderPanel("/entities/gifs/gif4.gif",
-                        "=   " + Constants.POINTS_BONUS_INVADER + " " + POINTS,
-                        BONUS_INVADER_WIDTH, INVADER_HEIGHT));
+                        "=   " + Constants.POINTS_BONUS_INVADER + " " + POINTS));
         p.add(invadersRow);
         p.add(Box.createVerticalGlue());
 
@@ -207,32 +203,17 @@ public final class CreditsPanel extends JPanel {
      * 
      * @param path   ...
      * @param points ...
-     * @param width  ...
-     * @param heigth ...
      * @return ...
      */
-    private JPanel createInvaderPanel(final String path, final String points, final int width, final int heigth) {
+    private JPanel createInvaderPanel(final String path, final String points) {
         final JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setOpaque(false);
 
-        // ImageIcon gifIcon = new ImageIcon(
-        // Objects.requireNonNull(getClass().getResource(path)));
-
-        // final JLabel imageLabel = new JLabel() {
-        // @Override
-        // protected void paintComponent(Graphics g) {
-        // super.paintComponent(g);
-        // g.drawImage(gifIcon.getImage(), 0, 0, width, heigth, this);
-        // }
-        // };
-
-        ImageIcon gifIcon = new ImageIcon(
+        final ImageIcon gifIcon = new ImageIcon(
                 Objects.requireNonNull(getClass().getResource(path)));
 
         final JLabel imageLabel = new JLabel(gifIcon);
-
-        // imageLabel.setPreferredSize(new Dimension(width, heigth));
 
         imageLabel.setAlignmentX(CENTER_ALIGNMENT);
 
