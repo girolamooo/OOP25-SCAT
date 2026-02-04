@@ -7,14 +7,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -50,12 +47,11 @@ public final class LeaderboardPanel extends JPanel {
         setLayout(new BorderLayout());
         this.setBackground(UIConstants.ARCADE_BLACK);
         final JLabel titleLabel = new JLabel("GLOBAL RANKING", JLabel.CENTER);
-        titleLabel.setOpaque(false);
         titleLabel.setFont(UIConstants.SMALL_FONT);
         titleLabel.setForeground(UIConstants.ARCADE_GREEN);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        this.add(titleLabel, BorderLayout.NORTH);
+        add(titleLabel, BorderLayout.NORTH);
         initContentTable();
         initBackButton();
     }
