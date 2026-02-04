@@ -21,7 +21,7 @@ import it.unibo.scat.common.GameRecord;
  */
 public class Leaderboard {
     private final List<GameRecord> games;
-    private final String leaderboardFile;
+    private final Path leaderboardFile;
 
     /**
      * Leaderboard constructor.
@@ -30,7 +30,7 @@ public class Leaderboard {
      * 
      */
     public Leaderboard(final String filename) {
-        this.leaderboardFile = filename;
+        this.leaderboardFile = Path.of(filename);
         games = new ArrayList<>();
     }
 
@@ -39,22 +39,20 @@ public class Leaderboard {
      * 
      */
     public void initLeaderboard() {
-
-        final Path pathLeaderboard = Path.of(leaderboardFile);
         try {
 
-            final Path parent = pathLeaderboard.getParent();
+            final Path parent = leaderboardFile.getParent();
             if (parent != null && !Files.exists(parent)) {
                 Files.createDirectories(parent);
             }
-            if (!Files.exists(pathLeaderboard)) {
-                Files.createFile(pathLeaderboard);
+            if (!Files.exists(leaderboardFile)) {
+                Files.createFile(leaderboardFile);
             }
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot create leaderboard file: " + leaderboardFile + " Exception: ", e);
         }
 
-        try (BufferedReader reader = Files.newBufferedReader(pathLeaderboard, StandardCharsets.UTF_8)) {
+        try (BufferedReader reader = Files.newBufferedReader(leaderboardFile, StandardCharsets.UTF_8)) {
             final int idxName = 0;
             final int idxScore = 1;
             final int idxLevel = 2;
@@ -92,7 +90,7 @@ public class Leaderboard {
     public void updateFile() {
         sortGames();
         try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(leaderboardFile), StandardCharsets.UTF_8))) {
+                new OutputStreamWriter(new FileOutputStream(leaderboardFile.toString()), StandardCharsets.UTF_8))) {
 
             for (final GameRecord g : games) {
                 writer.write(g.getName() + ";");
@@ -109,7 +107,7 @@ public class Leaderboard {
     }
 
     /**
-     * adds a new record to the leaderboard and updates the file.
+     * Adds a new record to the leaderboard and updates the file.
      * 
      * @param newRecord the record to add
      */
@@ -119,6 +117,8 @@ public class Leaderboard {
     }
 
     /**
+     * Returns a copy of all the records in the leaderboard.
+     * 
      * @return all the records of the leaderboard.
      * 
      */
