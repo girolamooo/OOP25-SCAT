@@ -21,7 +21,7 @@ import it.unibo.scat.common.GameRecord;
  */
 public class Leaderboard {
     private final List<GameRecord> games;
-    private final String leaderboardFile; // CORREGGERLO
+    private final String leaderboardFile;
 
     /**
      * Leaderboard constructor.
@@ -39,10 +39,7 @@ public class Leaderboard {
      * 
      */
     public void initLeaderboard() {
-        final int idxName = 0;
-        final int idxScore = 1;
-        final int idxLevel = 2;
-        final int idxDate = 3;
+
         final Path pathLeaderboard = Path.of(leaderboardFile);
         try {
 
@@ -53,16 +50,21 @@ public class Leaderboard {
             if (!Files.exists(pathLeaderboard)) {
                 Files.createFile(pathLeaderboard);
             }
-        } catch (final Exception e) {
+        } catch (final IOException e) {
             throw new IllegalStateException("Cannot create leaderboard file: " + leaderboardFile + " Exception: ", e);
         }
 
         try (BufferedReader reader = Files.newBufferedReader(pathLeaderboard, StandardCharsets.UTF_8)) {
+            final int idxName = 0;
+            final int idxScore = 1;
+            final int idxLevel = 2;
+            final int idxDate = 3;
             String line;
             String name;
             int score;
             int level;
             LocalDate date;
+
             line = reader.readLine();
             while (line != null) {
                 final String[] field = line.trim().split(";");
@@ -89,15 +91,6 @@ public class Leaderboard {
      */
     public void updateFile() {
         sortGames();
-        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(leaderboardFile))) {
-            for (final GameRecord game : games) {
-                writer.write(
-                        game.getName() + ";" + game.getScore() + ";" + game.getLevel() + ";" + game.getDate() + "\n");
-            }
-        } catch (final IOException e) {
-            throw new IllegalStateException("Cannot write leaderboard on file: " + leaderboardFile + "Exsception: ", e);
-        }
-
         try (BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(leaderboardFile), StandardCharsets.UTF_8))) {
 
