@@ -117,7 +117,7 @@ public class Leaderboard {
     }
 
     /**
-     * Returns a list of all game records
+     * Returns a list of all game records.
      * 
      * @return all the records of the leaderboard.
      * 
@@ -157,10 +157,11 @@ public class Leaderboard {
      * Fills the leaderboard with some data for testing purposes.
      */
     public void addTestData() {
-        if (games.isEmpty()) { // Aggiunge dati solo se la classifica è vuota
-            addNewGameRecord(new GameRecord("MARIO", 2000, 2, LocalDate.now()));
-            addNewGameRecord(new GameRecord("GIROLAMO", 1700, 2, LocalDate.now()));
-            addNewGameRecord(new GameRecord("LEONARDO", 1500, 2, LocalDate.now()));
+        final String score = "5000";
+        if (games.isEmpty()) {
+            addNewGameRecord(new GameRecord("MARIO", Integer.parseInt(score), 2, LocalDate.now()));
+            addNewGameRecord(new GameRecord("GIROLAMO", Integer.parseInt(score), 2, LocalDate.now()));
+            addNewGameRecord(new GameRecord("LEONARDO", Integer.parseInt(score), 2, LocalDate.now()));
         }
     }
 
