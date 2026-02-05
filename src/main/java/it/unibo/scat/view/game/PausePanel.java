@@ -2,6 +2,10 @@ package it.unibo.scat.view.game;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,48 +18,57 @@ import javax.swing.JPanel;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
+import it.unibo.scat.view.game.api.GamePanelInterface;
 
 /**
  * Panel shown in the GamePanel when the game is paused.
  */
-@SuppressWarnings("unused")
 public final class PausePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private static final int TITLE_SPACING = 30;
+    private static final int BUTTON_SPACING = 20;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 400;
+    private static final int PANEL_ALPHA = 230;
+
+    private static final int ARC_WIDTH = 200;
+    private static final int ARC_HEIGHT = 200;
 
     private final transient AudioManager soundEffect;
 
-    private final JButton resumeButton;
-    private final JButton menuButton;
-    private final JButton quitButton;
-
     /**
      * ...
+     * 
+     * @param game ...
      */
-    public PausePanel() {
+    public PausePanel(final GamePanelInterface game) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(UIConstants.PANELS_BG_COLOR);
-
+        this.setOpaque(false);
         this.soundEffect = new AudioManager();
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        // il titolo
+        add(Box.createVerticalStrut(TITLE_SPACING));
         addTitle();
 
-        // iniz bottoni
-        resumeButton = createButton("RESUME");
-        menuButton = createButton("MENU");
-        quitButton = createButton("QUIT");
+        add(Box.createVerticalGlue());
 
+        createButton("RESUME", game::resume);
+        add(Box.createVerticalStrut(BUTTON_SPACING));
+        createButton("MENU", game::abortGame);
+        add(Box.createVerticalStrut(BUTTON_SPACING));
+        createButton("QUIT", game::quit);
+
+        this.add(Box.createVerticalGlue());
     }
 
     /**
      * ...
      */
     private void addTitle() {
-        this.add(Box.createVerticalGlue());
 
-        final JLabel title = new JLabel("PAUSE");
+        final JLabel title = new JLabel("PAUSED");
 
         title.setFont(UIConstants.TITLE_FONT);
         title.setForeground(UIConstants.ARCADE_GREEN);
@@ -68,16 +81,20 @@ public final class PausePanel extends JPanel {
     /**
      * ...
      * 
-     * @param text ...
-     * @return ...
+     * @param text   ...
+     * @param action ...
      */
-    private JButton createButton(final String text) {
+    private void createButton(final String text, final Runnable action) {
         final JButton button = new JButton(text);
 
         button.setFont(UIConstants.MEDIUM_FONT);
         button.setForeground(Color.WHITE);
         button.setBackground(Color.BLACK);
         button.setAlignmentX(CENTER_ALIGNMENT);
+
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
 
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
@@ -96,10 +113,25 @@ public final class PausePanel extends JPanel {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 soundEffect.play(AudioTrack.OPTION_SELECTED, false);
+                action.run();
             }
         });
 
         add(button);
-        return button;
+    }
+
+    /**
+     * ...
+     * 
+     * @param g ...
+     */
+    @Override
+    protected void paintComponent(final Graphics g) {
+        final Graphics2D g2d = (Graphics2D) g.create();
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(new Color(0, 0, 0, PANEL_ALPHA));
+        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), ARC_WIDTH, ARC_HEIGHT);
+        g2d.dispose();
     }
 }
