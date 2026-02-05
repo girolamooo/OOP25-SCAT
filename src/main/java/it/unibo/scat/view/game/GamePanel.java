@@ -37,7 +37,6 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     private StatusBar statusBar;
     private GameOverPanel gameOverPanel;
     private int currentBackgroundIndex;
-    private boolean repaint = true;
 
     private JDialog pauseDialog;
 
@@ -199,11 +198,8 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
      * ...
      */
     public void update() {
-        repaint = false;
-
         if (shouldChangeBackground()) {
             updateBackground();
-            repaint = true;
         }
 
         canvas.update();
