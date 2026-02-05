@@ -70,7 +70,7 @@ public final class PausePanel extends JPanel {
 
         final JLabel title = new JLabel("PAUSED");
 
-        title.setFont(UIConstants.TITLE_FONT);
+        title.setFont(UIConstants.FONT_L);
         title.setForeground(UIConstants.ARCADE_GREEN);
         title.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -87,7 +87,7 @@ public final class PausePanel extends JPanel {
     private void createButton(final String text, final Runnable action) {
         final JButton button = new JButton(text);
 
-        button.setFont(UIConstants.MEDIUM_FONT);
+        button.setFont(UIConstants.FONT_L);
         button.setForeground(Color.WHITE);
         button.setBackground(Color.BLACK);
         button.setAlignmentX(CENTER_ALIGNMENT);

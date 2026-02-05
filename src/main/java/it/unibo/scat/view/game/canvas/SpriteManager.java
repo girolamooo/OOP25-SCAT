@@ -41,7 +41,7 @@ public final class SpriteManager {
                         final int frame) {
 
                 final Image[] images = scaledImages.get(type);
-                return images[Math.min(frame, images.length - 1)];
+                return images[Math.max(Math.min(frame, images.length - 1), 0)];
         }
 
         /**
