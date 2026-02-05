@@ -1,6 +1,7 @@
 package it.unibo.scat.view.game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -12,7 +13,9 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.UIConstants;
@@ -32,10 +35,10 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
 
     private Canvas canvas;
     private StatusBar statusBar;
-    private PausePanel pausePanel;
     private GameOverPanel gameOverPanel;
     private int currentBackgroundIndex;
-    private boolean repaint = true;
+
+    private JDialog pauseDialog;
 
     /**
      * @param viewInterface ...
@@ -49,7 +52,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         initBackgrounds();
         initCanvas();
         initStatusBar();
-        initPausePanel();
+
         initGameOverPanel();
     }
 
@@ -100,13 +103,6 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     /**
      * ...
      */
-    private void initPausePanel() {
-        pausePanel = new PausePanel();
-    }
-
-    /**
-     * ...
-     */
     private void initGameOverPanel() {
         gameOverPanel = new GameOverPanel();
     }
@@ -114,10 +110,12 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     @Override
     public void pause() {
         viewInterface.pauseGame();
+        showPausePanel();
     }
 
     @Override
     public void resume() {
+        pauseDialog.dispose();
         viewInterface.resumeGame();
     }
 
@@ -200,11 +198,8 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
      * ...
      */
     public void update() {
-        repaint = false;
-
         if (shouldChangeBackground()) {
             updateBackground();
-            repaint = true;
         }
 
         canvas.update();
@@ -233,5 +228,32 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         }
 
         return bgIndex != currentBackgroundIndex;
+    }
+
+    /**
+     * ...
+     */
+    private void showPausePanel() {
+        pauseDialog = new JDialog(
+                SwingUtilities.getWindowAncestor(this), "PAUSE", JDialog.ModalityType.APPLICATION_MODAL);
+
+        pauseDialog.setContentPane(new PausePanel(this));
+        pauseDialog.setUndecorated(true);
+        pauseDialog.setBackground(new Color(0, 0, 0, 0));
+        pauseDialog.pack();
+        pauseDialog.setLocationRelativeTo(this);
+        pauseDialog.setVisible(true);
+    }
+
+    @Override
+    public void abortGame() {
+        pauseDialog.dispose();
+        viewInterface.abortGame();
+    }
+
+    @Override
+    public void quit() {
+        pauseDialog.dispose();
+        viewInterface.quitGame();
     }
 }
