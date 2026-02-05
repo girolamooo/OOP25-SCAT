@@ -34,8 +34,6 @@ public class Control implements ControlInterface {
         gameLoop = new GameLoop(modelInterface);
         gameThread = new Thread(gameLoop, "game-loop");
 
-        gameLoop.start();
-        gameThread.start();
         modelInterface.setGameState(GameState.PAUSE);
     }
 
@@ -45,6 +43,8 @@ public class Control implements ControlInterface {
     public void init() {
         modelInterface.initEverything(Constants.ENTITIES_PATH, Constants.LEADERBOARD_PATH);
         viewInterface.initEverything();
+        gameLoop.start();
+        gameThread.start();
     }
 
     /**
