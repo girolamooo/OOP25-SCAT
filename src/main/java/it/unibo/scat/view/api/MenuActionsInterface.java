@@ -37,6 +37,11 @@ public interface MenuActionsInterface {
     /**
      * ...
      */
+    void abortGame();
+
+    /**
+     * ...
+     */
     void quitGame();
 
     /**
