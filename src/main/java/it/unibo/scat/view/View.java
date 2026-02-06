@@ -68,6 +68,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.setTitle("SCAT🚀👾");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
+        frame.setUndecorated(true);
 
         frame.getContentPane().setLayout(new CardLayout());
 

@@ -41,7 +41,7 @@ public final class CreditsPanel extends JPanel {
 
     private static final Font FONT_TITLE = UIConstants.FONT_L;
     private static final Font FONT_INFO = UIConstants.FONT_XS;
-    private static final Font FONT_BUTTON = UIConstants.FONT_XS;
+    private static final Font FONT_BUTTON = UIConstants.FONT_S;
     private static final Font FONT_STORY = UIConstants.FONT_XS;
     private static final Font FONT_POINTS = UIConstants.FONT_XS;
 
@@ -188,11 +188,13 @@ public final class CreditsPanel extends JPanel {
 
         addCustomLabel(p, "HOW TO PLAY?", FONT_TITLE, TITLE_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
-        addCustomLabel(p, "MOVE LEFT: LEFT ARROW", FONT_INFO, TEXT_COLOR);
+        addCustomLabel(p, "MOVE LEFT: left arrow", FONT_INFO, TEXT_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
-        addCustomLabel(p, "MOVE RIGHT: RIGHT ARROW", FONT_INFO, TEXT_COLOR);
+        addCustomLabel(p, "MOVE RIGHT: right arrow", FONT_INFO, TEXT_COLOR);
         p.add(Box.createVerticalStrut(BOTTOM_SPACING));
-        addCustomLabel(p, "SHOOT: SPACE", FONT_INFO, TEXT_COLOR);
+        addCustomLabel(p, "SHOOT: space", FONT_INFO, TEXT_COLOR);
+        p.add(Box.createVerticalStrut(BOTTOM_SPACING));
+        addCustomLabel(p, "PAUSE: esc", FONT_INFO, TEXT_COLOR);
 
         p.add(Box.createVerticalGlue());
         return p;
@@ -222,7 +224,6 @@ public final class CreditsPanel extends JPanel {
         score.setForeground(Color.WHITE);
 
         p.add(imageLabel);
-        // p.add());
         p.add(score);
 
         return p;

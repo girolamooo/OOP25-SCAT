@@ -67,7 +67,7 @@ public final class UIConstants {
         public static final Color ARCADE_GREEN = new Color(51, 255, 51);
 
         // PANELS_BORDER
-        public static final Border PANELS_BORDER = new LineBorder(ARCADE_GREEN, 3);
+        public static final Border PANELS_BORDER = new LineBorder(ARCADE_GREEN, 2);
 
         // FONTS
         public static final Font FONT_XXL;
@@ -82,7 +82,7 @@ public final class UIConstants {
                 final float xxlHover = 80f;
                 final float l = 45f;
                 final float medium = 40f;
-                final float mediumSmall = 30f;
+                final float mediumSmall = 32f;
                 final float small = 24f;
 
                 try (InputStream is = UIConstants.class.getResourceAsStream(FONT_PATH)) {
