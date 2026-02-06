@@ -3,14 +3,12 @@ package it.unibo.scat.view.game.statusbar;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.game.api.GamePanelInterface;
 
 /**
@@ -29,8 +28,10 @@ public final class StatusBar extends JPanel {
     private final transient GamePanelInterface gamePanelInterface;
     private boolean isPausePanelHover;
     private JPanel pausePanel;
-    private JPanel livesPanel;
     private JLabel scoreLabel;
+    private JLabel levelLabel;
+    private JPanel livesPanel;
+    private boolean isGamePaused;
 
     /**
      * @param gamePanelInterface ...
@@ -40,10 +41,10 @@ public final class StatusBar extends JPanel {
         this.gamePanelInterface = gamePanelInterface;
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        // setBackground(Color.BLACK);
 
         initPausePanel();
         initScoreLabel();
+        initLevelLabel();
         initLivesPanel();
     }
 
@@ -57,19 +58,28 @@ public final class StatusBar extends JPanel {
         pausePanel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
-            private final Image baseImage = new ImageIcon(
-                    Objects.requireNonNull(getClass().getResource("/images/pause/pause1.png"))).getImage();
-            private final Image hoverImage = new ImageIcon(
-                    Objects.requireNonNull(getClass().getResource("/images/pause/pause2.png"))).getImage();
+            private final Image pauseBaseImage = new ImageIcon(
+                    Objects.requireNonNull(getClass().getResource(UIConstants.PAUSE_BUTTON_PATHS.get(0)))).getImage();
+            private final Image pauseHoverImage = new ImageIcon(
+                    Objects.requireNonNull(getClass().getResource(UIConstants.PAUSE_BUTTON_PATHS.get(1)))).getImage();
+            private final Image resumeBaseImage = new ImageIcon(
+                    Objects.requireNonNull(getClass().getResource(UIConstants.RESUME_BUTTON_PATHS.get(0)))).getImage();
+            private final Image resumeHoverImage = new ImageIcon(
+                    Objects.requireNonNull(getClass().getResource(UIConstants.RESUME_BUTTON_PATHS.get(1)))).getImage();
 
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
+                final Image currentImage;
 
-                final Image img = isPausePanelHover ? hoverImage : baseImage;
+                if (isGamePaused) {
+                    currentImage = isPausePanelHover ? resumeHoverImage : resumeBaseImage;
+                } else {
+                    currentImage = isPausePanelHover ? pauseHoverImage : pauseBaseImage;
+                }
 
-                final int imgW = img.getWidth(this);
-                final int imgH = img.getHeight(this);
+                final int imgW = currentImage.getWidth(this);
+                final int imgH = currentImage.getHeight(this);
                 if (imgW <= 0 || imgH <= 0) {
                     return;
                 }
@@ -80,7 +90,7 @@ public final class StatusBar extends JPanel {
 
                 final int y = (getHeight() - drawH) / 2;
 
-                g.drawImage(img, 0, y, drawW, drawH, this);
+                g.drawImage(currentImage, 0, y, drawW, drawH, this);
             }
 
         };
@@ -95,7 +105,13 @@ public final class StatusBar extends JPanel {
 
             @Override
             public void mouseClicked(final MouseEvent e) {
-                gamePanelInterface.pause();
+                if (isGamePaused) {
+                    gamePanelInterface.resume();
+                } else {
+                    gamePanelInterface.pause();
+                }
+
+                isGamePaused = !isGamePaused;
             }
 
             @Override
@@ -120,27 +136,52 @@ public final class StatusBar extends JPanel {
     /**
      * ...
      */
-    private void initScoreLabel() {
-        final int fontHeight = 50;
+    private void initLevelLabel() {
+        levelLabel = new JLabel() {
+            @Override
+            protected void paintComponent(final Graphics g) {
+                super.paintComponent(g);
+                setText("<html><span style='color:#00FF00'>LEVEL:</span><span style='color:white'>"
+                        + gamePanelInterface.getLevel() + "</span></html>");
+            }
 
+        };
+
+        levelLabel.setForeground(Color.WHITE);
+        levelLabel.setFont(UIConstants.FONT_M);
+        levelLabel.setText(" ");
+        levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        levelLabel.setVerticalAlignment(SwingConstants.CENTER);
+        levelLabel.setFocusable(false);
+        levelLabel.setOpaque(false);
+
+        add(levelLabel);
+    }
+
+    /**
+     * ...
+     */
+    private void initScoreLabel() {
         scoreLabel = new JLabel() {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
-                setText("SCORE: " + gamePanelInterface.getScore());
+                setText("<html><span style='color:#00FF00'>SCORE:</span><span style='color:white'>"
+                        + gamePanelInterface.getScore() + "</span></html>");
+
             }
 
         };
 
         scoreLabel.setForeground(Color.WHITE);
-        scoreLabel.setFont(new Font("Calibri", Font.BOLD, fontHeight));
-        scoreLabel.setText("SCORE: " + gamePanelInterface.getScore());
+        scoreLabel.setFont(UIConstants.FONT_M);
+        scoreLabel.setText(" ");
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
         scoreLabel.setVerticalAlignment(SwingConstants.CENTER);
         scoreLabel.setFocusable(false);
         scoreLabel.setOpaque(false);
 
-        add(Box.createHorizontalGlue());
+        // add(Box.createHorizontalGlue());
         add(scoreLabel);
     }
 
@@ -159,19 +200,23 @@ public final class StatusBar extends JPanel {
                 switch (gamePanelInterface.getPlayerHealth()) {
                     case 1 -> {
                         currImg = new ImageIcon(
-                                Objects.requireNonNull(getClass().getResource("/images/life/life_1.png"))).getImage();
+                                Objects.requireNonNull(getClass().getResource(UIConstants.LIFE_PANEL_PATHS.get(1))))
+                                .getImage();
                     }
                     case 2 -> {
                         currImg = new ImageIcon(
-                                Objects.requireNonNull(getClass().getResource("/images/life/life_2.png"))).getImage();
+                                Objects.requireNonNull(getClass().getResource(UIConstants.LIFE_PANEL_PATHS.get(2))))
+                                .getImage();
                     }
                     case 3 -> {
                         currImg = new ImageIcon(
-                                Objects.requireNonNull(getClass().getResource("/images/life/life_3.png"))).getImage();
+                                Objects.requireNonNull(getClass().getResource(UIConstants.LIFE_PANEL_PATHS.get(3))))
+                                .getImage();
                     }
                     default -> {
                         currImg = new ImageIcon(
-                                Objects.requireNonNull(getClass().getResource("/images/life/life_0.png"))).getImage();
+                                Objects.requireNonNull(getClass().getResource(UIConstants.LIFE_PANEL_PATHS.get(0))))
+                                .getImage();
                     }
                 }
 
@@ -200,7 +245,7 @@ public final class StatusBar extends JPanel {
         livesPanel.setMinimumSize(new Dimension(targetW, targetH));
         livesPanel.setMaximumSize(new Dimension(targetW, targetH));
 
-        add(Box.createHorizontalGlue());
+        // add(Box.createHorizontalGlue());
         add(livesPanel);
     }
 
@@ -211,5 +256,6 @@ public final class StatusBar extends JPanel {
         livesPanel.setBackground(Color.RED);
         pausePanel.setBackground(Color.RED);
         scoreLabel.setBackground(Color.RED);
+        levelLabel.setBackground(Color.RED);
     }
 }

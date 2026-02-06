@@ -6,7 +6,6 @@ import it.unibo.scat.common.Direction;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.control.gameloop.GameLoop;
-import it.unibo.scat.model.Model;
 import it.unibo.scat.model.api.ModelInterface;
 import it.unibo.scat.view.api.ViewInterface;
 
@@ -34,6 +33,8 @@ public class Control implements ControlInterface {
 
         gameLoop = new GameLoop(modelInterface);
         gameThread = new Thread(gameLoop, "game-loop");
+
+        modelInterface.setGameState(GameState.PAUSE);
     }
 
     /**
@@ -42,6 +43,8 @@ public class Control implements ControlInterface {
     public void init() {
         modelInterface.initEverything(Constants.ENTITIES_PATH, Constants.LEADERBOARD_PATH);
         viewInterface.initEverything();
+        gameLoop.start();
+        gameThread.start();
     }
 
     /**
@@ -49,9 +52,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyStartGame() {
-        Model.setGameState(GameState.RUNNING);
-        gameLoop.start();
-        gameThread.start();
+        gameLoop.resumeGame();
     }
 
     /**
@@ -59,7 +60,7 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyPauseGame() {
-        Model.setGameState(GameState.PAUSE);
+        modelInterface.setGameState(GameState.PAUSE);
     }
 
     /**
@@ -99,8 +100,6 @@ public class Control implements ControlInterface {
      */
     @Override
     public void notifyResumeGame() {
-        // Model.setGameState(GamseState.RUNNING); // da rimuovere quando aggiungo la
-        // riga sotto
         gameLoop.resumeGame();
     }
 

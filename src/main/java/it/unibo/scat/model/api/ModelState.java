@@ -44,4 +44,28 @@ public interface ModelState {
       * @return the health of the players (0,1,2 or 3)
       */
      int getPlayerHealth();
+
+     /**
+      * @return ...
+      * 
+      */
+     int getInvadersStepMs();
+
+     /**
+      * @return ...
+      * 
+      */
+     int getInvadersAccMs();
+
+     /**
+      * @return ...
+      * 
+      */
+     int getBonusInvaderAccMs();
+
+     /**
+      * @return ...
+      * 
+      */
+     int getLevel();
 }

@@ -12,12 +12,15 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.scat.common.UIConstants;
+import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.MenuActionsInterface;
 import it.unibo.scat.view.game.api.GamePanelInterface;
+import it.unibo.scat.view.game.canvas.Canvas;
 import it.unibo.scat.view.game.statusbar.StatusBar;
 
 /**
@@ -31,9 +34,10 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
 
     private Canvas canvas;
     private StatusBar statusBar;
-    private PausePanel pausePanel;
     private GameOverPanel gameOverPanel;
     private int currentBackgroundIndex;
+
+    private JDialog pauseDialog;
 
     /**
      * @param viewInterface ...
@@ -47,7 +51,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         initBackgrounds();
         initCanvas();
         initStatusBar();
-        initPausePanel();
+
         initGameOverPanel();
     }
 
@@ -98,13 +102,6 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     /**
      * ...
      */
-    private void initPausePanel() {
-        pausePanel = new PausePanel();
-    }
-
-    /**
-     * ...
-     */
     private void initGameOverPanel() {
         gameOverPanel = new GameOverPanel();
     }
@@ -112,21 +109,13 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     @Override
     public void pause() {
         viewInterface.pauseGame();
+        showPausePanel();
     }
 
     @Override
     public void resume() {
+        pauseDialog.dispose();
         viewInterface.resumeGame();
-    }
-
-    /**
-     * temporary useless, to pass checkstyle, to remove...
-     */
-    public void useless() {
-        statusBar.transferFocus();
-        canvas.repaint();
-        pausePanel.repaint();
-        gameOverPanel.repaint();
     }
 
     /**
@@ -151,8 +140,8 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        final BufferedImage currentBg = backgrounds.get(currentBackgroundIndex);
 
+        final BufferedImage currentBg = backgrounds.get(currentBackgroundIndex);
         final int panelW = getWidth();
         final int panelH = getHeight();
         final int imgW = currentBg.getWidth();
@@ -187,11 +176,32 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
+     * @return ...
+     * 
+     */
+    @Override
+    public int getLevel() {
+        return viewInterface.getLevel();
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    @Override
+    public String getUsername() {
+        return viewInterface.fetchUsername();
+    }
+
+    /**
      * ...
      */
     public void update() {
-        canvas.update();
+        if (shouldChangeBackground()) {
+            updateBackground();
+        }
 
+        canvas.update();
         statusBar.repaint();
         canvas.repaint();
     }
@@ -199,11 +209,50 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     /**
      * ...
      */
-    public void changeBackground() {
-        currentBackgroundIndex++;
-
-        if (currentBackgroundIndex == backgrounds.size()) {
-            currentBackgroundIndex = 0;
+    public void updateBackground() {
+        currentBackgroundIndex = viewInterface.getLevel() - 1;
+        if (currentBackgroundIndex >= backgrounds.size()) {
+            currentBackgroundIndex %= backgrounds.size();
         }
+    }
+
+    /**
+     * @return ...
+     * 
+     */
+    private boolean shouldChangeBackground() {
+        int bgIndex = viewInterface.getLevel() - 1;
+        if (bgIndex >= backgrounds.size()) {
+            bgIndex %= backgrounds.size();
+        }
+
+        return bgIndex != currentBackgroundIndex;
+    }
+
+    /**
+     * ...
+     */
+    private void showPausePanel() {
+        pauseDialog = new JDialog(
+                SwingUtilities.getWindowAncestor(this), "PAUSE", JDialog.ModalityType.APPLICATION_MODAL);
+
+        pauseDialog.setContentPane(new PausePanel(this));
+        pauseDialog.setUndecorated(true);
+        pauseDialog.setBackground(UIConstants.PANELS_BG_COLOR);
+        pauseDialog.pack();
+        pauseDialog.setLocationRelativeTo(this);
+        pauseDialog.setVisible(true);
+    }
+
+    @Override
+    public void abortGame() {
+        pauseDialog.dispose();
+        viewInterface.abortGame();
+    }
+
+    @Override
+    public void quit() {
+        pauseDialog.dispose();
+        viewInterface.quitGame();
     }
 }

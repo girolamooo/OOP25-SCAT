@@ -15,6 +15,16 @@ public interface GamePanelInterface {
     void resume();
 
     /**
+     * ...
+     */
+    void abortGame();
+
+    /**
+     * ...
+     */
+    void quit();
+
+    /**
      * @return ...
      * 
      */
@@ -25,4 +35,16 @@ public interface GamePanelInterface {
      * 
      */
     int getPlayerHealth();
+
+    /**
+     * @return ...
+     * 
+     */
+    int getLevel();
+
+    /**
+     * @return ...
+     * 
+     */
+    String getUsername();
 }

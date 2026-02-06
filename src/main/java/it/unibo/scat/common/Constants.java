@@ -9,12 +9,12 @@ public final class Constants {
     public static final String ENTITIES_PATH = "data/entities.txt";
 
     // WORLD
-    public static final int BORDER_RIGHT = 59;
-    public static final int BORDER_BOTTOM = 37;
+    public static final int BORDER_RIGHT = 60;
+    public static final int BORDER_BOTTOM = 40;
     public static final int BORDER_LEFT = 1;
     public static final int BORDER_UP = 1;
 
-    public static final int INVADER_BOTTOM_LIMIT = 28;
+    public static final int INVADER_BOTTOM_LIMIT = 31;
 
     // POINTS
     public static final int POINTS_INVADER1 = 10;
@@ -23,17 +23,15 @@ public final class Constants {
     public static final int POINTS_BONUS_INVADER = 100;
 
     // GAMELOOP
-    public static final int GAME_STEP_MS = 16;
-    public static final int SHOT_STEP_MS = 64;
-    public static final int BONUSINVADER_STEP_MS = 600;
-    public static final int INVADER_STEP_MS = 400;
+    public static final int GAME_STEP_MS = 60;
+    public static final int SHOT_STEP_MS = 60;
+    public static final int BONUSINVADER_STEP_MS = 500;
 
     // COOLDOWNS
-    public static final int PLAYER_SHOOTING_COOLDOWN = 100;
-    public static final int INVADERS_SHOOTING_COOLDOWN = INVADER_STEP_MS / 5;
+    public static final int PLAYER_SHOOTING_COOLDOWN = 200;
 
     // ENTITIES HEALTH
-    public static final int BUNKER_HEALTH = 30;
+    public static final int BUNKER_HEALTH = 20;
     public static final int PLAYER_HEALTH = 3;
     public static final int INVADERS_HEALTH = 1;
     public static final int SHOT_HEALTH = 1;
