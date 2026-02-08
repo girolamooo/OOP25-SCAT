@@ -25,7 +25,8 @@ import it.unibo.scat.model.game.GameWorld;
  */
 public class Leaderboard {
     private final List<GameRecord> games;
-    private final String leaderboardFile;
+    private final Path leaderboardPath;
+    private static final int MAX_NAME_LENGTH = 10;
 
     /**
      * Leaderboard constructor.
@@ -34,8 +35,9 @@ public class Leaderboard {
      * 
      */
     public Leaderboard(final String filename) {
-        this.leaderboardFile = filename;
-        games = new ArrayList<>();
+        this.leaderboardPath = Path.of(filename);
+        this.games = new ArrayList<>();
+
     }
 
     /**
@@ -51,7 +53,7 @@ public class Leaderboard {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(
-                                getClass().getClassLoader().getResourceAsStream(leaderboardFile)),
+                                getClass().getClassLoader().getResourceAsStream(leaderboardPath.toString())),
                         StandardCharsets.UTF_8))) {
 
             String line;
@@ -76,7 +78,7 @@ public class Leaderboard {
             }
 
         } catch (final IOException e) {
-            throw new IllegalStateException("Cannot load records from file: " + leaderboardFile + "Exception: ", e);
+            throw new IllegalStateException("Cannot load records from file: " + leaderboardPath + "Exception: ", e);
         }
 
     }
@@ -85,17 +87,17 @@ public class Leaderboard {
      * Writes ex-novo the leaderboard file.
      */
     public void updateFile() {
-        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(leaderboardFile))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath)) {
             for (final GameRecord game : games) {
                 writer.write(
                         game.getName() + ";" + game.getScore() + ";" + game.getLevel() + ";" + game.getDate() + "\n");
             }
         } catch (final IOException e) {
-            throw new IllegalStateException("Cannot write leaderboard on file: " + leaderboardFile + "Exsception: ", e);
+            throw new IllegalStateException("Cannot write leaderboard on file: " + leaderboardPath + "Exsception: ", e);
         }
 
         try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(leaderboardFile), StandardCharsets.UTF_8))) {
+                new OutputStreamWriter(new FileOutputStream(leaderboardPath.toFile()), StandardCharsets.UTF_8))) {
 
             for (final GameRecord g : games) {
                 writer.write(g.getName() + ";");
@@ -106,7 +108,7 @@ public class Leaderboard {
             }
 
         } catch (final IOException e) {
-            throw new IllegalStateException("Cannot write records into file: " + leaderboardFile + "Exception: ", e);
+            throw new IllegalStateException("Cannot write records into file: " + leaderboardPath + "Exception: ", e);
         }
     }
 
