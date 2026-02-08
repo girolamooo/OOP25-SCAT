@@ -50,6 +50,18 @@ public class Leaderboard {
         final int idxLevel = 2;
         final int idxDate = 3;
 
+        try {
+            final Path parent = leaderboardPath.getParent();
+            if (parent != null && !Files.exists(parent)) {
+                Files.createDirectories(parent);
+            }
+            if (!Files.exists(leaderboardPath)) {
+                Files.createFile(leaderboardPath);
+            }
+        } catch (final IOException e) {
+            throw new IllegalStateException("Cannot create leaderboard file: " + leaderboardPath, e);
+        }
+
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(
