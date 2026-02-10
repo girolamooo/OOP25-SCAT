@@ -27,6 +27,8 @@ public final class GameOverPanel extends JPanel {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 400;
     private static final int VERTICAL_SPACING = 40;
+    private static final int TOP_MARGIN = 30;
+    private static final int BUTTON_GAP = 20;
     private final transient AudioManager soundEffect;
 
     /**
@@ -41,9 +43,9 @@ public final class GameOverPanel extends JPanel {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.soundEffect = new AudioManager();
 
-        add(Box.createVerticalStrut(30));
+        add(Box.createVerticalStrut(TOP_MARGIN));
 
-        JLabel title = new JLabel("GAME OVER");
+        final JLabel title = new JLabel("GAME OVER");
         title.setFont(UIConstants.FONT_L);
         title.setForeground(Color.RED);
         title.setAlignmentX(CENTER_ALIGNMENT);
@@ -51,7 +53,7 @@ public final class GameOverPanel extends JPanel {
 
         add(Box.createVerticalStrut(VERTICAL_SPACING));
 
-        JLabel score = new JLabel("FINAL SCORE: " + game.getScore());
+        final JLabel score = new JLabel("FINAL SCORE: " + game.getScore());
         score.setFont(UIConstants.FONT_M);
         score.setForeground(UIConstants.ARCADE_GREEN);
         score.setAlignmentX(CENTER_ALIGNMENT);
@@ -72,8 +74,8 @@ public final class GameOverPanel extends JPanel {
      * @param text   the button label.
      * @param action the logic to execute on click.
      */
-    private void createButton(String text, Runnable action) {
-        JButton btn = new JButton(" " + text + " ");
+    private void createButton(final String text, final Runnable action) {
+        final JButton btn = new JButton(" " + text + " ");
         btn.setFont(UIConstants.FONT_L);
         btn.setForeground(Color.RED);
         btn.setBackground(Color.BLACK);
@@ -84,14 +86,14 @@ public final class GameOverPanel extends JPanel {
 
         btn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 btn.setText("<" + text + ">");
                 btn.setForeground(Color.WHITE);
                 soundEffect.play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 btn.setText(" " + text + " ");
                 btn.setForeground(Color.RED);
             }
@@ -100,7 +102,7 @@ public final class GameOverPanel extends JPanel {
         btn.addActionListener(e -> {
             soundEffect.play(AudioTrack.OPTION_SELECTED, false);
 
-            Window ancestor = SwingUtilities.getWindowAncestor(this);
+            final Window ancestor = SwingUtilities.getWindowAncestor(this);
             if (ancestor instanceof JDialog) {
                 ancestor.dispose();
             }
@@ -109,6 +111,6 @@ public final class GameOverPanel extends JPanel {
         });
 
         add(btn);
-        add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(BUTTON_GAP));
     }
 }

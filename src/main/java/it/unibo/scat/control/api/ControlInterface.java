@@ -50,8 +50,8 @@ public interface ControlInterface {
     void notifyResetGame();
 
     /**
+     * @return the current game state.
      * 
-     * @return ....
      */
     GameState getGameState();
 }

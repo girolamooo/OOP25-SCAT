@@ -48,7 +48,13 @@ public interface GamePanelInterface {
      */
     String getUsername();
 
+    /**
+     * ...
+     */
     void restart();
 
+    /**
+     * ...
+     */
     void showGameOver();
 }

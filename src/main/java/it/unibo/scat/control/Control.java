@@ -113,6 +113,10 @@ public class Control implements ControlInterface {
         modelInterface.setUsername(username);
     }
 
+    /**
+     * @return the current game state.
+     * 
+     */
     @Override
     public GameState getGameState() {
         return modelInterface.getGameState();
