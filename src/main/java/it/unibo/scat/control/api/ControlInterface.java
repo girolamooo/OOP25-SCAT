@@ -1,6 +1,7 @@
 package it.unibo.scat.control.api;
 
 import it.unibo.scat.common.Direction;
+import it.unibo.scat.common.GameState;
 
 /**
  * Interface for the Control class.
@@ -47,4 +48,10 @@ public interface ControlInterface {
      * ...
      */
     void notifyResetGame();
+
+    /**
+     * 
+     * @return ....
+     */
+    GameState getGameState();
 }
