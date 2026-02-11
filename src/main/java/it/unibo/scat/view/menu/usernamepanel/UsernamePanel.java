@@ -23,7 +23,8 @@ import it.unibo.scat.view.api.MenuActionsInterface;
 import it.unibo.scat.view.components.CustomTextField;
 
 /**
- * This class handles the username panel.
+ * Panel that allows the user to enter a username,
+ * choose a ship, and start the game.
  */
 public final class UsernamePanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -33,8 +34,9 @@ public final class UsernamePanel extends JPanel {
     private CustomTextField usernameField;
 
     /**
-     * @param menuActionsInterface ...
-     * 
+     * Creates the username panel and initializes all UI components.
+     *
+     * @param menuActionsInterface interface used to handle menu actions
      */
     @SuppressFBWarnings("EI_EXPOSE_REP")
     public UsernamePanel(final MenuActionsInterface menuActionsInterface) {
@@ -51,7 +53,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the label prompting the user to enter a username.
      */
     private void initUsernameText() {
         final JLabel label = new JLabel("ENTER USERNAME");
@@ -65,7 +67,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the username input field with placeholder behavior.
      */
     private void initUsernameField() {
         usernameField = new CustomTextField();
@@ -97,7 +99,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the label prompting the user to choose a ship.
      */
     private void initShipText() {
         final JLabel label = new JLabel("CHOOSE SHIP");
@@ -112,7 +114,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the wrapper containing the ship selection buttons.
      */
     private void initButtonsWrapper() {
         final ButtonsWrapper buttonsWrapper = new ButtonsWrapper(menuActionsInterface);
@@ -128,7 +130,8 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the play button and its mouse interactions.
+     * Starts the game if input and selection are valid.
      */
     private void initPlayButton() {
         final String baseText = " PLAY ";
