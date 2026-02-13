@@ -63,7 +63,7 @@ public final class GameOverPanel extends JPanel {
         leaderboardLabel.setForeground(Color.WHITE);
         leaderboardLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(leaderboardLabel);
-        add(Box.createVerticalStrut(5));
+        add(Box.createVerticalStrut(BUTTON_GAP / 3));
 
     }
 
