@@ -37,12 +37,13 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
     private JFrame frame;
 
     private GamePanel gamePanel;
-    private AudioManager backgroundSound;
+    private AudioManager audioManager;
     private int chosenShipIndex = -1;
+    private int lastPlayerHealth = -1;
 
     @Override
     public void initEverything() {
-        backgroundSound = new AudioManager();
+        audioManager = new AudioManager();
 
         gamePanel = new GamePanel(this);
         gamePanel.setFocusable(true);
@@ -54,6 +55,12 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void update() {
+        final int currentPlayerHealth = modelState.getPlayerHealth();
+        if (lastPlayerHealth != -1 && currentPlayerHealth < lastPlayerHealth) {
+            audioManager.play(AudioTrack.HIT, false);
+        }
+
+        lastPlayerHealth = currentPlayerHealth;
         gamePanel.update();
 
     }
@@ -171,7 +178,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.repaint();
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
 
-        backgroundSound.stop();
+        audioManager.stop();
     }
 
     @Override
@@ -182,7 +189,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.revalidate();
         frame.repaint();
 
-        backgroundSound.play(AudioTrack.SOUND_TRACK, true);
+        audioManager.play(AudioTrack.SOUND_TRACK, true);
     }
 
     @Override
