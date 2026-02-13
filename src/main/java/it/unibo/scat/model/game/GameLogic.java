@@ -298,7 +298,7 @@ public class GameLogic {
      * @return true if invaders can shoot, false otherwise
      * 
      */
-    public boolean canInvadersShoot() {
+    private boolean canInvadersShoot() {
         final long currTime = System.currentTimeMillis();
 
         final int aliveInvaders = (int) gameWorld.getInvaders().stream()
