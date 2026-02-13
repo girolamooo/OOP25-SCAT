@@ -68,7 +68,7 @@ public final class GameLoop implements Runnable {
     }
 
     /**
-     * ...
+     * Suspends the thread execution if the game is not running.
      */
     private void waitIfNotPlaying() {
         if (model.getGameState() == GameState.RUNNING) {
@@ -90,8 +90,9 @@ public final class GameLoop implements Runnable {
     }
 
     /**
-     * @param millis ...
+     * Suspends the current thread for the specified duration.
      * 
+     * @param millis duration to sleep.
      */
     private static void sleepUninterruptibly(final long millis) {
         if (millis <= 0L) {
