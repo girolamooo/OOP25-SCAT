@@ -9,6 +9,7 @@ public enum AudioTrack {
      * The sound track of the principal menu.
      */
     SOUND_TRACK("audio/MenuSong.wav"),
+    HIT("audio/HitSound.wav"),
 
     /**
      * The sound of the botton when it is pressed.
