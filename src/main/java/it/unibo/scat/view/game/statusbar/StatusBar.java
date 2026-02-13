@@ -28,9 +28,6 @@ public final class StatusBar extends JPanel {
     private static final long serialVersionUID = 1L;
     private final transient GamePanelInterface gamePanelInterface;
     private JPanel pausePanel;
-    private JLabel scoreLabel;
-    private JLabel levelLabel;
-    private JPanel livesPanel;
 
     /**
      * @param gamePanelInterface ...
@@ -117,7 +114,7 @@ public final class StatusBar extends JPanel {
      * ...
      */
     private void initLevelLabel() {
-        levelLabel = new JLabel() {
+        final JLabel levelLabel = new JLabel() {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
@@ -142,7 +139,7 @@ public final class StatusBar extends JPanel {
      * ...
      */
     private void initScoreLabel() {
-        scoreLabel = new JLabel() {
+        final JLabel scoreLabel = new JLabel() {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
@@ -161,7 +158,6 @@ public final class StatusBar extends JPanel {
         scoreLabel.setFocusable(false);
         scoreLabel.setOpaque(false);
 
-        // add(Box.createHorizontalGlue());
         add(scoreLabel);
     }
 
@@ -171,7 +167,7 @@ public final class StatusBar extends JPanel {
     private void initLivesPanel() {
         final int targetH = 80;
         final int targetW = 210;
-        livesPanel = new JPanel() {
+        final JPanel livesPanel = new JPanel() {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
@@ -225,17 +221,7 @@ public final class StatusBar extends JPanel {
         livesPanel.setMinimumSize(new Dimension(targetW, targetH));
         livesPanel.setMaximumSize(new Dimension(targetW, targetH));
 
-        // add(Box.createHorizontalGlue());
         add(livesPanel);
     }
 
-    /**
-     * usless function temporary for checkstyle ....
-     */
-    public void useless() {
-        livesPanel.setBackground(Color.RED);
-        pausePanel.setBackground(Color.RED);
-        scoreLabel.setBackground(Color.RED);
-        levelLabel.setBackground(Color.RED);
-    }
 }

@@ -176,12 +176,4 @@ public abstract class AbstractEntity implements EntityView {
         return health;
     }
 
-    /**
-     * Override of toString function, useful for debugging. To remove is useless...
-     */
-    @Override
-    public final String toString() {
-        return "Entity: " + this.entityType + " pos:(" + this.position.getX() + "," + this.position.getY()
-                + ") dims: " + this.width + "x" + this.height + " health: " + this.health + " alive: " + this.alive;
-    }
 }

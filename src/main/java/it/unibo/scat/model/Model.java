@@ -55,9 +55,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
         leaderboard.initLeaderboard();
 
         timeAccumulator = new TimeAccumulator(gameLogic.getDifficultyManager());
-
-        // DEBUG
-        // gameWorld.printEntities();
     }
 
     @Override
