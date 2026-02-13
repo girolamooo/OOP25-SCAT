@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import it.unibo.scat.common.Constants;
 
 /**
- * ...
+ * Manages time accumulation for different game entities.
  */
 public final class TimeAccumulator {
     private final DifficultyManager difficultyManager;
@@ -14,15 +14,18 @@ public final class TimeAccumulator {
     private final AtomicInteger shotsAccMs = new AtomicInteger(0);
 
     /**
-     * @param difficultyManager ...
+     * Constructor that initializes the time accumulator.
      * 
+     * @param difficultyManager the manager used to calculate invader speed, invader
+     *                          shot speed and frequency.
      */
     public TimeAccumulator(final DifficultyManager difficultyManager) {
         this.difficultyManager = difficultyManager;
     }
 
     /**
-     * ...
+     * Consumes time after a logical step has been
+     * performed.
      */
     private void consumeAccumulators() {
         if (invadersAccMs.get() >= difficultyManager.getInvadersStepMs()) {
@@ -39,7 +42,7 @@ public final class TimeAccumulator {
     }
 
     /**
-     * ...
+     * Increments the time accumulators, by adding the fixed game step duration.
      */
     public void incrementTimeAccumulators() {
         consumeAccumulators();
@@ -50,24 +53,22 @@ public final class TimeAccumulator {
     }
 
     /**
-     * @return ...
-     * 
+     * @return the current accumulated time in milliseconds for the invaders'
+     *         movement.
      */
     public int getInvadersAccMs() {
         return invadersAccMs.get();
     }
 
     /**
-     * @return ...
-     * 
+     * @return the current accumulated time in milliseconds for the bonus invader.
      */
     public int getBonusInvaderAccMs() {
         return bonusInvaderAccMs.get();
     }
 
     /**
-     * @return ...
-     * 
+     * @return the current accumulated time in milliseconds for the shots' movement.
      */
     public int getShotsAccMs() {
         return shotsAccMs.get();
