@@ -6,7 +6,7 @@ import it.unibo.scat.common.EntityType;
 import it.unibo.scat.model.api.EntityFactory;
 
 /**
- * ...
+ * Implementation of the EntityFactory interface.
  */
 public final class EntityFactoryImpl implements EntityFactory {
 

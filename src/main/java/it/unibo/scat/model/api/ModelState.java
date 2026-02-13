@@ -46,26 +46,25 @@ public interface ModelState {
      int getPlayerHealth();
 
      /**
-      * @return ...
-      * 
+      * @return the time interval in milliseconds between two consecutive movements
+      *         of the invaders.
       */
      int getInvadersStepMs();
 
      /**
-      * @return ...
-      * 
+      * @return the current accumulated time in milliseconds used to track the
+      *         invaders' movement.
       */
      int getInvadersAccMs();
 
      /**
-      * @return ...
-      * 
+      * @return the current accumulated time in milliseconds used to track the bonus
+      *         invader's movement.
       */
      int getBonusInvaderAccMs();
 
      /**
-      * @return ...
-      * 
+      * @return .the level.
       */
      int getLevel();
 }

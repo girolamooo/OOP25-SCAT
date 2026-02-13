@@ -278,7 +278,8 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Updates the position of all active shots and removes the ones that are no
+     * longer alive from the game world.
      */
     public void moveShots() {
         final List<Shot> toRemove = new ArrayList<>();
@@ -309,7 +310,9 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Checks if the shooting conditions are met and, if so, generates new enemy
+     * projectiles
+     * and updates the shooting cooldown.
      */
     public void handleInvadersShooting() {
         if (!canInvadersShoot()) {
@@ -344,7 +347,7 @@ public class GameLogic {
     /**
      * Returns a random alive invader from the game world.
      * 
-     * @return a random alive invader, or null if no invaders are alive
+     * @return a random alive invader, or null if no invaders are alive.
      */
     private Invader getRandomInvader() {
         final List<Invader> aliveInvaders = gameWorld.getInvaders().stream()
@@ -375,8 +378,8 @@ public class GameLogic {
     /**
      * Removes every dead shot.
      * A shot is dead if:
-     * - has no health (isAlive is false)
-     * - or if it is out of border (isOutOfBorder is true)
+     * - has no health (isAlive is false).
+     * - or if it is out of border (isOutOfBorder is true).
      */
     public void removeDeadShots() {
         final List<Shot> snapshot = List.copyOf(gameWorld.getShots());
@@ -392,8 +395,8 @@ public class GameLogic {
      * If no bonus invader is present, spawns a new one with a 5%
      * probability.
      * 
-     * @param bonusInvaderAccMs ...
-     *
+     * @param bonusInvaderAccMs the accumulated time in milliseconds used to
+     *                          regulate the bonus invader's movement frequency.
      */
     public void handleBonusInvader(final int bonusInvaderAccMs) {
         final boolean isAlive = gameWorld.isBonusInvaderAlive();
@@ -416,7 +419,8 @@ public class GameLogic {
     }
 
     /**
-     * @param invadersAccMs ...
+     * @param invadersAccMs the accumulated time in milliseconds used to control the
+     *                      invaders' movement frequency.
      */
     public void handleInvadersMovement(final int invadersAccMs) {
         if (invadersAccMs >= difficultyManager.getInvadersStepMs()) {
@@ -429,7 +433,8 @@ public class GameLogic {
     }
 
     /**
-     * @param shotAccMs ...
+     * @param shotAccMs the accumulated time in milliseconds used to regulate
+     *                  projectile movement.
      */
     public void handleShotsMovement(final int shotAccMs) {
         if (shotAccMs >= Constants.SHOT_STEP_MS) {
@@ -539,8 +544,8 @@ public class GameLogic {
     }
 
     /**
-     * @return ...
-     * 
+     * @return the {@link DifficultyManager} instance responsible for handling game
+     *         difficulty and progression.
      */
     public DifficultyManager getDifficultyManager() {
         return difficultyManager;

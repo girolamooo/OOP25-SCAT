@@ -15,124 +15,126 @@ import it.unibo.scat.control.api.ControlInterface;
 public interface MenuActionsInterface {
 
     /**
-     * @return ...
-     *
+     * Frame getter.
+     * 
+     * @return the frame.
      */
     JFrame getFrame();
 
     /**
-     * ...
+     * Pauses the game.
      */
     void pauseGame();
 
     /**
-     * ...
+     * Resumes the game.
      */
     void resumeGame();
 
     /**
-     * ...
+     * Resets the game.
      */
     void resetGame();
 
     /**
-     * ...
+     * Aborts the game.
      */
     void abortGame();
 
     /**
-     * ...
+     * Quits the game.
      */
     void quitGame();
 
     /**
-     * @param username ...
-     *
+     * Username setter.
+     * 
+     * @param username the uername written by the player.
      */
     void setUsername(String username);
 
     /**
-     * @return ...
-     *
+     * @return a list containing the current state of all entities in the game
+     *         model.
      */
     List<EntityView> fetchEntitiesFromModel();
 
     /**
-     * @return ...
-     *
+     * @return the list of GameRecords that represents the current leaderboard.
      */
     List<GameRecord> fetchLeaderboard();
 
     /**
-     * @return ...
-     *
+     * @return the current player's username.
      */
     String fetchUsername();
 
     /**
-     * ...
+     * Shows the game panel.
      */
     void showGamePanel();
 
     /**
-     * ...
+     * Shows the menu panel.
      */
     void showMenuPanel();
 
     /**
-     * @return ...
-     *
+     * @return the score.
      */
     int fetchScore();
 
     /**
-     * @return ...
-     * 
+     * @return the player's health.
      */
     int fetchPlayerHealth();
 
     /**
-     * ...
+     * Starts the game.
      */
     void startGame();
 
     /**
-     * ....
+     * Control interface getter.
      * 
-     * @return ...
+     * @return the control interface.
      */
     ControlInterface getControlInterface();
 
     /**
-     * @param index ...
+     * Sets the index of the ship.
+     * 
+     * @param index the index of the ship selected by the player.
      */
     void setChosenShipIndex(int index);
 
     /**
-     * @return ...
+     * Chosen ship getter.
      * 
+     * @return the index of the chosen ship.
      */
     int getChosenShipIndex();
 
     /**
-     * @return ...
+     * @return the current level.
      */
     int getLevel();
 
     /**
-     * @return ...
+     * @return the time interval in milliseconds between two consecutive movements
+     *         of the invaders.
      */
     int getInvadersStepMs();
 
     /**
-     * @return ...
-     * 
+     * @return the current accumulated time in milliseconds used to track the
+     *         invaders' movement.
      */
     int getInvadersAccMs();
 
     /**
-     * @return ...
-     * 
+     * @return the current accumulated time in milliseconds used to track the bonus
+     *         invader's movement.
      */
     int getBonusInvaderAccMs();
 
