@@ -15,10 +15,12 @@ public class GameKL implements KeyListener {
     private final GamePanelInterface gamePanelInterface;
 
     /**
-     * need it to pass the tests. (da cancellare?).
+     * Constructs a new KeyListener to handle user input.
      * 
-     * @param controlInterface   ...
-     * @param gamePanelInterface ...
+     * @param controlInterface   the controller responsible for processing game
+     *                           commands (e.g., movement, shooting).
+     * @param gamePanelInterface the view component associated with this input
+     *                           listener.
      */
     public GameKL(final ControlInterface controlInterface, final GamePanelInterface gamePanelInterface) {
         this.controlInterface = controlInterface;
