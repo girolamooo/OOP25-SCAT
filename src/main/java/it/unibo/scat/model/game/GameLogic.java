@@ -282,14 +282,13 @@ public class GameLogic {
      * longer alive from the game world.
      */
     public void moveShots() {
-        final List<Shot> toRemove = new ArrayList<>();
-        for (final Shot shot : gameWorld.getShots()) {
+        final List<Shot> snapshot = List.copyOf(gameWorld.getShots());
+        for (final Shot shot : snapshot) {
             shot.move();
             if (!shot.isAlive()) {
-                toRemove.add(shot);
+                gameWorld.removeEntity(shot);
             }
         }
-        toRemove.forEach(gameWorld::removeEntity);
     }
 
     /**

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,9 +27,9 @@ public class GameWorld {
     private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
     private static final String EXPOSE_REP_JUSTIFICATION = "Intentional exposure of internal collections inside the model layer";
     private final EntityFactory entityFactory;
-    private final List<AbstractEntity> entities;
-    private final List<Invader> invaders;
-    private final List<Shot> shots;
+    private final List<AbstractEntity> entities = Collections.synchronizedList(new ArrayList<>());
+    private final List<Invader> invaders = Collections.synchronizedList(new ArrayList<>());
+    private final List<Shot> shots = Collections.synchronizedList(new ArrayList<>());
     private Player player;
     private Invader bonusInvader;
 
@@ -39,9 +40,6 @@ public class GameWorld {
      */
     public GameWorld(final EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
-        entities = new ArrayList<>();
-        invaders = new ArrayList<>();
-        shots = new ArrayList<>();
         player = null;
         bonusInvader = null;
     }
