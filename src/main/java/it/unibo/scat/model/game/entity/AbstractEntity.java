@@ -21,13 +21,14 @@ public abstract class AbstractEntity implements EntityState {
     private final EntityType entityType;
 
     /**
+     * Constructs a new entity with the specified properties.
+     * 
      * @param type   the type of the entity.
      * @param x      the initial x coordinate.
      * @param y      the initial y coordinate.
      * @param width  the witdh of the entity.
      * @param height the height of the entity.
      * @param health the initial health of the entity.
-     * 
      */
     public AbstractEntity(final EntityType type, final int x, final int y, final int width, final int height,
             final int health) {
@@ -57,8 +58,7 @@ public abstract class AbstractEntity implements EntityState {
     }
 
     /**
-     * @return ...
-     * 
+     * @return the points given to the player when entity is killed.
      */
     public int getEntityPoints() {
         return Constants.ZERO;
@@ -67,8 +67,8 @@ public abstract class AbstractEntity implements EntityState {
     /**
      * Sets the position of the entity.
      * 
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * @param x the x coordinate.
+     * @param y the y coordinate.
      */
     public void setPosition(final int x, final int y) {
         position = new Position(x, y);
@@ -175,5 +175,4 @@ public abstract class AbstractEntity implements EntityState {
     public int getHealth() {
         return health;
     }
-
 }

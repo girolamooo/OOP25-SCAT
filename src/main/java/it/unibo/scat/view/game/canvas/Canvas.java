@@ -18,7 +18,9 @@ import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.MenuActionsInterface;
 
 /**
- * ...
+ * The main panel that draws the game.
+ * It takes the game objects, converts their position to screen pixels, and
+ * draws the images.
  */
 @SuppressFBWarnings("EI_EXPOSE_REP2")
 public final class Canvas extends JPanel {
@@ -32,9 +34,9 @@ public final class Canvas extends JPanel {
     private transient SpriteManager spriteManger;
 
     /**
-     * ...
+     * Sets up the canvas to draw the game.
      * 
-     * @param menuActionsInterface ...
+     * @param menuActionsInterface used to get the list of objects to draw.
      */
     public Canvas(final MenuActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
@@ -48,7 +50,7 @@ public final class Canvas extends JPanel {
     }
 
     /**
-     * ...
+     * Updates the game data.
      */
     public void update() {
         entities = menuActionsInterface.fetchEntitiesFromModel();
@@ -66,10 +68,10 @@ public final class Canvas extends JPanel {
      * The hash changes only when at least one Entity of the group changes
      * position.
      *
-     * @param entityList the entities list
-     * @param types      the entity types to include
+     * @param entityList the entities list.
+     * @param types      the entity types to include.
      * @return a hash of the group position, or 0 if there are no entities of the
-     *         given type
+     *         given type.
      */
     private static int hashPositions(final List<EntityState> entityList, final EntityType... types) {
         final int hashingValue = 31;
@@ -134,9 +136,10 @@ public final class Canvas extends JPanel {
     }
 
     /**
-     * @param entity ...
-     * @return ...
+     * Chooses the correct image for an entity.
      * 
+     * @param entity the entity to draw.
+     * @return the image to be drawn.
      */
     private Image fetchImage(final EntityState entity) {
 
@@ -167,7 +170,7 @@ public final class Canvas extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the SpriteManager.
      */
     private void initSpriteManger() {
         final int scaleX = getWidth() / Constants.BORDER_RIGHT;

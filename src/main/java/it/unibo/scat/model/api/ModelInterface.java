@@ -14,10 +14,11 @@ public interface ModelInterface {
     void addPlayerShot();
 
     /**
-     * @param entitiesFile    the files that contains all the informations to
-     *                        properly initialize every entity
-     * @param leaderboardFile the files that contains the leaderboard
+     * Initilizes entities and leaderboard files.
      * 
+     * @param entitiesFile    the files that contains all the informations to
+     *                        properly initialize every entity.
+     * @param leaderboardFile the files that contains the leaderboard.
      */
     void initEverything(String entitiesFile, String leaderboardFile);
 
@@ -46,18 +47,16 @@ public interface ModelInterface {
     void movePlayer(Direction direction);
 
     /**
-     * ...
+     * Sets the game state.
      *
-     * @param state ...
-     *
+     * @param state the state the game needs to be setted.
      */
     void setGameState(GameState state);
 
     /**
-     * ...
+     * Game state getter.
      *
-     * @return ...
-     *
+     * @return the current game state.
      */
     GameState getGameState();
 

@@ -30,8 +30,8 @@ public class GameLogic {
     /**
      * GameLogic constructor.
      *
-     * @param gWorld        the game world
-     * @param entityFactory ...
+     * @param gWorld        the game world.
+     * @param entityFactory the entity factory.
      */
     public GameLogic(final GameWorld gWorld, final EntityFactory entityFactory) {
         this.gameWorld = gWorld;
@@ -68,7 +68,7 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Resets the invaders.
      */
     public void resetInvaders() {
         gameWorld.getInvaders().forEach(Invader::reset);
@@ -78,10 +78,9 @@ public class GameLogic {
      * This functions returns true if two entities (the first argument is assumed to
      * be always a shot) are on the same team.
      * 
-     * @param shot   ...
-     * @param entity ...
-     * @return ...
-     * 
+     * @param shot   the shot that can either come from the player or the invaders.
+     * @param entity the second entity envolved in the "collision".
+     * @return whether the shot was a "friendly fire" one.
      */
     private boolean areOnSameTeam(final Shot shot, final AbstractEntity entity) {
         if (entity instanceof Shot) {
