@@ -1,5 +1,7 @@
 package it.unibo.scat.view.game.api;
 
+import it.unibo.scat.common.GameState;
+
 /**
  * ...
  */
@@ -57,4 +59,9 @@ public interface GamePanelInterface {
      * ...
      */
     void showGameOver();
+
+    /**
+     * @return ...
+     */
+    GameState getGameState();
 }

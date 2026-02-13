@@ -292,4 +292,9 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         }
         viewInterface.quitGame();
     }
+
+    @Override
+    public GameState getGameState() {
+        return viewInterface.getGameState();
+    }
 }

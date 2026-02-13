@@ -1,10 +1,12 @@
 package it.unibo.scat.view.game;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,7 +28,6 @@ public final class GameOverPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int WIDTH = 700;
     private static final int HEIGHT = 400;
-    private static final int VERTICAL_SPACING = 40;
     private static final int TOP_MARGIN = 30;
     private static final int BUTTON_GAP = 20;
     private final transient AudioManager soundEffect;
@@ -46,18 +47,10 @@ public final class GameOverPanel extends JPanel {
         add(Box.createVerticalStrut(TOP_MARGIN));
 
         final JLabel title = new JLabel("GAME OVER");
-        title.setFont(UIConstants.FONT_L);
-        title.setForeground(Color.RED);
+        title.setFont(UIConstants.FONT_XL);
+        title.setForeground(UIConstants.ARCADE_GREEN);
         title.setAlignmentX(CENTER_ALIGNMENT);
         add(title);
-
-        add(Box.createVerticalStrut(VERTICAL_SPACING));
-
-        final JLabel score = new JLabel("FINAL SCORE: " + game.getScore());
-        score.setFont(UIConstants.FONT_M);
-        score.setForeground(UIConstants.ARCADE_GREEN);
-        score.setAlignmentX(CENTER_ALIGNMENT);
-        add(score);
 
         add(Box.createVerticalGlue());
 
@@ -83,18 +76,21 @@ public final class GameOverPanel extends JPanel {
         btn.setFocusable(false);
         btn.setBorderPainted(false);
         btn.setContentAreaFilled(false);
+        btn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
 
         btn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(final MouseEvent e) {
                 btn.setText("<" + text + ">");
                 btn.setForeground(Color.WHITE);
+                btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 soundEffect.play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override
             public void mouseExited(final MouseEvent e) {
                 btn.setText(" " + text + " ");
+                btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 btn.setForeground(Color.RED);
             }
         });
