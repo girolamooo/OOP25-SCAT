@@ -20,7 +20,7 @@ public final class SpriteManager {
         private final Map<EntityType, Image[]> scaledImages = new EnumMap<>(EntityType.class);
 
         /**
-         * ...
+         * Initializes the sprite manager and triggers the loading process.
          *
          * @param scaleX horizontal scaling factor.
          * @param scaleY vertical scaling factor.
@@ -30,11 +30,11 @@ public final class SpriteManager {
         }
 
         /**
-         * ...
+         * Gets the sprite associated with the specified entity and animation frame.
          * 
-         * @param type  ...
-         * @param frame ...
-         * @return ...
+         * @param type  the type of entity.
+         * @param frame the index of the animation frame to retrieve.
+         * @return the image to draw.
          */
         public Image getImage(
                         final EntityType type,
@@ -45,10 +45,10 @@ public final class SpriteManager {
         }
 
         /**
-         * ...
+         * Loads the images for every game object and resizes them.
          * 
-         * @param scaleX ...
-         * @param scaleY ...
+         * @param scaleX the horizontal zoom.
+         * @param scaleY the vertical zoom.
          */
         private void loadAndScaleImages(final int scaleX, final int scaleY) {
                 put(EntityType.PLAYER,
@@ -93,14 +93,14 @@ public final class SpriteManager {
         }
 
         /**
-         * ...
+         * Helper method to load and resize a list of images for a specific entity.
          * 
-         * @param type   ...
-         * @param paths  ...
-         * @param baseW  ...
-         * @param baseH  ...
-         * @param scaleX ...
-         * @param scaleY ...
+         * @param type   the entity type.
+         * @param paths  the list of file paths.
+         * @param baseW  the original width.
+         * @param baseH  the original height.
+         * @param scaleX the horizontal zoom.
+         * @param scaleY the vertical zoom.
          */
         private void put(
                         final EntityType type,
@@ -121,10 +121,10 @@ public final class SpriteManager {
         }
 
         /**
-         * ...
+         * Loads a single image file.
          * 
-         * @param path ...
-         * @return ...
+         * @param path location of the file.
+         * @return the loaded image.
          */
         private static Image loadSingle(final String path) {
                 return new ImageIcon(
@@ -132,12 +132,12 @@ public final class SpriteManager {
         }
 
         /**
-         * ...
+         * Changes the size of an image.
          * 
-         * @param img ...
-         * @param w   ...
-         * @param h   ...
-         * @return ...
+         * @param img the original image.
+         * @param w   the new width.
+         * @param h   the new height.
+         * @return the resized image.
          */
         private static Image scale(final Image img, final int w, final int h) {
                 return img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
