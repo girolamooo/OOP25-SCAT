@@ -108,7 +108,9 @@ public class Leaderboard {
     /**
      * Adds a new record and saves it to the disk.
      * 
-     * @param newRecord the game result to add
+     * @param username the username
+     * @param level    the current level
+     * @param score    the current score
      */
     public void addNewGameRecord(final String username, final int level, final int score) {
         final GameRecord newRecord = new GameRecord(username, score, level, LocalDate.now());
