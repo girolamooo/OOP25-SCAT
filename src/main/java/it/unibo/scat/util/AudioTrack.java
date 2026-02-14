@@ -10,6 +10,7 @@ public enum AudioTrack {
      */
     SOUND_TRACK("audio/MenuSong.wav"),
     HIT("audio/HitSound.wav"),
+    GAME_THEME("audio/GameSong.wav"),
 
     /**
      * The sound of the botton when it is pressed.
