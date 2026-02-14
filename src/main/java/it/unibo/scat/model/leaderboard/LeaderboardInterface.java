@@ -14,6 +14,7 @@ public interface LeaderboardInterface {
      * Initializes the leaderboard by loading existing data or creating default records.
      */
     void initLeaderboard();
+
     /**
      * Updates the persistent storage with the current list of game records.
      */
@@ -21,19 +22,20 @@ public interface LeaderboardInterface {
 
     /**
      * Adds a new game record to the leaderboard and ensures it is persisted and sorted.
-     * * @param newRecord the record to be added to the ranking.
+     * 
+     * @param newRecord the record to be added to the ranking.
      */
     void addNewGameRecord(GameRecord newRecord);
 
     /**
      * Returns a read-only list of all game records.
-     * * @return a list of current leaderboard entries.
+     * 
+     * @return a list of current leaderboard entries.
      */
     List<GameRecord> getAllRecords();
-    
+
     /**
      * Sorts the game records by score, then by level, then by date.
      */
     void sortGames();
-    
 }
