@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.game.api.GamePanelInterface;
 import it.unibo.scat.view.game.canvas.Canvas;
 import it.unibo.scat.view.game.statusbar.StatusBar;
@@ -30,7 +30,7 @@ import it.unibo.scat.view.game.statusbar.StatusBar;
 @SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
 public final class GamePanel extends JPanel implements GamePanelInterface {
     private static final long serialVersionUID = 1L;
-    private final transient MenuActionsInterface viewInterface;
+    private final transient ViewActionsInterface viewInterface;
     private transient List<BufferedImage> backgrounds;
 
     private Canvas canvas;
@@ -46,7 +46,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
      * 
      * @param viewInterface the menu actions interface.
      */
-    public GamePanel(final MenuActionsInterface viewInterface) {
+    public GamePanel(final ViewActionsInterface viewInterface) {
         this.viewInterface = viewInterface;
 
         setLayout(new BorderLayout());
@@ -277,12 +277,12 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
 
     @Override
     public void abortGame() {
-        if (gameOverDialog != null) {
-            gameOverDialog.dispose();
-            gameOverDialog = null;
+        if (pauseDialog != null) {
+            pauseDialog.dispose();
+            pauseDialog = null;
         }
         viewInterface.abortGame();
-        pauseDialog.dispose();
+        viewInterface.pauseGame();
     }
 
     @Override
@@ -290,6 +290,10 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         if (pauseDialog != null) {
             pauseDialog.dispose();
         }
+        if (gameOverDialog != null) {
+            gameOverDialog.dispose();
+        }
+
         viewInterface.quitGame();
     }
 

@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.scat.common.EntityView;
+import it.unibo.scat.common.EntityState;
 import it.unibo.scat.common.GameRecord;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.common.Observer;
@@ -20,7 +20,7 @@ import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.model.api.ModelState;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.api.ViewInterface;
 import it.unibo.scat.view.game.GameKL;
 import it.unibo.scat.view.game.GamePanel;
@@ -29,7 +29,7 @@ import it.unibo.scat.view.menu.MenuPanel;
 /**
  * The main class for the "View" section of the MVC pattern.
  */
-public final class View implements ViewInterface, MenuActionsInterface, Observer {
+public final class View implements ViewInterface, ViewActionsInterface, Observer {
     private final Rectangle bounds = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getMaximumWindowBounds();
     private ControlInterface controlInterface;
@@ -38,11 +38,14 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     private GamePanel gamePanel;
     private AudioManager backgroundSound;
+    private AudioManager sfxSound;
     private int chosenShipIndex = -1;
+    private int lastPlayerHealth = -1;
 
     @Override
     public void initEverything() {
         backgroundSound = new AudioManager();
+        sfxSound = new AudioManager();
 
         gamePanel = new GamePanel(this);
         gamePanel.setFocusable(true);
@@ -54,6 +57,22 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void update() {
+        final int currentPlayerHealth = modelState.getPlayerHealth();
+        final GameState currentState = getGameState();
+
+        if (currentState == GameState.RUNNING) {
+            if (lastPlayerHealth != -1 && currentPlayerHealth < lastPlayerHealth) {
+                sfxSound.play(AudioTrack.HIT, false);
+            }
+            lastPlayerHealth = currentPlayerHealth;
+        }
+
+        if (currentState == GameState.GAMEOVER) {
+            lastPlayerHealth = -1;
+            backgroundSound.stop();
+            backgroundSound.play(AudioTrack.GAME_OVER_SOUND, false);
+        }
+
         gamePanel.update();
 
     }
@@ -108,7 +127,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
     }
 
     @Override
-    public List<EntityView> fetchEntitiesFromModel() {
+    public List<EntityState> fetchEntitiesFromModel() {
         return modelState.getEntities();
     }
 
@@ -135,6 +154,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void pauseGame() {
+        backgroundSound.stop();
         controlInterface.notifyPauseGame();
     }
 
@@ -145,11 +165,13 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void resetGame() {
+        backgroundSound.play(AudioTrack.GAME_THEME, true);
         controlInterface.notifyResetGame();
     }
 
     @Override
     public void resumeGame() {
+        backgroundSound.play(AudioTrack.GAME_THEME, true);
         controlInterface.notifyResumeGame();
     }
 
@@ -170,7 +192,6 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.revalidate();
         frame.repaint();
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
-
         backgroundSound.stop();
     }
 
@@ -182,11 +203,15 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.revalidate();
         frame.repaint();
 
+        lastPlayerHealth = -1;
+        sfxSound.stop();
+        backgroundSound.stop();
         backgroundSound.play(AudioTrack.SOUND_TRACK, true);
     }
 
     @Override
     public void startGame() {
+        backgroundSound.play(AudioTrack.GAME_THEME, true);
         controlInterface.notifyStartGame();
     }
 
@@ -227,8 +252,9 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void abortGame() {
-        // controlInterface.notifyResumeGame();
         controlInterface.notifyResetGame();
+        backgroundSound.stop();
+        sfxSound.stop();
 
         showMenuPanel();
     }

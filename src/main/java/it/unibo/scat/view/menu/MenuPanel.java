@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 import it.unibo.scat.view.menu.usernamepanel.UsernamePanel;
 
@@ -28,17 +28,12 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     private static final String CARD_LEADERBOARD = "LEADERBOARD";
     private static final String CARD_CREDITS = "CREDITS";
 
-    private final transient MenuActionsInterface menuActionsInterface;
+    private final transient ViewActionsInterface menuActionsInterface;
     private transient BufferedImage currentBackground;
     private transient BufferedImage background1;
     private transient BufferedImage background2;
 
     private final transient CardLayout cardLayout = new CardLayout();
-
-    private SettingsPanel settingsPanel;
-    private UsernamePanel usernamePanel;
-    private LeaderboardPanel leaderboardPanel;
-    private CreditsPanel creditsPanel;
 
     /**
      * Creates the menu panel and initializes backgrounds and sub-panels.
@@ -46,7 +41,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
      * @param menuActionsInterface interface used to delegate menu actions.
      * 
      */
-    public MenuPanel(final MenuActionsInterface menuActionsInterface) {
+    public MenuPanel(final ViewActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
         setLayout(cardLayout);
 
@@ -76,10 +71,10 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
      * Initializes and registers all menu panels in the {@link CardLayout}.
      */
     private void initPanels() {
-        settingsPanel = new SettingsPanel(menuActionsInterface, this);
-        usernamePanel = new UsernamePanel(menuActionsInterface);
-        leaderboardPanel = new LeaderboardPanel(this, menuActionsInterface);
-        creditsPanel = new CreditsPanel(this);
+        final SettingsPanel settingsPanel = new SettingsPanel(menuActionsInterface, this);
+        final UsernamePanel usernamePanel = new UsernamePanel(menuActionsInterface);
+        final LeaderboardPanel leaderboardPanel = new LeaderboardPanel(this, menuActionsInterface);
+        final CreditsPanel creditsPanel = new CreditsPanel(this);
 
         settingsPanel.setOpaque(false);
 
@@ -194,13 +189,4 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
         repaint();
     }
 
-    /**
-     * useless, to pass checkstyle temporary...
-     */
-    public void useless() {
-        settingsPanel.doLayout();
-        usernamePanel.doLayout();
-        leaderboardPanel.doLayout();
-        creditsPanel.doLayout();
-    }
 }

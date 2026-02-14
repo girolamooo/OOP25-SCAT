@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import it.unibo.scat.common.Constants;
 import it.unibo.scat.common.GameRecord;
 
 /**
  * Class to manage the leaderboard: loading, saving and sorting scores.
  */
 public final class Leaderboard implements LeaderboardInterface {
-    private static final String RESOURCE_PATH = "/data/leaderboard.txt";
     private final List<GameRecord> games;
     private final Path leaderboardPath;
 
@@ -42,7 +42,7 @@ public final class Leaderboard implements LeaderboardInterface {
                 Files.createDirectories(parent);
             }
             if (!Files.exists(leaderboardPath)) {
-                try (InputStream input = Leaderboard.class.getResourceAsStream(RESOURCE_PATH)) {
+                try (InputStream input = Leaderboard.class.getResourceAsStream(Constants.RESOURCE_PATH)) {
                     if (input != null) {
                         Files.copy(input, leaderboardPath);
                     } else {
@@ -73,12 +73,10 @@ public final class Leaderboard implements LeaderboardInterface {
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot load records from file: " + leaderboardPath, e);
         }
-        sortGames();
     }
 
     @Override
     public void updateFile() {
-        sortGames();
         try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath)) {
             for (final GameRecord game : games) {
                 writer.write(game.getName() + ";" + game.getScore() + ";"
@@ -92,7 +90,6 @@ public final class Leaderboard implements LeaderboardInterface {
     @Override
     public void addNewGameRecord(final GameRecord newRecord) {
         games.add(newRecord);
-        updateFile();
     }
 
     @Override
