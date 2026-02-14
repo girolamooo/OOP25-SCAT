@@ -281,6 +281,12 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
             pauseDialog.dispose();
             pauseDialog = null;
         }
+
+        if (gameOverDialog != null) {
+            gameOverDialog.dispose();
+            gameOverDialog = null;
+        }
+
         viewInterface.abortGame();
         viewInterface.pauseGame();
     }
