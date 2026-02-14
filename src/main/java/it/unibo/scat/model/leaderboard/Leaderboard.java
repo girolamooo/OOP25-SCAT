@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import it.unibo.scat.common.Constants;
 import it.unibo.scat.common.GameRecord;
 
 /**
  * Class to manage the leaderboard: loading, saving and sorting scores.
  */
 public class Leaderboard {
-    private static final String RESOURCE_PATH = "/data/leaderboard.txt";
     private final List<GameRecord> games;
     private final Path leaderboardPath;
 
@@ -46,7 +46,7 @@ public class Leaderboard {
                 Files.createDirectories(parent);
             }
             if (!Files.exists(leaderboardPath)) {
-                try (InputStream input = Leaderboard.class.getResourceAsStream(RESOURCE_PATH)) {
+                try (InputStream input = Leaderboard.class.getResourceAsStream(Constants.RESOURCE_PATH)) {
                     if (input != null) {
                         Files.copy(input, leaderboardPath);
                     } else {
@@ -95,7 +95,7 @@ public class Leaderboard {
      * Saves the list of games to the file.
      */
     public void updateFile() {
-        try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath, StandardCharsets.UTF_8)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath)) {
             for (final GameRecord game : games) {
                 writer.write(
                         game.getName() + ";" + game.getScore() + ";" + game.getLevel() + ";" + game.getDate() + "\n");
@@ -108,12 +108,13 @@ public class Leaderboard {
     /**
      * Adds a new record and saves it to the disk.
      * 
-     * @param newRecord the game result to add
+     * @param username the username
+     * @param level    the current level
+     * @param score    the current score
      */
-    public void addNewGameRecord(final GameRecord newRecord) {
+    public void addNewGameRecord(final String username, final int level, final int score) {
+        final GameRecord newRecord = new GameRecord(username, score, level, LocalDate.now());
         games.add(newRecord);
-        sortGames();
-        updateFile();
     }
 
     /**
@@ -129,10 +130,9 @@ public class Leaderboard {
      */
     public void sortGames() {
         games.sort(
-        Comparator.comparing(GameRecord::getScore).reversed()
-            .thenComparing(GameRecord::getLevel, Comparator.reverseOrder())
-            .thenComparing(GameRecord::getDate, Comparator.reverseOrder())
-    );
+                Comparator.comparing(GameRecord::getScore).reversed()
+                        .thenComparing(GameRecord::getLevel, Comparator.reverseOrder())
+                        .thenComparing(GameRecord::getDate, Comparator.reverseOrder()));
     }
 
 }
