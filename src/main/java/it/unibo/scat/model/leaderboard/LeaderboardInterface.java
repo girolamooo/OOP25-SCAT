@@ -6,12 +6,14 @@ import it.unibo.scat.common.GameRecord;
 
 /**
  * Interface that defines the operations for managing the game's leaderboard.
- * It provides methods for data persistence, record management, and ranking logic.
+ * It provides methods for data persistence, record management, and ranking
+ * logic.
  */
 public interface LeaderboardInterface {
 
     /**
-     * Initializes the leaderboard by loading existing data or creating default records.
+     * Initializes the leaderboard by loading existing data or creating default
+     * records.
      */
     void initLeaderboard();
 
@@ -21,11 +23,14 @@ public interface LeaderboardInterface {
     void updateFile();
 
     /**
-     * Adds a new game record to the leaderboard and ensures it is persisted and sorted.
+     * Adds a new game record to the leaderboard and ensures it is persisted and
+     * sorted.
      * 
-     * @param newRecord the record to be added to the ranking.
+     * @param username the username.
+     * @param level    the current level.
+     * @param score    the current score.
      */
-    void addNewGameRecord(GameRecord newRecord);
+    void addNewGameRecord(String username, int level, int score);
 
     /**
      * Returns a read-only list of all game records.

@@ -88,7 +88,8 @@ public final class Leaderboard implements LeaderboardInterface {
     }
 
     @Override
-    public void addNewGameRecord(final GameRecord newRecord) {
+    public void addNewGameRecord(final String username, final int level, final int score) {
+        final GameRecord newRecord = new GameRecord(username, score, level, LocalDate.now());
         games.add(newRecord);
     }
 
