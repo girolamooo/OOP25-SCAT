@@ -34,7 +34,7 @@ import it.unibo.scat.view.menu.api.MenuPanelInterface;
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int COLUMN_COUNT = 5;
-    private static final int TABLE_ROW_HEIGHT = 25;
+    private static final int TABLE_ROW_HEIGHT = 45;
     private final transient MenuPanelInterface menuInterface;
     private final transient MenuActionsInterface menuActionsInterface;
     private final transient List<GameRecord> records;
