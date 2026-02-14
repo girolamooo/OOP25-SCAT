@@ -18,7 +18,7 @@ import it.unibo.scat.common.GameRecord;
 /**
  * Class to manage the leaderboard: loading, saving and sorting scores.
  */
-public class Leaderboard {
+public class Leaderboard implements LeaderboardInterface {
     private static final String RESOURCE_PATH = "/data/leaderboard.txt";
     private final List<GameRecord> games;
     private final Path leaderboardPath;
@@ -35,10 +35,8 @@ public class Leaderboard {
 
     }
 
-    /**
-     * Prepares the leaderboard. If the file does not exist,
-     * it copies the default data from the resources.
-     */
+    
+    @Override
     public void initLeaderboard() {
         try {
             final Path parent = leaderboardPath.getParent();
@@ -92,9 +90,7 @@ public class Leaderboard {
         sortGames();
     }
 
-    /**
-     * Saves the list of games to the file.
-     */
+    @Override
     public void updateFile() {
         sortGames();
         try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath)) {
@@ -107,27 +103,18 @@ public class Leaderboard {
         }
     }
 
-    /**
-     * Adds a new record and saves it to the disk.
-     * 
-     * @param newRecord the game result to add
-     */
+    @Override
     public void addNewGameRecord(final GameRecord newRecord) {
         games.add(newRecord);
         updateFile();
     }
 
-    /**
-     * @return all the records of the leaderboard.
-     * 
-     */
+    @Override
     public List<GameRecord> getAllRecords() {
         return List.copyOf(games);
     }
 
-    /**
-     * Sorts the game records by score, then by level, then by date.
-     */
+   @Override
     public void sortGames() {
         games.sort(new Comparator<>() {
 
