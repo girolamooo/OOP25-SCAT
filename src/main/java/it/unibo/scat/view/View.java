@@ -56,7 +56,13 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
     @Override
     public void update() {
         final int currentPlayerHealth = modelState.getPlayerHealth();
-        if (lastPlayerHealth != -1 && currentPlayerHealth < lastPlayerHealth) {
+        final GameState currentState = modelState.getGameState();
+
+        if (currentState != GameState.RUNNING) {
+            audioManager.stop();
+        }
+        if (currentState == GameState.RUNNING && lastPlayerHealth != -1 && currentPlayerHealth < lastPlayerHealth) {
+
             audioManager.play(AudioTrack.HIT, false);
         }
 
@@ -142,6 +148,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void pauseGame() {
+        audioManager.stop();
         controlInterface.notifyPauseGame();
     }
 
@@ -157,6 +164,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void resumeGame() {
+        audioManager.play(AudioTrack.GAME_THEME, true);
         controlInterface.notifyResumeGame();
     }
 
@@ -177,8 +185,8 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.revalidate();
         frame.repaint();
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
-
         audioManager.stop();
+        audioManager.play(AudioTrack.GAME_THEME, true);
     }
 
     @Override
@@ -189,6 +197,8 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.revalidate();
         frame.repaint();
 
+        lastPlayerHealth = -1;
+        audioManager.stop();
         audioManager.play(AudioTrack.SOUND_TRACK, true);
     }
 
@@ -236,6 +246,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
     public void abortGame() {
         // controlInterface.notifyResumeGame();
         controlInterface.notifyResetGame();
+        audioManager.stop();
 
         showMenuPanel();
     }
