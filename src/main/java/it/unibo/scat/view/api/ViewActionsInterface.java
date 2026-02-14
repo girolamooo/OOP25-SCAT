@@ -12,7 +12,7 @@ import it.unibo.scat.control.api.ControlInterface;
 /**
  * Interface for the View class, used by MenuPanel, GamePanel.
  */
-public interface MenuActionsInterface {
+public interface ViewActionsInterface {
 
     /**
      * Frame getter.

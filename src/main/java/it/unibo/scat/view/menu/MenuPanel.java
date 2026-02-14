@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 import it.unibo.scat.view.menu.usernamepanel.UsernamePanel;
 
@@ -28,7 +28,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
     private static final String CARD_LEADERBOARD = "LEADERBOARD";
     private static final String CARD_CREDITS = "CREDITS";
 
-    private final transient MenuActionsInterface menuActionsInterface;
+    private final transient ViewActionsInterface menuActionsInterface;
     private transient BufferedImage currentBackground;
     private transient BufferedImage background1;
     private transient BufferedImage background2;
@@ -41,7 +41,7 @@ public final class MenuPanel extends JPanel implements MenuPanelInterface {
      * @param menuActionsInterface interface used to delegate menu actions.
      * 
      */
-    public MenuPanel(final MenuActionsInterface menuActionsInterface) {
+    public MenuPanel(final ViewActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
         setLayout(cardLayout);
 

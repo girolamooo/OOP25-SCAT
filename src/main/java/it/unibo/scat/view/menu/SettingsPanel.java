@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomLabel;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
 
@@ -22,7 +22,7 @@ import it.unibo.scat.view.menu.api.MenuPanelInterface;
 public final class SettingsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int VERTICAL_GAP = 50;
-    private final transient MenuActionsInterface viewInterface;
+    private final transient ViewActionsInterface viewInterface;
     private final transient MenuPanelInterface menuInterface;
     private final transient AudioManager effectSound;
 
@@ -32,7 +32,7 @@ public final class SettingsPanel extends JPanel {
      * @param viewInterface interface used to trigger application-level actions
      * @param menuInterface interface used to switch menu screens
      */
-    public SettingsPanel(final MenuActionsInterface viewInterface, final MenuPanelInterface menuInterface) {
+    public SettingsPanel(final ViewActionsInterface viewInterface, final MenuPanelInterface menuInterface) {
         this.viewInterface = viewInterface;
         this.menuInterface = menuInterface;
         effectSound = new AudioManager();
