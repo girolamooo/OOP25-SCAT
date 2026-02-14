@@ -200,6 +200,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
 
         if (viewInterface.getGameState() == GameState.GAMEOVER) {
             if (gameOverDialog == null || !gameOverDialog.isVisible()) {
+                statusBar.repaint();
                 this.showGameOver();
             }
             return;
