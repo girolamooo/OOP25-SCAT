@@ -204,6 +204,7 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
         frame.repaint();
 
         lastPlayerHealth = -1;
+        sfxSound.stop();
         backgroundSound.stop();
         backgroundSound.play(AudioTrack.SOUND_TRACK, true);
     }
@@ -251,9 +252,9 @@ public final class View implements ViewInterface, MenuActionsInterface, Observer
 
     @Override
     public void abortGame() {
-        // controlInterface.notifyResumeGame();
         controlInterface.notifyResetGame();
         backgroundSound.stop();
+        sfxSound.stop();
 
         showMenuPanel();
     }
