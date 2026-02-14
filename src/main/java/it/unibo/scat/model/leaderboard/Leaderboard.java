@@ -89,15 +89,13 @@ public class Leaderboard {
         } catch (final IOException e) {
             throw new IllegalStateException("Cannot load records from file: " + leaderboardPath + "Exception: ", e);
         }
-        sortGames();
     }
 
     /**
      * Saves the list of games to the file.
      */
     public void updateFile() {
-        sortGames();
-        try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(leaderboardPath, StandardCharsets.UTF_8)) {
             for (final GameRecord game : games) {
                 writer.write(
                         game.getName() + ";" + game.getScore() + ";" + game.getLevel() + ";" + game.getDate() + "\n");
@@ -114,6 +112,7 @@ public class Leaderboard {
      */
     public void addNewGameRecord(final GameRecord newRecord) {
         games.add(newRecord);
+        sortGames();
         updateFile();
     }
 
@@ -129,26 +128,11 @@ public class Leaderboard {
      * Sorts the game records by score, then by level, then by date.
      */
     public void sortGames() {
-        games.sort(new Comparator<>() {
-
-            @Override
-            public int compare(final GameRecord o1, final GameRecord o2) {
-                int r = Integer.compare(o2.getScore(), o1.getScore());
-                if (r != 0) {
-                    return r;
-                }
-                r = Integer.compare(o2.getLevel(), o1.getLevel());
-                if (r != 0) {
-                    return r;
-                }
-                r = o2.getDate().compareTo(o1.getDate());
-                if (r != 0) {
-                    return r;
-                }
-                return 0;
-            }
-
-        });
+        games.sort(
+        Comparator.comparing(GameRecord::getScore).reversed()
+            .thenComparing(GameRecord::getLevel, Comparator.reverseOrder())
+            .thenComparing(GameRecord::getDate, Comparator.reverseOrder())
+    );
     }
 
 }
