@@ -19,10 +19,10 @@ import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Constants;
-import it.unibo.scat.util.AudioManager;
-import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * This class handles the credits panel.
