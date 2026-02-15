@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.scat.util.Audio;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
@@ -31,7 +32,7 @@ public final class PausePanel extends JPanel {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 400;
     private static final int PANEL_ALPHA = 230;
-    private final transient AudioManager soundEffect;
+    private final transient Audio soundEffect;
 
     /**
      * Pause panel constructor, creates the RESUME, MENU, QUIT buttons and adds the
