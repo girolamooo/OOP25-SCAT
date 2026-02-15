@@ -1,4 +1,4 @@
-package it.unibo.scat.util;
+package it.unibo.scat.view.util;
 
 import java.io.IOException;
 

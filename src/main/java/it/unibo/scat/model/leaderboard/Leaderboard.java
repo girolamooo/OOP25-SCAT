@@ -100,19 +100,9 @@ public final class Leaderboard implements LeaderboardInterface {
 
     @Override
     public void sortGames() {
-        games.sort(new Comparator<>() {
-            @Override
-            public int compare(final GameRecord o1, final GameRecord o2) {
-                int r = Integer.compare(o2.getScore(), o1.getScore());
-                if (r != 0) {
-                    return r;
-                }
-                r = Integer.compare(o2.getLevel(), o1.getLevel());
-                if (r != 0) {
-                    return r;
-                }
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
+        games.sort(Comparator.comparing(GameRecord::getScore)
+                .thenComparingInt(GameRecord::getLevel)
+                .thenComparing(GameRecord::getDate)
+                .reversed());
     }
 }

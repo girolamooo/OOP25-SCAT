@@ -18,12 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.scat.util.Audio;
-import it.unibo.scat.util.AudioManager;
-import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomTextField;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * Panel that allows the user to enter a username,
@@ -34,7 +33,6 @@ public final class UsernamePanel extends JPanel {
     private static final String USERNAME = "USERNAME";
     private static final int VERTICAL_SPACE = 20;
     private final transient ViewActionsInterface menuActionsInterface;
-    private final transient Audio sfxSound;
     private CustomTextField usernameField;
 
     /**
@@ -45,7 +43,6 @@ public final class UsernamePanel extends JPanel {
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Intentional exposure")
     public UsernamePanel(final ViewActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
-        sfxSound = new AudioManager();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(UIConstants.PANELS_BG_COLOR);
         setBorder(UIConstants.PANELS_BORDER);
@@ -174,6 +171,7 @@ public final class UsernamePanel extends JPanel {
                 menuActionsInterface.setUsername(usernameField.getText());
                 menuActionsInterface.showGamePanel();
                 menuActionsInterface.startGame();
+                new AudioManager().play(AudioTrack.OPTION_SELECTED, false);
             }
 
             @Override
@@ -181,7 +179,7 @@ public final class UsernamePanel extends JPanel {
                 playButton.setText(hoverText);
                 playButton.setForeground(Color.WHITE);
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                sfxSound.play(AudioTrack.MOUSE_OVER, false);
+                new AudioManager().play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override

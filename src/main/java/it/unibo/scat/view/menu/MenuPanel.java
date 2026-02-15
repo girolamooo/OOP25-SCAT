@@ -19,7 +19,8 @@ import it.unibo.scat.view.menu.usernamepanel.UsernamePanel;
 /**
  * Main menu panel. Manages different screens using {@link CardLayout}.
  */
-@SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
+@SuppressFBWarnings(value = { "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "EI_EXPOSE_REP2" }, justification = "Component not intended for serialization;Reference intentionally shared")
 public final class MenuPanel extends JPanel implements MenuPanelInterface {
     private static final long serialVersionUID = 1L;
 

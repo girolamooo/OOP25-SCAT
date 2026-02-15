@@ -11,12 +11,13 @@ import javax.swing.ImageIcon;
 import it.unibo.scat.common.Constants;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.view.UIConstants;
+import it.unibo.scat.view.game.api.SpriteManager;
 
 /**
- * Centralized loader + scaler + cache for all sprites.
- * Images are loaded, scaled and then cached.
+ * Centralized loader + scaler + saver for all sprites.
+ * Images are loaded, scaled and then saved.
  */
-public final class SpriteManager {
+public final class SpriteManagerImpl implements SpriteManager {
         private final Map<EntityType, Image[]> scaledImages = new EnumMap<>(EntityType.class);
 
         /**
@@ -25,8 +26,8 @@ public final class SpriteManager {
          * @param scaleX horizontal scaling factor.
          * @param scaleY vertical scaling factor.
          */
-        public SpriteManager(final int scaleX, final int scaleY) {
-                loadAndScaleImages(scaleX, scaleY);
+        public SpriteManagerImpl(final int scaleX, final int scaleY) {
+                loadAndScaleSprites(scaleX, scaleY);
         }
 
         /**
@@ -36,7 +37,8 @@ public final class SpriteManager {
          * @param frame the index of the animation frame to retrieve.
          * @return the image to draw.
          */
-        public Image getImage(
+        @Override
+        public Image getSprite(
                         final EntityType type,
                         final int frame) {
 
@@ -50,7 +52,7 @@ public final class SpriteManager {
          * @param scaleX the horizontal zoom.
          * @param scaleY the vertical zoom.
          */
-        private void loadAndScaleImages(final int scaleX, final int scaleY) {
+        private void loadAndScaleSprites(final int scaleX, final int scaleY) {
                 put(EntityType.PLAYER,
                                 UIConstants.PLAYER_PATHS,
                                 Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT,
@@ -128,7 +130,7 @@ public final class SpriteManager {
          */
         private static Image loadSingle(final String path) {
                 return new ImageIcon(
-                                Objects.requireNonNull(SpriteManager.class.getResource(path))).getImage();
+                                Objects.requireNonNull(SpriteManagerImpl.class.getResource(path))).getImage();
         }
 
         /**

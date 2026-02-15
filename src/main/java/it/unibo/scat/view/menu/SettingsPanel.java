@@ -8,18 +8,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.scat.util.Audio;
-import it.unibo.scat.util.AudioManager;
-import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomLabel;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
+import it.unibo.scat.view.util.Audio;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * Panel that displays the main menu options and handles user interactions.
  */
-@SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
-
+@SuppressFBWarnings(value = { "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "EI_EXPOSE_REP2" }, justification = "Component not intended for serialization;Reference intentionally shared")
 public final class SettingsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int VERTICAL_GAP = 50;

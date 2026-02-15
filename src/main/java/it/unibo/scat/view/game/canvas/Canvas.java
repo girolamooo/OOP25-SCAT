@@ -16,13 +16,15 @@ import it.unibo.scat.common.EntityState;
 import it.unibo.scat.common.EntityType;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.ViewActionsInterface;
+import it.unibo.scat.view.game.api.SpriteManager;
 
 /**
  * The main panel that draws the game.
  * It takes the game objects, converts their position to screen pixels, and
  * draws the images.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP2")
+@SuppressFBWarnings(value = { "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "EI_EXPOSE_REP2" }, justification = "Component not intended for serialization;Reference intentionally shared")
 public final class Canvas extends JPanel {
     private static final long serialVersionUID = 1L;
     private final transient ViewActionsInterface menuActionsInterface;
@@ -42,7 +44,7 @@ public final class Canvas extends JPanel {
         this.menuActionsInterface = menuActionsInterface;
         entities = null; // to do for the checkstyle
         voidImage = new ImageIcon(
-                Objects.requireNonNull(SpriteManager.class.getResource(UIConstants.NULL_PATH))).getImage();
+                Objects.requireNonNull(SpriteManagerImpl.class.getResource(UIConstants.NULL_PATH))).getImage();
 
         setForeground(Color.WHITE);
         setFont(UIConstants.FONT_S);
@@ -145,24 +147,24 @@ public final class Canvas extends JPanel {
 
         switch (entity.getType()) {
             case INVADER_1, INVADER_2, INVADER_3 -> {
-                return spriteManger.getImage(entity.getType(), invadersAnimationFrame.get());
+                return spriteManger.getSprite(entity.getType(), invadersAnimationFrame.get());
             }
             case BONUS_INVADER -> {
-                return spriteManger.getImage(entity.getType(), 0);
+                return spriteManger.getSprite(entity.getType(), 0);
             }
             case PLAYER, PLAYER_SHOT -> {
-                return spriteManger.getImage(entity.getType(), menuActionsInterface.getChosenShipIndex());
+                return spriteManger.getSprite(entity.getType(), menuActionsInterface.getChosenShipIndex());
             }
             case INVADER_SHOT -> {
-                return spriteManger.getImage(entity.getType(), 1);
+                return spriteManger.getSprite(entity.getType(), 1);
             }
             case BUNKER -> {
                 if (entity.getHealth() > Constants.BUNKER_HEALTH / 3 * 2) {
-                    return spriteManger.getImage(entity.getType(), 0);
+                    return spriteManger.getSprite(entity.getType(), 0);
                 } else if (entity.getHealth() > Constants.BUNKER_HEALTH / 3) {
-                    return spriteManger.getImage(entity.getType(), 1);
+                    return spriteManger.getSprite(entity.getType(), 1);
                 }
-                return spriteManger.getImage(entity.getType(), 2);
+                return spriteManger.getSprite(entity.getType(), 2);
             }
         }
 
@@ -175,6 +177,6 @@ public final class Canvas extends JPanel {
     private void initSpriteManger() {
         final int scaleX = getWidth() / Constants.BORDER_RIGHT;
         final int scaleY = getHeight() / Constants.BORDER_BOTTOM;
-        spriteManger = new SpriteManager(scaleX, scaleY);
+        spriteManger = new SpriteManagerImpl(scaleX, scaleY);
     }
 }
