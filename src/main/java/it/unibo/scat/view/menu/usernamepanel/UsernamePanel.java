@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.util.Audio;
+import it.unibo.scat.util.AudioManager;
+import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomTextField;
@@ -32,6 +35,7 @@ public final class UsernamePanel extends JPanel {
     private static final int VERTICAL_SPACE = 20;
     private final transient ViewActionsInterface menuActionsInterface;
     private CustomTextField usernameField;
+    private Audio sfxSound;
 
     /**
      * Creates the username panel and initializes all UI components.
@@ -41,6 +45,7 @@ public final class UsernamePanel extends JPanel {
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Intentional exposure")
     public UsernamePanel(final ViewActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
+        sfxSound = new AudioManager();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(UIConstants.PANELS_BG_COLOR);
         setBorder(UIConstants.PANELS_BORDER);
@@ -176,6 +181,7 @@ public final class UsernamePanel extends JPanel {
                 playButton.setText(hoverText);
                 playButton.setForeground(Color.WHITE);
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                sfxSound.play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override
