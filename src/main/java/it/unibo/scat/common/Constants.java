@@ -1,12 +1,13 @@
 package it.unibo.scat.common;
 
 /**
- * ...
+ * Utility class containing global application constants.
  */
 public final class Constants {
     // PATHS
     public static final String LEADERBOARD_PATH = "data/leaderboard.txt";
     public static final String ENTITIES_PATH = "data/entities.txt";
+    public static final String RESOURCE_PATH = "/data/leaderboard.txt";
 
     // WORLD
     public static final int BORDER_RIGHT = 60;

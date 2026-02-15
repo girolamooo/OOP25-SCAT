@@ -15,10 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import it.unibo.scat.util.AudioManager;
-import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.game.api.GamePanelInterface;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * Panel shown in the GamePanel when the game is paused.
@@ -34,9 +34,10 @@ public final class PausePanel extends JPanel {
     private final transient AudioManager soundEffect;
 
     /**
-     * ...
+     * Pause panel constructor, creates the RESUME, MENU, QUIT buttons and adds the
+     * title..
      * 
-     * @param game ...
+     * @param game the game panel interface.
      */
     public PausePanel(final GamePanelInterface game) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -61,12 +62,12 @@ public final class PausePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Helper method, adds title.
      */
     private void addTitle() {
         final JLabel title = new JLabel("GAME PAUSED");
 
-        title.setFont(UIConstants.FONT_L);
+        title.setFont(UIConstants.FONT_XL);
         title.setForeground(UIConstants.ARCADE_GREEN);
         title.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -75,10 +76,10 @@ public final class PausePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Helper method that creates the buttons.
      * 
-     * @param text   ...
-     * @param action ...
+     * @param text   the text displayed on buttons.
+     * @param action the button's action.
      */
     private void createButton(final String text, final Runnable action) {
         final JButton button = new JButton(" " + text + " ");
@@ -120,9 +121,9 @@ public final class PausePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Helps to paint the component.
      * 
-     * @param g ...
+     * @param g the graphics context in which to paint.
      */
     @Override
     protected void paintComponent(final Graphics g) {

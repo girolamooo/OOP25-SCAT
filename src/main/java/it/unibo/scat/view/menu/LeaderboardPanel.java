@@ -22,30 +22,36 @@ import javax.swing.table.JTableHeader;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.GameRecord;
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
- * This class handles the leaderboard panel.
+ * Panel that displays the global leaderboard with ranking data.
  */
-@SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
+@SuppressFBWarnings(value = { "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "EI_EXPOSE_REP2" }, justification = "Component not intended for serialization;Reference intentionally shared")
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int COLUMN_COUNT = 5;
-    private static final int TABLE_ROW_HEIGHT = 25;
+    private static final int TABLE_ROW_HEIGHT = 45;
     private final transient MenuPanelInterface menuInterface;
-    private final transient MenuActionsInterface menuActionsInterface;
+    private final transient ViewActionsInterface menuActionsInterface;
     private final transient List<GameRecord> records;
+    private final transient AudioManager audiomanager;
 
     /**
-     * @param mInterface       ...
-     * @param mActionInterface ...
-     * 
+     * Creates the leaderboard panel and initializes its components.
+     *
+     * @param mInterface       interface used to switch menu screens
+     * @param mActionInterface interface used to retrieve leaderboard data
      */
-    public LeaderboardPanel(final MenuPanelInterface mInterface, final MenuActionsInterface mActionInterface) {
+    public LeaderboardPanel(final MenuPanelInterface mInterface, final ViewActionsInterface mActionInterface) {
         this.menuInterface = mInterface;
         this.menuActionsInterface = mActionInterface;
         records = menuActionsInterface.fetchLeaderboard();
+        audiomanager = new AudioManager();
 
         setLayout(new BorderLayout());
         this.setBackground(UIConstants.ARCADE_BLACK);
@@ -62,7 +68,8 @@ public final class LeaderboardPanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the back button and its mouse interactions.
+     * When clicked, returns to the settings screen.
      */
     private void initBackButton() {
         final JLabel backButton = new JLabel("< BACK");
@@ -76,13 +83,14 @@ public final class LeaderboardPanel extends JPanel {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 menuInterface.showSettingsPanel();
+                audiomanager.play(AudioTrack.OPTION_SELECTED, false);
             }
 
             @Override
             public void mouseEntered(final MouseEvent e) {
                 backButton.setForeground(Color.WHITE);
                 backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                // soundEffect.play(AudioTrack.MOUSE_OVER, false);
+                audiomanager.play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override
@@ -95,12 +103,11 @@ public final class LeaderboardPanel extends JPanel {
     }
 
     /**
-     * ...
+     * Builds and configures the leaderboard table,
+     * populating it with fetched game records.
      */
     private void initContentTable() {
-        // @formatter:off
-        final String[] columnNames = {"RANK", "NAME", "SCORE", "LEVEL", "DATE"};
-        // @formatter:on
+        final String[] columnNames = {"RANK", "NAME", "SCORE", "LEVEL", "DATE" };
         final Object[][] data = new Object[records.size()][COLUMN_COUNT];
 
         for (final GameRecord record : records) {

@@ -17,8 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.common.GameState;
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.game.api.GamePanelInterface;
 import it.unibo.scat.view.game.canvas.Canvas;
 import it.unibo.scat.view.game.statusbar.StatusBar;
@@ -26,24 +27,27 @@ import it.unibo.scat.view.game.statusbar.StatusBar;
 /**
  * Panel that contains all the graphics element for the game.
  */
-@SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
+@SuppressFBWarnings(value = { "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "EI_EXPOSE_REP2" }, justification = "Component not intended for serialization;Reference intentionally shared")
 public final class GamePanel extends JPanel implements GamePanelInterface {
     private static final long serialVersionUID = 1L;
-    private final transient MenuActionsInterface viewInterface;
+    private final transient ViewActionsInterface viewInterface;
     private transient List<BufferedImage> backgrounds;
 
     private Canvas canvas;
     private StatusBar statusBar;
-    private GameOverPanel gameOverPanel;
     private int currentBackgroundIndex;
 
     private JDialog pauseDialog;
+    private JDialog gameOverDialog;
 
     /**
-     * @param viewInterface ...
+     * Game panel constructor, initializes backgrounds, canvas, game over panel and
+     * the status bar.
      * 
+     * @param viewInterface the menu actions interface.
      */
-    public GamePanel(final MenuActionsInterface viewInterface) {
+    public GamePanel(final ViewActionsInterface viewInterface) {
         this.viewInterface = viewInterface;
 
         setLayout(new BorderLayout());
@@ -52,11 +56,10 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
         initCanvas();
         initStatusBar();
 
-        initGameOverPanel();
     }
 
     /**
-     * ...
+     * Initializes the canvas.
      */
     private void initCanvas() {
         canvas = new Canvas(viewInterface);
@@ -67,7 +70,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * ...
+     * Initializes the status bar.
      */
     private void initStatusBar() {
         final int height = 70;
@@ -78,10 +81,11 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * @param maxWindowBounds ...
-     * @param ins             ...
-     * @return ...
+     * Calculates and returns the dimension of the optimal frame size.
      * 
+     * @param maxWindowBounds the maximum window bounds.
+     * @param ins             the insets.
+     * @return the optimal dimension.
      */
     public Dimension computeBestFrameSize(final Rectangle maxWindowBounds, final Insets ins) {
         final double aspect = 59.0 / 36.0;
@@ -99,13 +103,6 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
                 canvasH + barH + ins.top + ins.bottom);
     }
 
-    /**
-     * ...
-     */
-    private void initGameOverPanel() {
-        gameOverPanel = new GameOverPanel();
-    }
-
     @Override
     public void pause() {
         viewInterface.pauseGame();
@@ -114,12 +111,12 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
 
     @Override
     public void resume() {
-        pauseDialog.dispose();
         viewInterface.resumeGame();
+        pauseDialog.dispose();
     }
 
     /**
-     * ...
+     * Initializes the backgrounds.
      */
     private void initBackgrounds() {
         backgrounds = new ArrayList<>();
@@ -158,8 +155,9 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * @return ...
+     * Score getter, from the view interface.
      * 
+     * @return the score.
      */
     @Override
     public int getScore() {
@@ -167,8 +165,9 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * @return ...
+     * Player health getter, from the view interface.
      * 
+     * @return the player health.
      */
     @Override
     public int getPlayerHealth() {
@@ -176,8 +175,9 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * @return ...
+     * Level getter, from the view interface.
      * 
+     * @return the level.
      */
     @Override
     public int getLevel() {
@@ -185,8 +185,9 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * @return ...
+     * Username getter, from the view interface.
      * 
+     * @return the username.
      */
     @Override
     public String getUsername() {
@@ -194,9 +195,18 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * ...
+     * Updates the canvas and the status bar.
      */
     public void update() {
+
+        if (viewInterface.getGameState() == GameState.GAMEOVER) {
+            if (gameOverDialog == null || !gameOverDialog.isVisible()) {
+                statusBar.repaint();
+                this.showGameOver();
+            }
+            return;
+        }
+
         if (shouldChangeBackground()) {
             updateBackground();
         }
@@ -207,7 +217,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * ...
+     * Updates the background.
      */
     public void updateBackground() {
         currentBackgroundIndex = viewInterface.getLevel() - 1;
@@ -217,8 +227,9 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * @return ...
+     * Helper method that checks if the background should be changed.
      * 
+     * @return true if the background should be changed, false otherwise.
      */
     private boolean shouldChangeBackground() {
         int bgIndex = viewInterface.getLevel() - 1;
@@ -230,7 +241,7 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     /**
-     * ...
+     * Shows the pause panel.
      */
     private void showPausePanel() {
         pauseDialog = new JDialog(
@@ -245,14 +256,57 @@ public final class GamePanel extends JPanel implements GamePanelInterface {
     }
 
     @Override
+    public void showGameOver() {
+        SwingUtilities.invokeLater(() -> {
+            gameOverDialog = new JDialog(
+                    SwingUtilities.getWindowAncestor(this), "GAME OVER", JDialog.ModalityType.APPLICATION_MODAL);
+            gameOverDialog.setContentPane(new GameOverPanel(this));
+            gameOverDialog.setUndecorated(true);
+            gameOverDialog.pack();
+            gameOverDialog.setLocationRelativeTo(this);
+            gameOverDialog.setVisible(true);
+        });
+    }
+
+    @Override
+    public void restart() {
+        if (gameOverDialog != null) {
+            gameOverDialog.dispose();
+            gameOverDialog = null;
+        }
+        viewInterface.resetGame();
+    }
+
+    @Override
     public void abortGame() {
-        pauseDialog.dispose();
+        if (pauseDialog != null) {
+            pauseDialog.dispose();
+            pauseDialog = null;
+        }
+
+        if (gameOverDialog != null) {
+            gameOverDialog.dispose();
+            gameOverDialog = null;
+        }
+
         viewInterface.abortGame();
+        viewInterface.pauseGame();
     }
 
     @Override
     public void quit() {
-        pauseDialog.dispose();
+        if (pauseDialog != null) {
+            pauseDialog.dispose();
+        }
+        if (gameOverDialog != null) {
+            gameOverDialog.dispose();
+        }
+
         viewInterface.quitGame();
+    }
+
+    @Override
+    public GameState getGameState() {
+        return viewInterface.getGameState();
     }
 }

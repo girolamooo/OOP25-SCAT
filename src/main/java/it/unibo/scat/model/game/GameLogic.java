@@ -30,8 +30,8 @@ public class GameLogic {
     /**
      * GameLogic constructor.
      *
-     * @param gWorld        the game world
-     * @param entityFactory ...
+     * @param gWorld        the game world.
+     * @param entityFactory the entity factory.
      */
     public GameLogic(final GameWorld gWorld, final EntityFactory entityFactory) {
         this.gameWorld = gWorld;
@@ -68,7 +68,7 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Resets the invaders.
      */
     public void resetInvaders() {
         gameWorld.getInvaders().forEach(Invader::reset);
@@ -78,10 +78,9 @@ public class GameLogic {
      * This functions returns true if two entities (the first argument is assumed to
      * be always a shot) are on the same team.
      * 
-     * @param shot   ...
-     * @param entity ...
-     * @return ...
-     * 
+     * @param shot   the shot that can either come from the player or the invaders.
+     * @param entity the second entity envolved in the "collision".
+     * @return whether the shot was a "friendly fire" one.
      */
     private boolean areOnSameTeam(final Shot shot, final AbstractEntity entity) {
         if (entity instanceof Shot) {
@@ -278,17 +277,17 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Updates the position of all active shots and removes the ones that are no
+     * longer alive from the game world.
      */
     public void moveShots() {
-        final List<Shot> toRemove = new ArrayList<>();
-        for (final Shot shot : gameWorld.getShots()) {
+        final List<Shot> snapshot = List.copyOf(gameWorld.getShots());
+        for (final Shot shot : snapshot) {
             shot.move();
             if (!shot.isAlive()) {
-                toRemove.add(shot);
+                gameWorld.removeEntity(shot);
             }
         }
-        toRemove.forEach(gameWorld::removeEntity);
     }
 
     /**
@@ -297,7 +296,7 @@ public class GameLogic {
      * @return true if invaders can shoot, false otherwise
      * 
      */
-    public boolean canInvadersShoot() {
+    private boolean canInvadersShoot() {
         final long currTime = System.currentTimeMillis();
 
         final int aliveInvaders = (int) gameWorld.getInvaders().stream()
@@ -309,7 +308,9 @@ public class GameLogic {
     }
 
     /**
-     * ...
+     * Checks if the shooting conditions are met and, if so, generates new enemy
+     * projectiles
+     * and updates the shooting cooldown.
      */
     public void handleInvadersShooting() {
         if (!canInvadersShoot()) {
@@ -344,7 +345,7 @@ public class GameLogic {
     /**
      * Returns a random alive invader from the game world.
      * 
-     * @return a random alive invader, or null if no invaders are alive
+     * @return a random alive invader, or null if no invaders are alive.
      */
     private Invader getRandomInvader() {
         final List<Invader> aliveInvaders = gameWorld.getInvaders().stream()
@@ -375,8 +376,8 @@ public class GameLogic {
     /**
      * Removes every dead shot.
      * A shot is dead if:
-     * - has no health (isAlive is false)
-     * - or if it is out of border (isOutOfBorder is true)
+     * - has no health (isAlive is false).
+     * - or if it is out of border (isOutOfBorder is true).
      */
     public void removeDeadShots() {
         final List<Shot> snapshot = List.copyOf(gameWorld.getShots());
@@ -392,8 +393,8 @@ public class GameLogic {
      * If no bonus invader is present, spawns a new one with a 5%
      * probability.
      * 
-     * @param bonusInvaderAccMs ...
-     *
+     * @param bonusInvaderAccMs the accumulated time in milliseconds used to
+     *                          regulate the bonus invader's movement frequency.
      */
     public void handleBonusInvader(final int bonusInvaderAccMs) {
         final boolean isAlive = gameWorld.isBonusInvaderAlive();
@@ -416,7 +417,8 @@ public class GameLogic {
     }
 
     /**
-     * @param invadersAccMs ...
+     * @param invadersAccMs the accumulated time in milliseconds used to control the
+     *                      invaders' movement frequency.
      */
     public void handleInvadersMovement(final int invadersAccMs) {
         if (invadersAccMs >= difficultyManager.getInvadersStepMs()) {
@@ -429,7 +431,8 @@ public class GameLogic {
     }
 
     /**
-     * @param shotAccMs ...
+     * @param shotAccMs the accumulated time in milliseconds used to regulate
+     *                  projectile movement.
      */
     public void handleShotsMovement(final int shotAccMs) {
         if (shotAccMs >= Constants.SHOT_STEP_MS) {
@@ -539,8 +542,8 @@ public class GameLogic {
     }
 
     /**
-     * @return ...
-     * 
+     * @return the {@link DifficultyManager} instance responsible for handling game
+     *         difficulty and progression.
      */
     public DifficultyManager getDifficultyManager() {
         return difficultyManager;

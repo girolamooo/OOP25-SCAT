@@ -19,25 +19,29 @@ import javax.swing.SwingConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomTextField;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
- * This class handles the username panel.
+ * Panel that allows the user to enter a username,
+ * choose a ship, and start the game.
  */
 public final class UsernamePanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final String USERNAME = "USERNAME";
     private static final int VERTICAL_SPACE = 20;
-    private final transient MenuActionsInterface menuActionsInterface;
+    private final transient ViewActionsInterface menuActionsInterface;
     private CustomTextField usernameField;
 
     /**
-     * @param menuActionsInterface ...
-     * 
+     * Creates the username panel and initializes all UI components.
+     *
+     * @param menuActionsInterface interface used to handle menu actions
      */
-    @SuppressFBWarnings("EI_EXPOSE_REP")
-    public UsernamePanel(final MenuActionsInterface menuActionsInterface) {
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Intentional exposure")
+    public UsernamePanel(final ViewActionsInterface menuActionsInterface) {
         this.menuActionsInterface = menuActionsInterface;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(UIConstants.PANELS_BG_COLOR);
@@ -51,7 +55,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the label prompting the user to enter a username.
      */
     private void initUsernameText() {
         final JLabel label = new JLabel("ENTER USERNAME");
@@ -65,7 +69,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the username input field with placeholder behavior.
      */
     private void initUsernameField() {
         usernameField = new CustomTextField();
@@ -97,7 +101,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the label prompting the user to choose a ship.
      */
     private void initShipText() {
         final JLabel label = new JLabel("CHOOSE SHIP");
@@ -112,7 +116,7 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the wrapper containing the ship selection buttons.
      */
     private void initButtonsWrapper() {
         final ButtonsWrapper buttonsWrapper = new ButtonsWrapper(menuActionsInterface);
@@ -128,7 +132,8 @@ public final class UsernamePanel extends JPanel {
     }
 
     /**
-     * ...
+     * Initializes the play button and its mouse interactions.
+     * Starts the game if input and selection are valid.
      */
     private void initPlayButton() {
         final String baseText = " PLAY ";
@@ -166,6 +171,7 @@ public final class UsernamePanel extends JPanel {
                 menuActionsInterface.setUsername(usernameField.getText());
                 menuActionsInterface.showGamePanel();
                 menuActionsInterface.startGame();
+                new AudioManager().play(AudioTrack.OPTION_SELECTED, false);
             }
 
             @Override
@@ -173,6 +179,7 @@ public final class UsernamePanel extends JPanel {
                 playButton.setText(hoverText);
                 playButton.setForeground(Color.WHITE);
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                new AudioManager().play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override

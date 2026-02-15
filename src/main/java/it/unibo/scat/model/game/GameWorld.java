@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.Constants;
@@ -22,27 +22,24 @@ import it.unibo.scat.model.game.entity.Shot;
 /**
  * Class that represents the game world and holds the game's state.
  */
-@SuppressFBWarnings("DMI_RANDOM_USED_ONLY_ONCE")
+@SuppressFBWarnings(value = "DMI_RANDOM_USED_ONLY_ONCE", justification = "Random instance used once intentionally.")
 public class GameWorld {
     private static final String EI_EXPOSE_REP = "EI_EXPOSE_REP";
     private static final String EXPOSE_REP_JUSTIFICATION = "Intentional exposure of internal collections inside the model layer";
     private final EntityFactory entityFactory;
-    private final List<AbstractEntity> entities;
-    private final List<Invader> invaders;
-    private final List<Shot> shots;
+    private final List<AbstractEntity> entities = Collections.synchronizedList(new ArrayList<>());
+    private final List<Invader> invaders = Collections.synchronizedList(new ArrayList<>());
+    private final List<Shot> shots = Collections.synchronizedList(new ArrayList<>());
     private Player player;
     private Invader bonusInvader;
 
     /**
      * GameWorld constructor.
      * 
-     * @param entityFactory ...
+     * @param entityFactory the factory of entities.
      */
     public GameWorld(final EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
-        entities = new ArrayList<>();
-        invaders = new ArrayList<>();
-        shots = new ArrayList<>();
         player = null;
         bonusInvader = null;
     }
@@ -50,7 +47,7 @@ public class GameWorld {
     /**
      * Initializes the game entities by loading them from a file.
      * 
-     * @param filename the file containing the entities configuration
+     * @param filename the file containing the entities configuration.
      */
     public void initEntities(final String filename) {
         try (BufferedReader reader = new BufferedReader(
@@ -115,8 +112,7 @@ public class GameWorld {
     }
 
     /**
-     * @return the player entity
-     *
+     * @return the player entity.
      */
     @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = EXPOSE_REP_JUSTIFICATION)
     public Player getPlayer() {
@@ -126,7 +122,7 @@ public class GameWorld {
     /**
      * Adds an entity to the game world and the appropriate internal list.
      * 
-     * @param e the entity to add
+     * @param e the entity to add.
      */
     @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = EXPOSE_REP_JUSTIFICATION)
     public void addEntity(final AbstractEntity e) {
@@ -155,7 +151,7 @@ public class GameWorld {
     /**
      * Removes an entity from the game world and from the appropriate internal list.
      * 
-     * @param e the entity to remove
+     * @param e the entity to remove.
      */
     public void removeEntity(final AbstractEntity e) {
         entities.remove(e);
@@ -175,7 +171,6 @@ public class GameWorld {
 
     /**
      * Changes the movement direction of the invaders.
-     * 
      */
     public void changeInvadersDirection() {
 
@@ -193,7 +188,7 @@ public class GameWorld {
     /**
      * Checks if the invaders need to change direction.
      * 
-     * @return true if the direction should change, false otherwise
+     * @return true if the direction should change, false otherwise.
      */
     public boolean shouldInvadersChangeDirection() {
 
@@ -212,7 +207,7 @@ public class GameWorld {
     /**
      * Checks if any invader has reached the right border.
      * 
-     * @return true if an invader hit the right border
+     * @return true if an invader hit the right border.
      */
     private boolean didInvadersHitRight() {
         for (final Invader invader : invaders) {
@@ -227,7 +222,7 @@ public class GameWorld {
     /**
      * Checks if any invader has reached the left border.
      * 
-     * @return true if an invader hit the left border
+     * @return true if an invader hit the left border.
      */
     private boolean didInvadersHitLeft() {
         for (final Invader invader : invaders) {
@@ -240,38 +235,9 @@ public class GameWorld {
     }
 
     /**
-     * Debug method.
-     */
-    public void printEntities() {
-        final Logger logger = Logger.getLogger(GameWorld.class.getName());
-
-        int i = 0;
-        logger.info("PRINTING entities, size: " + entities.size());
-        for (final AbstractEntity e : entities) {
-            logger.info(i + ":" + e);
-            i++;
-        }
-
-        i = 0;
-        logger.info("\nPRINTING just invaders, size: " + invaders.size());
-        for (final AbstractEntity e : invaders) {
-            logger.info(i + ":" + e);
-            i++;
-        }
-
-        i = 0;
-        logger.info("\nPRINTING just shots, size: " + shots.size());
-        for (final AbstractEntity e : shots) {
-            logger.info(i + ":" + e);
-            i++;
-        }
-    }
-
-    /**
      * @return returns the bonusInvader, it could also be null!
-     * 
      */
-    @SuppressFBWarnings(EI_EXPOSE_REP)
+    @SuppressFBWarnings(value = EI_EXPOSE_REP, justification = EXPOSE_REP_JUSTIFICATION)
     public Invader getBonusInvader() {
         return bonusInvader;
     }

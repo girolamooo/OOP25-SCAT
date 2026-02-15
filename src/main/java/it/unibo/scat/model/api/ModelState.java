@@ -2,7 +2,7 @@ package it.unibo.scat.model.api;
 
 import java.util.List;
 
-import it.unibo.scat.common.EntityView;
+import it.unibo.scat.common.EntityState;
 import it.unibo.scat.common.GameRecord;
 
 /**
@@ -15,7 +15,7 @@ public interface ModelState {
       *
       * @return list of entities.
       */
-     List<EntityView> getEntities();
+     List<EntityState> getEntities();
 
      /**
       * Username getter.
@@ -46,26 +46,26 @@ public interface ModelState {
      int getPlayerHealth();
 
      /**
-      * @return ...
-      * 
+      * @return the time interval in milliseconds between two consecutive movements
+      *         of the invaders.
       */
      int getInvadersStepMs();
 
      /**
-      * @return ...
-      * 
+      * @return the current accumulated time in milliseconds used to track the
+      *         invaders' movement.
       */
      int getInvadersAccMs();
 
      /**
-      * @return ...
-      * 
+      * @return the current accumulated time in milliseconds used to track the bonus
+      *         invader's movement.
       */
      int getBonusInvaderAccMs();
 
      /**
-      * @return ...
-      * 
+      * @return .the level.
       */
      int getLevel();
+
 }

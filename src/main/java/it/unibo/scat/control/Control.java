@@ -12,10 +12,7 @@ import it.unibo.scat.view.api.ViewInterface;
 /**
  * The main class for the "Control" section of the MVC pattern.
  */
-// @SuppressFBWarnings(value = "UUF_UNUSED_FIELD", justification = "Fields will
-// be used by upcoming game logic")
-// @SuppressFBWarnings({ "EI2", "URF_UNREAD_FIELD" })
-@SuppressFBWarnings("EI2")
+@SuppressFBWarnings(value = "EI2", justification = "Intentional shared reference.")
 public class Control implements ControlInterface {
     private final ViewInterface viewInterface;
     private final ModelInterface modelInterface;
@@ -23,9 +20,10 @@ public class Control implements ControlInterface {
     private final Thread gameThread;
 
     /**
-     * @param vInterface ...
-     * @param mInterface ...
-     * 
+     * Creates the controller and initializes the game loop.
+     *
+     * @param vInterface view interface
+     * @param mInterface model interface
      */
     public Control(final ViewInterface vInterface, final ModelInterface mInterface) {
         this.viewInterface = vInterface;
@@ -38,7 +36,7 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * ...
+     * Initializes model and view, then starts the game loop thread.
      */
     public void init() {
         modelInterface.initEverything(Constants.ENTITIES_PATH, Constants.LEADERBOARD_PATH);
@@ -56,7 +54,7 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * ...
+     * Notifies that the game should be paused.
      */
     @Override
     public void notifyPauseGame() {
@@ -64,8 +62,9 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * @param direction ...
-     * 
+     * Notifies a player movement request.
+     *
+     * @param direction movement direction
      */
     @Override
     public void notifyPlayerMovement(final Direction direction) {
@@ -73,13 +72,16 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * ...
+     * Notifies that the player has fired a shot.
      */
     @Override
     public void notifyPlayerShot() {
         modelInterface.addPlayerShot();
     }
 
+    /**
+     * Notifies that the application should terminate.
+     */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "Application termination is intended")
     @Override
     public final void notifyQuitGame() {
@@ -88,15 +90,16 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * ...
+     * Notifies that the game should be reset.
      */
     @Override
     public void notifyResetGame() {
         modelInterface.resetGame();
+        gameLoop.resumeGame();
     }
 
     /**
-     * ...
+     * Notifies that the game should resume from pause.
      */
     @Override
     public void notifyResumeGame() {
@@ -104,12 +107,22 @@ public class Control implements ControlInterface {
     }
 
     /**
-     * @param username ...
-     * 
+     * Notifies that the username should be set.
+     *
+     * @param username player username
      */
     @Override
     public void notifySetUsername(final String username) {
         modelInterface.setUsername(username);
+    }
+
+    /**
+     * @return the current game state.
+     * 
+     */
+    @Override
+    public GameState getGameState() {
+        return modelInterface.getGameState();
     }
 
 }

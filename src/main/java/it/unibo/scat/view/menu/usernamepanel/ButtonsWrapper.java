@@ -7,19 +7,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import it.unibo.scat.view.UIConstants;
-import it.unibo.scat.view.api.MenuActionsInterface;
+import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomButton;
 
 /**
- * ...
+ * A container panel responsible for displaying and managing the ship selection
+ * buttons.
  */
 public final class ButtonsWrapper extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @param menuActionsInterface ...
+     * Initializes the panel with selectable ship buttons.
+     * 
+     * @param menuActionsInterface the menu actions interface.
      */
-    public ButtonsWrapper(final MenuActionsInterface menuActionsInterface) {
+    public ButtonsWrapper(final ViewActionsInterface menuActionsInterface) {
 
         setLayout(new GridLayout(1, 3, 10, 10));
 

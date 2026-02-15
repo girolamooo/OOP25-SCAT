@@ -27,8 +27,9 @@ public final class CustomButton extends JButton {
     private boolean selected;
 
     /**
-     * @param imagePath ...
+     * Custom button constructor.
      * 
+     * @param imagePath the image's path.
      */
     public CustomButton(final String imagePath) {
 
@@ -73,7 +74,9 @@ public final class CustomButton extends JButton {
     }
 
     /**
-     * @param bool ...
+     * Sets the selection.
+     * 
+     * @param bool boolean that is true if it's selected.
      */
     public void setSelection(final boolean bool) {
         actualColor = DEFAULT_COLOR;

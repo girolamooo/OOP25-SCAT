@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import it.unibo.scat.common.Direction;
-import it.unibo.scat.common.EntityView;
+import it.unibo.scat.common.EntityState;
 import it.unibo.scat.common.GameRecord;
 import it.unibo.scat.common.GameResult;
 import it.unibo.scat.common.GameState;
@@ -19,11 +19,11 @@ import it.unibo.scat.model.game.GameWorld;
 import it.unibo.scat.model.game.TimeAccumulator;
 import it.unibo.scat.model.game.entity.EntityFactoryImpl;
 import it.unibo.scat.model.leaderboard.Leaderboard;
+import it.unibo.scat.model.leaderboard.LeaderboardInterface;
 
 /**
  * The main class for the "Model" section of the MVC pattern.
  */
-// @SuppressFBWarnings("URF_UNREAD_FIELD")
 public final class Model implements ModelInterface, ModelState, Observable {
     private volatile Observer observer;
     private GameState gameState;
@@ -31,7 +31,7 @@ public final class Model implements ModelInterface, ModelState, Observable {
     private final AtomicInteger score = new AtomicInteger(0);
 
     private String username;
-    private Leaderboard leaderboard;
+    private LeaderboardInterface leaderboard;
     private GameWorld gameWorld;
     private GameLogic gameLogic;
 
@@ -55,9 +55,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
         leaderboard.initLeaderboard();
 
         timeAccumulator = new TimeAccumulator(gameLogic.getDifficultyManager());
-
-        // DEBUG
-        // gameWorld.printEntities();
     }
 
     @Override
@@ -85,8 +82,10 @@ public final class Model implements ModelInterface, ModelState, Observable {
     }
 
     /**
-     * @param gameResult ...
+     * Handles game end conditions: increases level on victory or
+     * saves the score to the leaderboard on defeat.
      * 
+     * @param gameResult the session outcome.
      */
     public void handleGameEnd(final GameResult gameResult) {
         if (gameResult == GameResult.PLAYING) {
@@ -101,19 +100,24 @@ public final class Model implements ModelInterface, ModelState, Observable {
 
         if (gameResult == GameResult.INVADERS_WON) {
             setGameState(GameState.GAMEOVER);
+
+            leaderboard.addNewGameRecord(username, gameLogic.getDifficultyManager().getLevel(), score.get());
+            leaderboard.sortGames();
+            leaderboard.updateFile();
         }
     }
 
     /**
-     * increses the level by one.
+     * Increses the level by one.
      */
     public void increaseLevel() {
         gameLogic.getDifficultyManager().incrementLevel();
     }
 
     /**
-     * @param points the points to add to the current score.
+     * Updates the player's total score by adding the specified amount.
      * 
+     * @param points the points to add to the current score.
      */
     public void updateScore(final int points) {
         this.score.addAndGet(points);
@@ -136,8 +140,12 @@ public final class Model implements ModelInterface, ModelState, Observable {
     @Override
     public void resetGame() {
         gameLogic.resetEntities();
+        if (this.gameWorld.getPlayer() != null) {
+            this.gameWorld.getPlayer().reset();
+        }
         score.set(0);
         gameLogic.getDifficultyManager().resetLevel();
+        setGameState(GameState.PAUSE);
         notifyObserver();
     }
 
@@ -152,10 +160,13 @@ public final class Model implements ModelInterface, ModelState, Observable {
     }
 
     @Override
-    public List<EntityView> getEntities() {
-        return List.copyOf(gameWorld.getEntities().stream()
-                .filter(EntityView::isAlive)
-                .toList());
+    public List<EntityState> getEntities() {
+        synchronized (gameWorld.getEntities()) {
+            return gameWorld.getEntities().stream()
+                    .filter(EntityState::isAlive)
+                    .map(EntityState.class::cast)
+                    .toList();
+        }
     }
 
     @Override
@@ -188,10 +199,6 @@ public final class Model implements ModelInterface, ModelState, Observable {
         return gameWorld.getPlayer().getHealth();
     }
 
-    /**
-     * @return ...
-     * 
-     */
     @Override
     public int getLevel() {
         return gameLogic.getDifficultyManager().getLevel();
