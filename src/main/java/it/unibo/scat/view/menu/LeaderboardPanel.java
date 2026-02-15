@@ -83,6 +83,7 @@ public final class LeaderboardPanel extends JPanel {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 menuInterface.showSettingsPanel();
+                audiomanager.play(AudioTrack.OPTION_SELECTED, false);
             }
 
             @Override

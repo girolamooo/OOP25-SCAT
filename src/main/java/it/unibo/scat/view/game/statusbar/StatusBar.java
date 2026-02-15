@@ -19,6 +19,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.GameState;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.game.api.GamePanelInterface;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * Represents the panel at the top of the game screen.
@@ -89,16 +91,17 @@ public final class StatusBar extends JPanel {
 
             @Override
             public void mouseClicked(final MouseEvent e) {
-                if (gamePanelInterface.getGameState() == GameState.PAUSE) {
-                    gamePanelInterface.resume();
-                } else {
+                if (gamePanelInterface.getGameState() != GameState.PAUSE) {
+                    new AudioManager().play(AudioTrack.OPTION_SELECTED, false);
                     gamePanelInterface.pause();
                 }
+
             }
 
             @Override
             public void mouseEntered(final MouseEvent e) {
                 pausePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                new AudioManager().play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override
