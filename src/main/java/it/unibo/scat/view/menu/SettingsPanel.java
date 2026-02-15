@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.scat.util.Audio;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.api.ViewActionsInterface;
@@ -24,7 +25,7 @@ public final class SettingsPanel extends JPanel {
     private static final int VERTICAL_GAP = 50;
     private final transient ViewActionsInterface viewInterface;
     private final transient MenuPanelInterface menuInterface;
-    private final transient AudioManager effectSound;
+    private final transient Audio effectSound;
 
     /**
      * Creates the settings panel and initializes all menu options.
