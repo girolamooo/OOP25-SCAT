@@ -21,6 +21,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.components.CustomTextField;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * Panel that allows the user to enter a username,
@@ -169,6 +171,7 @@ public final class UsernamePanel extends JPanel {
                 menuActionsInterface.setUsername(usernameField.getText());
                 menuActionsInterface.showGamePanel();
                 menuActionsInterface.startGame();
+                new AudioManager().play(AudioTrack.OPTION_SELECTED, false);
             }
 
             @Override
@@ -176,6 +179,7 @@ public final class UsernamePanel extends JPanel {
                 playButton.setText(hoverText);
                 playButton.setForeground(Color.WHITE);
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                new AudioManager().play(AudioTrack.MOUSE_OVER, false);
             }
 
             @Override
