@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import it.unibo.scat.util.Audio;
 import it.unibo.scat.util.AudioManager;
 import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
@@ -30,7 +31,7 @@ public final class GameOverPanel extends JPanel {
     private static final int HEIGHT = 400;
     private static final int TOP_MARGIN = 30;
     private static final int BUTTON_GAP = 15;
-    private final transient AudioManager soundEffect;
+    private final transient Audio soundEffect;
 
     /**
      * Initializes the panel with title, final score, and action buttons.
