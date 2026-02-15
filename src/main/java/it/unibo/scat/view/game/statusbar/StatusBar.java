@@ -23,7 +23,7 @@ import it.unibo.scat.view.game.api.GamePanelInterface;
 /**
  * Represents the panel at the top of the game screen.
  */
-@SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED", justification = "Component not intended for serialization")
 public final class StatusBar extends JPanel {
     private static final long serialVersionUID = 1L;
     private final transient GamePanelInterface gamePanelInterface;

@@ -21,16 +21,17 @@ import javax.swing.table.JTableHeader;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.scat.common.GameRecord;
-import it.unibo.scat.util.AudioManager;
-import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.UIConstants;
 import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.menu.api.MenuPanelInterface;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * Panel that displays the global leaderboard with ranking data.
  */
-@SuppressFBWarnings({ "SE_TRANSIENT_FIELD_NOT_RESTORED", "EI_EXPOSE_REP2" })
+@SuppressFBWarnings(value = { "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "EI_EXPOSE_REP2" }, justification = "Component not intended for serialization;Reference intentionally shared")
 public final class LeaderboardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int COLUMN_COUNT = 5;
@@ -105,7 +106,7 @@ public final class LeaderboardPanel extends JPanel {
      * populating it with fetched game records.
      */
     private void initContentTable() {
-        final String[] columnNames = {"RANK", "NAME", "SCORE", "LEVEL", "DATE"};
+        final String[] columnNames = {"RANK", "NAME", "SCORE", "LEVEL", "DATE" };
         final Object[][] data = new Object[records.size()][COLUMN_COUNT];
 
         for (final GameRecord record : records) {

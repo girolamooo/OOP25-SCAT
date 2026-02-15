@@ -18,13 +18,13 @@ import it.unibo.scat.common.GameState;
 import it.unibo.scat.common.Observer;
 import it.unibo.scat.control.api.ControlInterface;
 import it.unibo.scat.model.api.ModelState;
-import it.unibo.scat.util.AudioManager;
-import it.unibo.scat.util.AudioTrack;
 import it.unibo.scat.view.api.ViewActionsInterface;
 import it.unibo.scat.view.api.ViewInterface;
 import it.unibo.scat.view.game.GameKL;
 import it.unibo.scat.view.game.GamePanel;
 import it.unibo.scat.view.menu.MenuPanel;
+import it.unibo.scat.view.util.AudioManager;
+import it.unibo.scat.view.util.AudioTrack;
 
 /**
  * The main class for the "View" section of the MVC pattern.
@@ -146,7 +146,7 @@ public final class View implements ViewInterface, ViewActionsInterface, Observer
         return modelState.getUsername();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_REP")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Intentional exposure is intended.")
     @Override
     public JFrame getFrame() {
         return this.frame;

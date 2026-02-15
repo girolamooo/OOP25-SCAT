@@ -1,4 +1,4 @@
-package it.unibo.scat.util;
+package it.unibo.scat.view.util;
 
 /**
  * Interface for managing audio playback.
