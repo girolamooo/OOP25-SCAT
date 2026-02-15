@@ -34,8 +34,8 @@ public final class UsernamePanel extends JPanel {
     private static final String USERNAME = "USERNAME";
     private static final int VERTICAL_SPACE = 20;
     private final transient ViewActionsInterface menuActionsInterface;
+    private final transient Audio sfxSound;
     private CustomTextField usernameField;
-    private Audio sfxSound;
 
     /**
      * Creates the username panel and initializes all UI components.
